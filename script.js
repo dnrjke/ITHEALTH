@@ -79,8 +79,12 @@ function initNavigation() {
     if (mainTitle) {
         mainTitle.addEventListener('click', () => {
             showContent(mainContentId);
-            // 헤더 네비게이션 상태 업데이트
-            updateHeaderNav('home');
+            // 모든 헤더 네비게이션 비활성화
+            headerNavLinks.forEach(link => link.classList.remove('active'));
+            // 모든 하위 탭 닫기
+            document.querySelectorAll('.header-subnav').forEach(subnav => {
+                subnav.classList.add('hidden');
+            });
         });
     }
     

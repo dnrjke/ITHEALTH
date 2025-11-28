@@ -18,6 +18,23 @@ header {
     max-height: 60px;
 }
 
+/* 모바일: 헤더 패딩 및 간격 축소 */
+@media (max-width: 768px) {
+    header {
+        padding: 6px 12px;
+        gap: 12px;
+        max-height: 56px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 5px 8px;
+        gap: 8px;
+        max-height: 52px;
+    }
+}
+
 /* (중간 너비 구간에서는 1단 유지: 2단은 모바일 전용에서 처리) */
 
 /* header::before 제거 - 단색 배경 유지 */
@@ -30,6 +47,13 @@ header h1 {
     flex-shrink: 0;
     line-height: 1;
     grid-area: title;
+}
+
+/* 모바일: 제목 크기 축소 */
+@media (max-width: 480px) {
+    header h1 {
+        font-size: clamp(16px, 1.8vw, 20px);
+    }
 }
 
 /* ==================== 헤더 내비게이션 ==================== */
@@ -48,6 +72,20 @@ header h1 {
     display: flex;
     gap: 10px;
     align-items: center;
+    flex-wrap: nowrap; /* 세로로 나열 방지 */
+}
+
+/* 작은 화면에서 버튼 크기 조정 */
+@media (max-width: 768px) {
+    .header-nav-list {
+        gap: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-nav-list {
+        gap: 4px;
+    }
 }
 
 .header-nav-item {
@@ -73,6 +111,25 @@ header h1 {
     box-sizing: border-box;
 }
 
+/* 모바일: 버튼 크기 축소 */
+@media (max-width: 768px) {
+    .header-nav-link {
+        padding: 5px 10px;
+        gap: 4px;
+        font-size: clamp(11px, 1.5vw, 13px);
+        min-height: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-nav-link {
+        padding: 4px 8px;
+        gap: 3px;
+        font-size: clamp(10px, 1.4vw, 12px);
+        min-height: 28px;
+    }
+}
+
 .header-nav-link:hover {
     background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
@@ -96,6 +153,17 @@ header h1 {
     flex-shrink: 0;
     font-size: clamp(12px, 1.6vw, 14px);
     line-height: 1;
+}
+
+/* 모바일: 아이콘 크기 조정 */
+@media (max-width: 480px) {
+    .header-nav-link .nav-icon {
+        font-size: clamp(12px, 1.5vw, 14px);
+    }
+
+    .header-nav-link .nav-label {
+        font-size: clamp(10px, 1.4vw, 12px);
+    }
 }
 
 /* 헤더 컨트롤 */
@@ -251,6 +319,21 @@ header h1 {
     align-items: center;
 }
 
+/* 모바일: 언어 선택기 크기 축소 */
+@media (max-width: 768px) {
+    .language-selector {
+        padding: 5px 10px;
+        max-height: 32px;
+    }
+}
+
+@media (max-width: 480px) {
+    .language-selector {
+        padding: 4px 8px;
+        max-height: 28px;
+    }
+}
+
 .language-selector span {
     cursor: pointer;
     margin: 0 1px;
@@ -262,6 +345,14 @@ header h1 {
     display: inline-block;
     color: rgba(255, 255, 255, 0.7);
     line-height: 1;
+}
+
+/* 모바일: 언어 텍스트 크기 축소 */
+@media (max-width: 480px) {
+    .language-selector span {
+        padding: 3px 5px;
+        font-size: clamp(9px, 1.3vw, 11px);
+    }
 }
 
 .language-selector span:hover {
