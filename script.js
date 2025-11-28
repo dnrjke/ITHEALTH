@@ -106,6 +106,9 @@ function initNavigation() {
         }
     }
 
+    // showContent를 전역으로 노출 (타이머에서 사용 가능하도록)
+    window.showContent = showContent;
+
     // 네비게이션 아이템 클릭 이벤트
     navItems.forEach(item => {
         item.addEventListener('click', () => {
@@ -183,14 +186,11 @@ function initNavigation() {
             } else if (subnav === 'hand-pain') {
                 showContent('hand-pain-content');
             } else if (subnav === 'rest-all') {
-                showContent('health-checklist-content');
-                // 전체 휴식 가이드 시작
-                setTimeout(() => {
-                    const globalTimerStart = document.getElementById('global-timer-start');
-                    if (globalTimerStart) {
-                        globalTimerStart.click();
-                    }
-                }, 300);
+                // 현재 화면에서 바로 전체 휴식 가이드 시작 (화면 전환 없음)
+                const globalTimerStart = document.getElementById('global-timer-start');
+                if (globalTimerStart) {
+                    globalTimerStart.click();
+                }
             } else if (subnav.startsWith('rest-')) {
                 showContent('rest-guide-content');
             }
@@ -265,15 +265,11 @@ function initNavigation() {
         const quickBreakStartBtn = document.getElementById('quick-break-start-btn');
         if (quickBreakStartBtn) {
             quickBreakStartBtn.addEventListener('click', () => {
-                showContent('health-checklist-content');
-                updateHeaderNav('checklist');
-                // 페이지 전환 후 타이머 시작
-                setTimeout(() => {
-                    const globalTimerStart = document.getElementById('global-timer-start');
-                    if (globalTimerStart) {
-                        globalTimerStart.click();
-                    }
-                }, 300);
+                // 현재 화면에서 바로 타이머 시작 (화면 전환 없음)
+                const globalTimerStart = document.getElementById('global-timer-start');
+                if (globalTimerStart) {
+                    globalTimerStart.click();
+                }
             });
         }
     }
@@ -1134,6 +1130,7 @@ function initTimer() {
         currentTime: 0,
         totalTime: 0,
         intervalId: null,
+        previousContent: null, // 이전 화면 저장
         steps: [
             { step: 1, duration: 60 },
             { step: 2, duration: 120 },
@@ -1332,6 +1329,12 @@ function initTimer() {
     }
 
     function startGlobalTimer() {
+        // 현재 활성화된 콘텐츠 저장
+        const activeContent = document.querySelector('.tab-content.active');
+        if (activeContent) {
+            timerState.previousContent = activeContent.id;
+        }
+
         timerState.mode = 'global';
         timerState.isRunning = true;
         timerState.isPaused = false;
@@ -1497,6 +1500,12 @@ function initTimer() {
             if (pauseBtn) {
                 pauseBtn.querySelector('span:last-child').textContent = '일시정지';
             }
+
+            // 이전 화면으로 복귀
+            if (timerState.previousContent && window.showContent) {
+                window.showContent(timerState.previousContent);
+                timerState.previousContent = null;
+            }
         } else if (timerState.mode === 'individual') {
             const stepTimer = document.querySelector(`[data-step-timer="${timerState.currentStep}"]`);
             stepTimer.classList.add('hidden');
@@ -1539,19 +1548,25 @@ function initTimer() {
                 card.classList.add('completed', 'collapsed');
                 card.classList.remove('active', 'waiting');
             });
+
+            // 이전 화면으로 복귀
+            if (timerState.previousContent && window.showContent) {
+                window.showContent(timerState.previousContent);
+                timerState.previousContent = null;
+            }
         } else if (timerState.mode === 'individual') {
             const stepTimer = document.querySelector(`[data-step-timer="${timerState.currentStep}"]`);
             stepTimer.classList.add('hidden');
-            
+
             const card = document.querySelector(`.break-step[data-step="${timerState.currentStep}"]`);
             card.classList.add('completed');
             card.classList.remove('active', 'individual-mode');
-            
+
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
             playBtn.classList.remove('playing');
             playBtn.querySelector('span').textContent = '▶️';
         }
-        
+
         setTimeout(() => {
             document.getElementById('timer-complete-message').classList.add('hidden');
             if (timerState.mode === 'global') {
