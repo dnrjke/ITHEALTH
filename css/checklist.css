@@ -26,7 +26,18 @@
 .checklist-subtitle {
     font-size: 1.2em;
     color: #666;
+    margin: 0 0 0.5em 0;
+}
+
+.checklist-guide {
+    font-size: 1em;
+    color: #888;
     margin: 0;
+    font-style: italic;
+}
+
+.mobile-br {
+    display: none;
 }
 
 /* 체크리스트 그리드 */
@@ -88,6 +99,12 @@
     background: linear-gradient(135deg, rgba(255, 112, 67, 0.1) 0%, rgba(244, 81, 30, 0.1) 100%);
     border-color: #ff7043;
     box-shadow: 0 2px 8px rgba(255, 112, 67, 0.2);
+}
+
+.check-input:checked + .check-label:hover {
+    background: linear-gradient(135deg, rgba(255, 112, 67, 0.15) 0%, rgba(244, 81, 30, 0.15) 100%);
+    border-color: #ff5722;
+    transform: translateX(4px);
 }
 
 .check-icon {

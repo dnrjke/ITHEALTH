@@ -32,11 +32,68 @@
                         <span class="nav-label">가이드 소개</span>
                     </a>
                 </li>
-                <li class="header-nav-item">
+                <li class="header-nav-item has-submenu">
                     <a href="#" class="header-nav-link" data-nav="guide">
                         <span class="nav-icon">📖</span>
                         <span class="nav-label">건강 가이드</span>
                     </a>
+                    <!-- 건강 가이드 하위 탭 -->
+                    <ul class="header-subnav hidden">
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link active" data-subnav="headache">
+                                <span>두통/무기력</span>
+                            </a>
+                        </li>
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link" data-subnav="turtle-neck">
+                                <span>거북목</span>
+                            </a>
+                        </li>
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link" data-subnav="hand-pain">
+                                <span>손의 통증</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="header-nav-item has-submenu">
+                    <a href="#" class="header-nav-link" data-nav="rest-guide">
+                        <span class="nav-icon">🧘</span>
+                        <span class="nav-label">휴식 가이드</span>
+                    </a>
+                    <!-- 휴식 가이드 하위 탭 -->
+                    <ul class="header-subnav hidden">
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link active" data-subnav="rest-all">
+                                <span>전체</span>
+                            </a>
+                        </li>
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link" data-subnav="rest-neck">
+                                <span>뒷목</span>
+                            </a>
+                        </li>
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link" data-subnav="rest-face">
+                                <span>얼굴</span>
+                            </a>
+                        </li>
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link" data-subnav="rest-eye">
+                                <span>눈</span>
+                            </a>
+                        </li>
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link" data-subnav="rest-hand">
+                                <span>손</span>
+                            </a>
+                        </li>
+                        <li class="header-subnav-item">
+                            <a href="#" class="header-subnav-link" data-subnav="rest-waist">
+                                <span>허리</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="header-nav-item">
                     <a href="#" class="header-nav-link" data-nav="checklist">
@@ -422,6 +479,88 @@
             <button id="next-button-hp" class="next-step-button">다음 스텝</button>
         </div>
         
+        <!-- 휴식 가이드 메인 페이지 -->
+        <div id="rest-guide-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="rest-guide-container">
+                <div class="rest-guide-header">
+                    <h2 class="rest-guide-title">휴식 가이드</h2>
+                    <p class="rest-guide-subtitle">몸과 마음을 위한 간단한 스트레칭과 이완법</p>
+                </div>
+
+                <div class="rest-guide-intro">
+                    <div class="intro-section">
+                        <h3 class="section-heading">휴식 가이드 소개</h3>
+                        <div class="content-box">
+                            <p>장시간 업무로 지친 몸과 마음을 위한 간단하고 효과적인 휴식법을 소개합니다.</p>
+                            <p>각 부위별로 특화된 스트레칭과 이완 기법을 통해 즉각적인 피로 회복을 경험해보세요.</p>
+                            <p>하루 몇 분만 투자해도 장기적인 건강 개선 효과를 얻을 수 있습니다.</p>
+                        </div>
+                    </div>
+
+                    <div class="rest-guides-grid">
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🎬</div>
+                            <h4>전체 휴식 가이드</h4>
+                            <p>목, 어깨, 허리를 포함한 전신 스트레칭으로 전체적인 피로를 해소합니다. 약 5분 소요됩니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-all">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🦴</div>
+                            <h4>뒷목 휴식 가이드</h4>
+                            <p>장시간 모니터를 보며 긴장된 목 뒷근육을 풀어주는 집중 스트레칭입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-neck">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">😌</div>
+                            <h4>얼굴 휴식 가이드</h4>
+                            <p>표정근과 턱 근육의 긴장을 풀어 두통 예방과 얼굴 피로 해소에 도움을 줍니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-face">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">👁️</div>
+                            <h4>눈 휴식 가이드</h4>
+                            <p>화면 응시로 인한 눈의 피로와 건조함을 완화하는 눈 운동과 이완법입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-eye">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">✋</div>
+                            <h4>손 휴식 가이드</h4>
+                            <p>키보드와 마우스 사용으로 지친 손목과 손가락을 위한 스트레칭입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-hand">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🧍</div>
+                            <h4>허리 휴식 가이드</h4>
+                            <p>앉아서 일하는 자세로 인한 허리 부담을 줄이고 코어 근육을 활성화합니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-waist">시작하기</button>
+                        </div>
+                    </div>
+
+                    <div class="rest-guide-tips">
+                        <h3 class="section-heading">💡 효과적인 휴식을 위한 팁</h3>
+                        <div class="content-box">
+                            <ul class="tip-list">
+                                <li>50분 집중 후 10분 휴식 패턴을 유지하세요</li>
+                                <li>스트레칭 시 통증이 느껴지면 즉시 중단하고 강도를 낮추세요</li>
+                                <li>깊고 편안한 호흡과 함께 천천히 동작하세요</li>
+                                <li>하루에 여러 번 짧게 하는 것이 한 번 길게 하는 것보다 효과적입니다</li>
+                                <li>스트레칭 전후로 충분한 수분을 섭취하세요</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 건강 체크리스트 섹션 -->
         <div id="health-checklist-content" class="tab-content" data-theme-bg="nature-wellness-background.jpg">
             <div class="tab-background">
@@ -431,17 +570,25 @@
             <div class="checklist-container">
                 <div class="checklist-header">
                     <h2 class="checklist-title">건강 체크리스트</h2>
-                    <p class="checklist-subtitle">지금 이 순간, 나의 상태를 점검해보세요</p>
+                    <p class="checklist-subtitle">지금 이 순간,<br class="mobile-br"> 나의 상태를 점검해보세요</p>
+                    <p class="checklist-guide">해당하는 항목을 선택하면 맞춤 건강 팁을 제공합니다</p>
                 </div>
                 
                 <div class="checklist-grid">
                     <div class="checklist-section">
-                        <h3 class="section-title">💧 수분 섭취</h3>
+                        <h3 class="section-title">💧 수분 및 식사</h3>
                         <div class="check-item" data-category="hydration" data-tip="water">
                             <input type="checkbox" id="check-water" class="check-input">
                             <label for="check-water" class="check-label">
                                 <span class="check-icon">💧</span>
                                 <span class="check-text">지난 1시간 내에 물을 마셨나요?</span>
+                            </label>
+                        </div>
+                        <div class="check-item" data-category="hydration" data-tip="meal">
+                            <input type="checkbox" id="check-meal" class="check-input">
+                            <label for="check-meal" class="check-label">
+                                <span class="check-icon">🍽️</span>
+                                <span class="check-text">최근 4시간 내에 식사를 하셨나요?</span>
                             </label>
                         </div>
                     </div>

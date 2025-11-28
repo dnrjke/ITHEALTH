@@ -234,6 +234,142 @@
     background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
 }
 
+/* ================================================
+   휴식 가이드 페이지 스타일
+   ================================================ */
+
+.rest-guide-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3em 2em;
+    position: relative;
+    z-index: 1;
+}
+
+.rest-guide-header {
+    text-align: center;
+    margin-bottom: 4em;
+    padding: 2em 0;
+}
+
+.rest-guide-title {
+    font-size: 2.5em;
+    color: var(--brand-strong);
+    margin-bottom: 0.5em;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.rest-guide-subtitle {
+    font-size: 1.3em;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+}
+
+.rest-guide-intro {
+    position: relative;
+    z-index: 1;
+}
+
+.rest-guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    margin-top: 3em;
+    margin-bottom: 4em;
+}
+
+.rest-guide-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 3px solid var(--brand-light);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.rest-guide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.rest-guide-card .card-icon {
+    font-size: 3em;
+    margin-bottom: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.rest-guide-card h4 {
+    color: var(--brand-strong);
+    font-size: 1.4em;
+    margin: 0;
+    font-weight: 500;
+}
+
+.rest-guide-card p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.05em;
+    margin: 0;
+    flex: 1;
+}
+
+.guide-card-btn {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+    color: white;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.guide-card-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(46, 125, 50, 0.4);
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
+}
+
+.rest-guide-tips {
+    margin-top: 3em;
+}
+
+.rest-guide-tips .tip-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rest-guide-tips .tip-list li {
+    padding: 1.2em 0;
+    padding-left: 2.5em;
+    border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+    position: relative;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #444;
+}
+
+.rest-guide-tips .tip-list li:last-child {
+    border-bottom: none;
+}
+
+.rest-guide-tips .tip-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--brand);
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
 /* 반응형 */
 @media (max-width: 768px) {
     .intro-container {

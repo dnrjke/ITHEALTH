@@ -82,6 +82,11 @@
     background-position: center center;
     background-repeat: no-repeat;
     z-index: -1;
+    /* 모바일 Safari 스크롤 공백 문제 해결 */
+    min-height: calc(100vh + 100px);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    will-change: transform;
 }
 
 .hero {
