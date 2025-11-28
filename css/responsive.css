@@ -43,12 +43,12 @@
             'nav nav';
         row-gap: 6px;
     }
-    
+
     header h1 {
         font-size: 17px;
         grid-area: title;
     }
-    
+
     .header-controls { grid-area: controls; }
     .header-nav {
         grid-area: nav;
@@ -56,23 +56,67 @@
         padding-top: 6px;
         border-top: 1px solid rgba(255, 255, 255, 0.15);
     }
-    
+
+    /* 모바일에서 헤더 2줄째 그리드 표시 */
     .header-nav-list {
-        gap: 8px;
-        justify-content: space-around;
-    }
-    
-    .header-nav-link {
-        padding: 6px 12px;
-        font-size: 12px;
-        min-height: 36px;
-        /* 아이콘-텍스트를 가로 정렬 유지 */
-        flex-direction: row;
         gap: 6px;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
     }
-    
-    .header-nav-link .nav-icon { font-size: 16px; }
-    .header-nav-link .nav-label { font-size: 12px; }
+
+    .header-nav-item {
+        flex: none;
+    }
+
+    .header-nav-link {
+        padding: 6px 8px;
+        font-size: 11px;
+        min-height: 36px;
+        flex-direction: column;
+        gap: 4px;
+        justify-content: center;
+    }
+
+    .header-nav-link .nav-icon {
+        font-size: 16px;
+        line-height: 1;
+    }
+
+    .header-nav-link .nav-label {
+        font-size: 10px;
+        line-height: 1;
+        text-align: center;
+    }
+
+    /* 하위 네비게이션 모바일 스타일 */
+    .header-subnav {
+        position: static;
+        transform: none;
+        margin-top: 6px;
+        background: rgba(46, 115, 53, 0.95);
+        border-radius: 8px;
+        padding: 6px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+        gap: 4px;
+    }
+
+    .header-subnav.hidden {
+        display: none;
+    }
+
+    .header-subnav-link {
+        padding: 6px 8px;
+        font-size: 11px;
+        text-align: center;
+    }
+
+    /* 모바일 br 표시 */
+    .mobile-br {
+        display: inline;
+    }
     
     .language-selector {
         padding: 4px 10px;

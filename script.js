@@ -131,23 +131,97 @@ function initNavigation() {
     });
     }
     
-    // 헤더 내비게이션 클릭 이벤트
-    headerNavLinks.forEach(link => {
+    // 하위 네비게이션 토글
+    const hasSubmenuItems = document.querySelectorAll('.header-nav-item.has-submenu');
+
+    hasSubmenuItems.forEach(item => {
+        const link = item.querySelector('.header-nav-link');
+        const subnav = item.querySelector('.header-subnav');
+
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const nav = link.dataset.nav;
-            
+
+            // 건강 가이드 또는 휴식 가이드인 경우 하위 탭 토글
+            if (nav === 'guide' || nav === 'rest-guide') {
+                subnav.classList.toggle('hidden');
+                // 다른 하위 탭은 닫기
+                hasSubmenuItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        const otherSubnav = otherItem.querySelector('.header-subnav');
+                        if (otherSubnav) {
+                            otherSubnav.classList.add('hidden');
+                        }
+                    }
+                });
+
+                // 헤더 네비게이션 활성 상태 업데이트
+                updateHeaderNav(nav);
+
+                // 현재 화면 유지 (토글만 수행)
+                return;
+            }
+        });
+    });
+
+    // 하위 네비게이션 링크 클릭 이벤트
+    document.querySelectorAll('.header-subnav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const subnav = link.dataset.subnav;
+
+            // 같은 하위 탭 내에서 활성 상태 업데이트
+            const parentSubnav = link.closest('.header-subnav');
+            parentSubnav.querySelectorAll('.header-subnav-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+
+            // 콘텐츠 표시
+            if (subnav === 'headache') {
+                showContent('headache-content');
+            } else if (subnav === 'turtle-neck') {
+                showContent('turtle-neck-content');
+            } else if (subnav === 'hand-pain') {
+                showContent('hand-pain-content');
+            } else if (subnav === 'rest-all') {
+                showContent('health-checklist-content');
+                // 전체 휴식 가이드 시작
+                setTimeout(() => {
+                    const globalTimerStart = document.getElementById('global-timer-start');
+                    if (globalTimerStart) {
+                        globalTimerStart.click();
+                    }
+                }, 300);
+            } else if (subnav.startsWith('rest-')) {
+                showContent('rest-guide-content');
+            }
+        });
+    });
+
+    // 헤더 내비게이션 클릭 이벤트 (하위 탭이 없는 경우)
+    headerNavLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            const nav = link.dataset.nav;
+
+            // has-submenu가 있는 경우는 이미 위에서 처리
+            if (link.closest('.has-submenu')) {
+                return;
+            }
+
+            e.preventDefault();
+
             // 헤더 네비게이션 활성 상태 업데이트
             updateHeaderNav(nav);
-            
+
+            // 모든 하위 탭 닫기
+            document.querySelectorAll('.header-subnav').forEach(subnav => {
+                subnav.classList.add('hidden');
+            });
+
             // 콘텐츠 표시
             if (nav === 'home') {
                 showContent(mainContentId);
             } else if (nav === 'intro') {
                 showContent('intro-content');
-            } else if (nav === 'guide') {
-                // 첫 번째 건강 가이드(두통/무기력)로 이동
-                showContent('headache-content');
             } else if (nav === 'checklist') {
                 showContent('health-checklist-content');
             }
@@ -749,7 +823,8 @@ function initChecklist() {
             "긴장성두통": "머리 주변 근육의 긴장으로 인해 발생하는 두통입니다. 스트레스와 잘못된 자세가 주요 원인입니다.",
             "편두통": "머리 한쪽이 욱신거리는 박동성 두통으로, 구토나 빛·소리에 대한 민감성을 동반할 수 있습니다.",
             "만성피로증후군": "충분한 휴식에도 개선되지 않는 지속적인 피로 상태입니다. 수면 부족, 스트레스, 영양 불균형이 원인입니다.",
-            "집중력저하": "주의력과 집중력이 떨어지는 상태로, 산소 부족, 피로, 스트레스가 주요 원인입니다."
+            "집중력저하": "주의력과 집중력이 떨어지는 상태로, 산소 부족, 피로, 스트레스가 주요 원인입니다.",
+            "저혈당": "혈당이 정상 범위 이하로 떨어진 상태로, 식사를 거르거나 장시간 공복 시 발생합니다. 어지럼증, 피로감, 집중력 저하를 유발합니다."
         };
 
         const healthTipsData = {
@@ -757,6 +832,11 @@ function initChecklist() {
                 title: "수분 보충이 필요해요",
                 tips: ["지금 당장 물 한 컵을 마셔보세요", "1시간마다 알람을 설정해 물을 마시는 습관을 만들어보세요", "카페인 음료보다는 물이나 허브차를 선택하세요"],
                 diseases: ["만성피로증후군", "집중력저하"]
+            },
+            meal: {
+                title: "식사 또는 간식이 필요해요",
+                tips: ["혈당 안정을 위해 건강한 간식을 섭취하세요 (견과류, 바나나, 삶은 달걀 등)", "규칙적인 식사 시간을 지키세요 (최소 4-5시간 간격)", "단백질과 복합 탄수화물이 포함된 균형잡힌 식사를 하세요", "업무 중 간단히 먹을 수 있는 건강 간식을 미리 준비하세요"],
+                diseases: ["저혈당", "집중력저하", "만성피로증후군"]
             },
             'neck-forward': {
                 title: "목 자세 교정이 필요해요",
@@ -1018,6 +1098,12 @@ function initChecklist() {
                     input.checked = false;
                 });
                 updateCheckCount();
+
+                // 모바일에서 화면 최상단으로 스크롤
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
             });
         }
         
@@ -1252,16 +1338,23 @@ function initTimer() {
         timerState.currentStep = 1;
         timerState.currentTime = 0;
         timerState.totalTime = 300;
-        
+
         // UI 표시
         document.getElementById('global-timer-start').classList.add('hidden');
         document.getElementById('timer-sticky-progress').classList.remove('hidden');
         document.getElementById('sticky-card-display').classList.remove('hidden');
         document.getElementById('timer-complete-message').classList.add('hidden');
-        
+
+        // 상단 버튼 숨기기
+        const scrollToTopBtn = document.querySelector('.scroll-to-top-btn');
+        if (scrollToTopBtn) {
+            scrollToTopBtn.style.opacity = '0';
+            scrollToTopBtn.style.visibility = 'hidden';
+        }
+
         // body에 전체 타이머 모드 클래스 추가
         document.body.classList.add('global-timer-active');
-        
+
         updateCardStates(1);
         runTimer();
     }
@@ -1385,13 +1478,20 @@ function initTimer() {
         timerState.isRunning = false;
         timerState.isPaused = false;
         timerState.currentTime = 0;
-        
+
         if (timerState.mode === 'global') {
             document.getElementById('timer-sticky-progress').classList.add('hidden');
             document.getElementById('sticky-card-display').classList.add('hidden');
             document.getElementById('global-timer-start').classList.remove('hidden');
             document.body.classList.remove('global-timer-active');
-            
+
+            // 상단 버튼 다시 표시
+            const scrollToTopBtn = document.querySelector('.scroll-to-top-btn');
+            if (scrollToTopBtn) {
+                scrollToTopBtn.style.opacity = '1';
+                scrollToTopBtn.style.visibility = 'visible';
+            }
+
             // 일시정지 버튼 텍스트 리셋
             const pauseBtn = document.getElementById('sticky-timer-pause');
             if (pauseBtn) {
@@ -1400,34 +1500,41 @@ function initTimer() {
         } else if (timerState.mode === 'individual') {
             const stepTimer = document.querySelector(`[data-step-timer="${timerState.currentStep}"]`);
             stepTimer.classList.add('hidden');
-            
+
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
             playBtn.classList.remove('playing');
             playBtn.querySelector('span').textContent = '▶️';
         }
-        
+
         timerState.mode = null;
         timerState.currentStep = null;
-        
+
         document.querySelectorAll('.break-step').forEach(card => {
             card.classList.remove('completed', 'active', 'waiting', 'collapsed', 'individual-mode');
         });
-        
+
         document.getElementById('timer-complete-message').classList.add('hidden');
     }
 
     function completeTimer() {
         clearInterval(timerState.intervalId);
         timerState.isRunning = false;
-        
+
         document.getElementById('timer-complete-message').classList.remove('hidden');
-        
+
         if (timerState.mode === 'global') {
             document.getElementById('timer-sticky-progress').classList.add('hidden');
             document.getElementById('sticky-card-display').classList.add('hidden');
             document.getElementById('global-timer-start').classList.remove('hidden');
             document.body.classList.remove('global-timer-active');
-            
+
+            // 상단 버튼 다시 표시
+            const scrollToTopBtn = document.querySelector('.scroll-to-top-btn');
+            if (scrollToTopBtn) {
+                scrollToTopBtn.style.opacity = '1';
+                scrollToTopBtn.style.visibility = 'visible';
+            }
+
             document.querySelectorAll('.break-step').forEach(card => {
                 card.classList.add('completed', 'collapsed');
                 card.classList.remove('active', 'waiting');
