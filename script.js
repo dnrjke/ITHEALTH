@@ -40,68 +40,34 @@ document.addEventListener('DOMContentLoaded', () => {
    ================================================ */
 
 function initNavigation() {
-    const navItems = document.querySelectorAll('.nav-item');
     const tabContents = document.querySelectorAll('.tab-content');
     const mainTitle = document.getElementById('main-title');
-    const navIndicator = document.querySelector('.nav-indicator');
     const mainContentId = 'main-content';
-    
+
     // 헤더 내비게이션
     const headerNavLinks = document.querySelectorAll('.header-nav-link');
-
-    /**
-     * 네비게이션 인디케이터 업데이트
-     */
-    function updateNavIndicator(activeItem) {
-        if (!navIndicator) return;
-        
-        if (!activeItem) {
-            navIndicator.style.opacity = '0';
-            return;
-        }
-        
-        const navRect = activeItem.parentElement.getBoundingClientRect();
-        const itemRect = activeItem.getBoundingClientRect();
-        const offsetLeft = itemRect.left - navRect.left;
-        const width = itemRect.width;
-        
-        navIndicator.style.left = `${offsetLeft}px`;
-        navIndicator.style.width = `${width}px`;
-        navIndicator.style.opacity = '1';
-    }
 
     /**
      * 콘텐츠 탭 전환
      */
     function showContent(tabId) {
-        // 모든 탭/내비 상태 초기화
+        // 모든 탭 상태 초기화
         tabContents.forEach(content => {
             content.classList.remove('active');
         });
-        navItems.forEach(item => {
-            item.classList.remove('active');
-        });
 
-        // 메인 화면 처리: 내비 숨김(body.main-view 적용)
+        // 메인 화면 처리
         if (tabId === mainContentId) {
             const main = document.getElementById(mainContentId);
             if (main) main.classList.add('active');
-            updateNavIndicator(null);
             document.body.classList.add('main-view');
             return;
         }
 
-        // 기타 섹션 처리: 내비 표시(body.main-view 제거)
+        // 기타 섹션 처리
         const targetContent = document.getElementById(tabId);
         if (targetContent) {
             targetContent.classList.add('active');
-            const activeNavItem = document.querySelector(`.nav-item[data-tab="${tabId.replace('-content', '')}"]`);
-            if (activeNavItem) {
-                activeNavItem.classList.add('active');
-                updateNavIndicator(activeNavItem);
-            } else {
-                updateNavIndicator(null);
-            }
             document.body.classList.remove('main-view');
         }
     }
@@ -109,29 +75,13 @@ function initNavigation() {
     // showContent를 전역으로 노출 (타이머에서 사용 가능하도록)
     window.showContent = showContent;
 
-    // 네비게이션 아이템 클릭 이벤트
-    navItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const tabId = item.dataset.tab + '-content';
-            showContent(tabId);
-            // 섹션 네비게이션 클릭 시 헤더 네비게이션을 "건강 가이드"로 설정
-            updateHeaderNav('guide');
-        });
-    });
-
     // 메인 타이틀 클릭 이벤트
     if (mainTitle) {
-    mainTitle.addEventListener('click', () => {
-        showContent(mainContentId);
-        navItems.forEach(item => {
-            item.classList.remove('active');
+        mainTitle.addEventListener('click', () => {
+            showContent(mainContentId);
+            // 헤더 네비게이션 상태 업데이트
+            updateHeaderNav('home');
         });
-        if (navIndicator) {
-            navIndicator.style.opacity = '0';
-        }
-        // 헤더 네비게이션 상태 업데이트
-        updateHeaderNav('home');
-    });
     }
     
     // 하위 네비게이션 토글
@@ -177,6 +127,9 @@ function initNavigation() {
             const parentSubnav = link.closest('.header-subnav');
             parentSubnav.querySelectorAll('.header-subnav-link').forEach(l => l.classList.remove('active'));
             link.classList.add('active');
+
+            // 하위 탭 닫기
+            parentSubnav.classList.add('hidden');
 
             // 콘텐츠 표시
             if (subnav === 'headache') {
@@ -277,22 +230,6 @@ function initNavigation() {
     // 초기 화면 설정
     showContent(mainContentId);
     initMainScreenButtons();
-
-    // 윈도우 리사이즈 시 네비게이션 업데이트
-    window.addEventListener('resize', () => {
-        const activeNavItem = document.querySelector('.nav-item.active');
-        if (activeNavItem) {
-            setTimeout(() => updateNavIndicator(activeNavItem), 100);
-        }
-    });
-
-    // 초기 네비게이션 인디케이터 설정
-    setTimeout(() => {
-        const firstActiveItem = document.querySelector('.nav-item.active');
-        if (firstActiveItem) {
-            updateNavIndicator(firstActiveItem);
-        }
-    }, 100);
 }
 
 /* ================================================
@@ -566,25 +503,7 @@ function initI18n() {
     function setLang(lang) {
         const t = translations[lang];
         if (!t) return;
-        
-        // 네비게이션
-        const navHeadache = document.getElementById('nav-headache');
-        const navTurtle = document.getElementById('nav-turtle');
-        const navHand = document.getElementById('nav-hand');
-        
-        if (navHeadache) {
-            navHeadache.querySelector('.nav-text').textContent = t.tabs.headache;
-            navHeadache.querySelector('.nav-description').textContent = t.navDesc.headache;
-        }
-        if (navTurtle) {
-            navTurtle.querySelector('.nav-text').textContent = t.tabs.turtle;
-            navTurtle.querySelector('.nav-description').textContent = t.navDesc.turtle;
-        }
-        if (navHand) {
-            navHand.querySelector('.nav-text').textContent = t.tabs.hand;
-            navHand.querySelector('.nav-description').textContent = t.navDesc.hand;
-        }
-        
+
         // 히어로 섹션
         updateElement('poster-title', t.hero?.title);
         updateElement('poster-subtitle', t.hero?.subtitle);

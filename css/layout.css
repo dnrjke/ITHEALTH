@@ -118,23 +118,36 @@ header h1 {
 .header-subnav {
     list-style: none;
     margin: 0;
-    padding: 8px 0;
+    padding: 12px;
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
     background: rgba(46, 115, 53, 0.98);
     border-radius: 12px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
-    min-width: 150px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
     z-index: 1000;
     opacity: 1;
     visibility: visible;
     transition: all 0.3s ease;
-    margin-top: 4px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    margin-top: 8px;
+
+    /* 3열 그리드 레이아웃 (모바일 기본) */
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    min-width: 280px;
+}
+
+/* PC 화면: 더 많은 열 표시 */
+@media (min-width: 768px) {
+    .header-subnav {
+        grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+        min-width: 320px;
+        max-width: 500px;
+        gap: 10px;
+        padding: 16px;
+    }
 }
 
 .header-subnav.hidden {
@@ -150,26 +163,35 @@ header h1 {
 }
 
 .header-subnav-link {
-    display: block;
-    padding: 8px 16px;
-    color: rgba(255, 255, 255, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 8px;
+    color: rgba(255, 255, 255, 0.9);
     text-decoration: none;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 600;
     transition: all 0.2s ease;
-    border-radius: 8px;
-    margin: 0 6px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid transparent;
+    text-align: center;
+    min-height: 44px;
 }
 
 .header-subnav-link:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.18);
     color: #ffffff;
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.2);
 }
 
 .header-subnav-link.active {
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 700;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* 테마 선택기 */
