@@ -1,0 +1,58 @@
+/* ================================================
+   BASE STYLES - 변수, 리셋, 기본 스타일
+   ================================================ */
+
+/* CSS 변수 정의 */
+:root {
+    --bg: linear-gradient(135deg, #f0f8f2 0%, #e8f5ea 50%, #eef5f0 100%);
+    --text: #2f3b2f;
+    --panel: #ffffff;
+    --muted: #e7efe9;
+    --brand: #2e7d32;
+    --brand-strong: #1b5e20;
+    --brand-light: #66bb6a;
+    --accent-warm: #ff7043;
+    --accent-cool: #42a5f5;
+    --shadow-soft: rgba(46, 125, 50, 0.08);
+    --shadow-medium: rgba(46, 125, 50, 0.15);
+}
+
+/* 부드러운 스크롤 */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    width: 100%;
+}
+
+/* Body 기본 스타일 */
+body {
+    font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: clip;
+    overflow-y: auto;
+    width: 100%;
+    position: relative;
+    padding-top: 0;
+}
+
+/* 포커스 가시성 */
+:focus-visible {
+    outline: 3px solid var(--brand-light);
+    outline-offset: 2px;
+}
+
+/* 유틸리티 클래스 */
+.hidden {
+    display: none !important;
+}
+
+/* Google Fonts 임포트 */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+

@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT&HEALTH</title>
+    <!-- CSS 모듈 파일들 -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/intro.css">
+    <link rel="stylesheet" href="css/checklist.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="main-view">
+    <header>
+        <h1 id="main-title">IT&HEALTH</h1>
+        
+        <!-- 헤더 내비게이션 -->
+        <nav class="header-nav" aria-label="주요 메뉴">
+            <ul class="header-nav-list">
+                <li class="header-nav-item">
+                    <a href="#" class="header-nav-link active" data-nav="guide">
+                        <span class="nav-icon">📖</span>
+                        <span class="nav-label">건강 가이드</span>
+                    </a>
+                </li>
+                <li class="header-nav-item">
+                    <a href="#" class="header-nav-link" data-nav="rest-guide">
+                        <span class="nav-icon">🧘</span>
+                        <span class="nav-label">휴식 가이드</span>
+                    </a>
+                </li>
+                <li class="header-nav-item">
+                    <a href="#" class="header-nav-link" data-nav="checklist">
+                        <span class="nav-icon">✅</span>
+                        <span class="nav-label">체크리스트</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="header-controls">
+            <!-- 테마 선택기 - 비활성화됨 -->
+            <!-- <div class="theme-selector" aria-label="테마 선택">
+                <span class="selector-label">테마</span>
+                <div class="theme-options">
+                    <span class="theme-option active" data-theme="anime" role="button" tabindex="0">애니메</span>
+                    <span class="theme-option" data-theme="modern" role="button" tabindex="0">모던</span>
+                </div>
+            </div> -->
+            <div class="language-selector" aria-label="언어 선택">
+                <span class="lang-option active" data-lang="KR" role="button" tabindex="0" aria-pressed="true">KR</span> |
+                <span class="lang-option" data-lang="EN" role="button" tabindex="0" aria-pressed="false">EN</span> |
+                <span class="lang-option" data-lang="JP" role="button" tabindex="0" aria-pressed="false">JP</span>
+            </div>
+        </div>
+    </header>
+    
+    <!-- 섹션 네비게이션 (캐러셀) -->
+    <nav class="section-nav">
+        <button class="nav-arrow nav-arrow-left" aria-label="이전 탭들">
+            <span>‹</span>
+        </button>
+        <div class="nav-carousel-container">
+            <div class="nav-carousel">
+                <div id="nav-headache" class="nav-item active" data-tab="headache">
+                    <span class="nav-icon">🧠</span>
+                    <span class="nav-text">두통/무기력</span>
+                    <div class="nav-description">깊은 호흡과 자세 개선</div>
+                </div>
+                <div id="nav-turtle" class="nav-item" data-tab="turtle-neck">
+                    <span class="nav-icon">🐢</span>
+                    <span class="nav-text">거북목</span>
+                    <div class="nav-description">목과 어깨 건강</div>
+                </div>
+                <div id="nav-hand" class="nav-item" data-tab="hand-pain">
+                    <span class="nav-icon">✋</span>
+                    <span class="nav-text">손의 통증</span>
+                    <div class="nav-description">손목과 손가락 케어</div>
+                </div>
+                <div id="nav-eye" class="nav-item" data-tab="eye-health">
+                    <span class="nav-icon">👁️</span>
+                    <span class="nav-text">눈 건강</span>
+                    <div class="nav-description">눈의 피로와 건조함</div>
+                </div>
+                <div id="nav-back" class="nav-item" data-tab="back-health">
+                    <span class="nav-icon">🧍</span>
+                    <span class="nav-text">허리 건강</span>
+                    <div class="nav-description">앉은 자세와 코어</div>
+                </div>
+                <div id="nav-face" class="nav-item" data-tab="face-tension">
+                    <span class="nav-icon">😌</span>
+                    <span class="nav-text">얼굴 긴장</span>
+                    <div class="nav-description">표정근과 턱 이완</div>
+                </div>
+            </div>
+        </div>
+        <button class="nav-arrow nav-arrow-right" aria-label="다음 탭들">
+            <span>›</span>
+        </button>
+        <!-- 모바일용 탭 인디케이터 (6개 탭) -->
+        <div class="nav-page-indicator">
+            <span class="page-dot active" data-tab-index="0" aria-label="두통/무기력"></span>
+            <span class="page-dot" data-tab-index="1" aria-label="거북목"></span>
+            <span class="page-dot" data-tab-index="2" aria-label="손의 통증"></span>
+            <span class="page-dot" data-tab-index="3" aria-label="눈 건강"></span>
+            <span class="page-dot" data-tab-index="4" aria-label="허리 건강"></span>
+            <span class="page-dot" data-tab-index="5" aria-label="얼굴 긴장"></span>
+        </div>
+        <!-- 녹색 현재 상태 표시바를 section-nav 하단에 위치 -->
+        <div class="nav-indicator"></div>
+    </nav>
+    
+    <!-- 메인 콘텐츠 -->
+    <main class="content">
+        <!-- 메인 히어로 화면 -->
+        <div id="main-content" class="tab-content active">
+            <div class="hero">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 id="poster-title" class="hero-title">건강한 IT 라이프</h1>
+                        <p id="poster-subtitle" class="hero-subtitle">매일의 작은 변화가 당신의 일상을 바꿉니다</p>
+                        <div class="hero-tagline">
+                            <span id="poster-description" class="tagline-text">지속 가능한 건강 습관으로 더 나은 내일을 만나보세요</span>
+                        </div>
+                    </div>
+                    <div class="checklist-access">
+                        <button id="start-guide-btn" class="start-guide-button">
+                            <span class="start-icon">🚀</span>
+                            <span class="start-text">시작하기</span>
+                        </button>
+                        <button id="quick-break-start-btn" class="quick-break-start-button">
+                            <span class="break-icon">🎬</span>
+                            <span class="break-text">5분 휴식하기</span>
+                        </button>
+                        <button id="health-checklist-btn" class="checklist-button">
+                            <span class="checklist-icon">📋</span>
+                            <span class="checklist-text">건강 체크리스트</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 가이드 소개 섹션 -->
+        <div id="intro-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="intro-container">
+                <div class="intro-hero">
+                    <h2 class="intro-title" id="intro-main-title">IT&HEALTH 가이드에 오신 것을 환영합니다</h2>
+                    <div class="intro-lead">
+                        <p class="lead-text" id="intro-lead-1">장시간 데스크워크로 몸에 무리가 가고 있지는 않나요?</p>
+                        <p class="lead-text" id="intro-lead-2">자세가 무너지고 있지는 않나요?</p>
+                    </div>
+                </div>
+
+                <div class="intro-section">
+                    <h3 class="section-heading" id="intro-purpose-title">우리의 미션</h3>
+                    <div class="content-box">
+                        <p id="intro-purpose-1">IT 작업은 현대인에게 피할 수 없는 일입니다.</p>
+                        <p id="intro-purpose-2">그렇기에 몸을 지키는 지식이 필요합니다.</p>
+                        <p id="intro-purpose-3">당신이 궁금해할 건강 정보를 여기 모았습니다.</p>
+                    </div>
+                </div>
+
+                <div class="intro-section">
+                    <h3 class="section-heading" id="intro-content-title">주요 건강 정보</h3>
+                    <div class="info-cards-grid">
+                        <div class="info-card-intro">
+                            <div class="card-icon">🧠</div>
+                            <h4 id="intro-card1-title">두통과 무기력</h4>
+                            <p id="intro-card1-desc">장시간의 얕은 호흡과 무너진 자세로 인한 두통과 집중력 저하를 예방하는 방법을 알아보세요.</p>
+                        </div>
+                        <div class="info-card-intro">
+                            <div class="card-icon">🐢</div>
+                            <h4 id="intro-card2-title">거북목 증상</h4>
+                            <p id="intro-card2-desc">모니터를 장시간 내려다보는 자세로 인한 목과 어깨의 부담을 줄이는 실용적인 팁을 제공합니다.</p>
+                        </div>
+                        <div class="info-card-intro">
+                            <div class="card-icon">✋</div>
+                            <h4 id="intro-card3-title">손목과 손가락</h4>
+                            <p id="intro-card3-desc">키보드와 마우스 사용으로 인한 건초염과 손목 통증을 예방하고 관리하는 방법을 소개합니다.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="intro-section">
+                    <h3 class="section-heading" id="intro-howto-title">이 가이드 활용하기</h3>
+                    <div class="content-box">
+                        <ul class="feature-list">
+                            <li id="intro-howto-1"><span class="feature-icon">📋</span> <strong>건강 체크리스트</strong>로 지금 바로 내 상태를 점검하세요</li>
+                            <li id="intro-howto-2"><span class="feature-icon">🎬</span> <strong>5분 휴식 가이드</strong>를 통해 즉시 실천 가능한 스트레칭을 경험하세요</li>
+                            <li id="intro-howto-3"><span class="feature-icon">🌿</span> <strong>증상별 가이드</strong>에서 내게 필요한 건강 정보를 찾아보세요</li>
+                            <li id="intro-howto-4"><span class="feature-icon">🔄</span> <strong>규칙적인 실천</strong>으로 장기적인 건강 개선을 이루세요</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="intro-section">
+                    <h3 class="section-heading" id="intro-workspace-title">건강한 작업 환경 만들기</h3>
+                    <div class="content-box climate-info">
+                        <p id="intro-workspace-desc">쾌적한 작업 공간은 신체 건강과 업무 효율에 직접적인 영향을 미칩니다.</p>
+                        <div class="climate-grid">
+                            <div class="climate-card">
+                                <div class="climate-icon">🌡️</div>
+                                <h5 id="climate-temp-title">적절한 온습도</h5>
+                                <p id="climate-temp-desc">작업 공간의 온도는 18~24°C, 습도는 40~60%가 적절하며 쾌적한 환경 유지가 중요합니다.</p>
+                            </div>
+                            <div class="climate-card">
+                                <div class="climate-icon">💧</div>
+                                <h5 id="climate-hydration-title">충분한 수분 섭취</h5>
+                                <p id="climate-hydration-desc">하루 1.5~2리터의 물을 마시며 장시간 작업 시 수분 보충을 잊지 마세요.</p>
+                            </div>
+                            <div class="climate-card">
+                                <div class="climate-icon">💨</div>
+                                <h5 id="climate-air-title">실내 공기 질</h5>
+                                <p id="climate-air-desc">2~3시간마다 환기하여 신선한 공기를 순환시키고 쾌적한 작업 환경을 유지하세요.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="intro-quick-access">
+                    <h3 class="section-heading">🚀 바로가기</h3>
+                    <div class="quick-access-buttons">
+                        <button class="quick-access-btn" data-target="guide">
+                            <span class="qa-icon">📖</span>
+                            <span class="qa-label">건강 가이드</span>
+                            <span class="qa-desc">증상별 건강 정보</span>
+                        </button>
+                        <button class="quick-access-btn" data-target="rest-guide">
+                            <span class="qa-icon">🧘</span>
+                            <span class="qa-label">휴식 가이드</span>
+                            <span class="qa-desc">부위별 스트레칭</span>
+                        </button>
+                        <button class="quick-access-btn" data-target="checklist">
+                            <span class="qa-icon">✅</span>
+                            <span class="qa-label">체크리스트</span>
+                            <span class="qa-desc">내 상태 점검하기</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="intro-footer">
+                    <div class="message-box">
+                        <h3 id="intro-message-title">건강한 IT 라이프를 시작하세요</h3>
+                        <p id="intro-message-1">심각한 증상이 지속되거나 악화된다면 반드시 의료 전문가와 상담하세요.</p>
+                        <p id="intro-message-2">작은 습관의 변화가 큰 건강의 차이를 만듭니다. 오늘부터 시작해보세요!</p>
+                    </div>
+                    <button class="cta-button" id="intro-cta">건강 가이드 둘러보기 →</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 두통/무기력 섹션 -->
+        <div id="headache-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="section-layout">
+                <div class="hero-left">
+                    <h2 class="content-title">두통과 무기력 해결하기</h2>
+                    <p id="intro1" class="intro-text">장시간의 데스크워크에 의해 <span class="problem-keyword">얕은 호흡</span>이 습관화되면, 뇌로의 산소 공급이 부족하며, 두통이나 집중력 저하로 이어질 수 있습니다.</p>
+                    <p id="intro2" class="intro-text"><span class="problem-keyword">무너진 자세</span>는 혈액순환을 방해하며, 피로감과 무기력증을 불러일으키는 원인이 됩니다.</p>
+                </div>
+                <div class="hero-right">
+                    <img src="image/icon/headache.jpg" alt="두통 아이콘" class="content-hero-image">
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3 id="symptom-title" class="section-title">[증상 특징]</h3>
+                <ul class="symptom-list">
+                    <li><span class="icon">🙁</span> <span id="symptom-item1">오후가 되면 머리가 무거워짐</span></li>
+                    <li><span class="icon">✨</span> <span id="symptom-item2">왠지 모르게 의욕이 나지 않음</span></li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3 id="cause-title" class="section-title">[원인과 메커니즘]</h3>
+                <ul class="cause-list">
+                    <li><span class="icon">①</span> <span id="cause-item1">얕은 호흡으로 인한 산소 부족</span></li>
+                    <li><span class="icon">②</span> <span id="cause-item2">자세 불균형으로 인한 혈류 장애</span></li>
+                </ul>
+            </div>
+
+            <div class="tips-section">
+                <div class="tips-background">
+                    <img src="image/anime-meditation-scene.jpg" alt="명상 장면" class="tips-character">
+                    <div class="tips-overlay"></div>
+                </div>
+                <div class="tips-content">
+                    <h3 id="tip-title" class="section-title tips-title">[개선의 힌트]</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card breathing-tip">
+                            <div class="tip-icon">🫁</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="tip-item1">깊은 호흡을 의식합니다.</span>
+                                <p class="tip-detail">3초 들이마시고 4초 내쉬는 리듬으로</p>
+                            </div>
+                        </div>
+                        <div class="tip-card environment-tip">
+                            <div class="tip-icon">🪑</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="tip-item2">데스크 환경을 재정비합니다.</span>
+                                <p class="tip-detail">자연스러운 자세가 되도록</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="keyword-chips floating-chips" aria-label="핵심 키워드">
+                        <span class="chip chip-breath" id="chip-breath-text">깊은 호흡</span>
+                        <span class="chip chip-posture" id="chip-posture-text">자연스러운 자세</span>
+                        <span class="chip chip-mindfulness">마음챙김</span>
+                    </div>
+                </div>
+                <div class="tips-guide">
+                    <div class="guide-image">
+                        <!-- 자세 가이드 이미지 제거됨 -->
+                    </div>
+                </div>
+            </div>
+
+            <button id="next-button" class="next-step-button">다음 스텝</button>
+        </div>
+        
+        <!-- 거북목 섹션 -->
+        <div id="turtle-neck-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="section-layout">
+                <div class="hero-left">
+                    <h2 class="content-title">거북목 증상 개선</h2>
+                    <p id="tn-intro1" class="intro-text">스마트폰이나 모니터를 장시간 내려다보는 자세는 목 근육에 과도한 부담을 주어, <span class="problem-keyword">"거북목"</span>이라고 불리는 증상을 일으킵니다.</p>
+                    <p id="tn-intro2" class="intro-text"><span class="problem-keyword">잘못된 시선 위치</span>와 장시간 고정된 자세는 목의 긴장과 어깨 결림의 원인이 됩니다.</p>
+                </div>
+                <div class="hero-right">
+                    <img src="image/icon/tech_neck.jpg" alt="거북목 아이콘" class="content-hero-image">
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3 id="tn-symptom-title" class="section-title">[증상 특징]</h3>
+                <ul class="symptom-list">
+                    <li><span class="icon">😰</span> <span id="tn-symptom-item1">목과 어깨에 지속적인 긴장감</span></li>
+                    <li><span class="icon">😣</span> <span id="tn-symptom-item2">고개를 돌릴 때 불편함</span></li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3 id="tn-cause-title" class="section-title">[원인과 메커니즘]</h3>
+                <ul class="cause-list">
+                    <li><span class="icon">①</span> <span id="tn-cause-item1">잘못된 시선 위치로 인한 목의 긴장</span></li>
+                    <li><span class="icon">②</span> <span id="tn-cause-item2">장시간 고정된 자세</span></li>
+                </ul>
+            </div>
+
+            <div class="tips-section">
+                <div class="tips-background">
+                    <img src="image/anime-meditation-scene.jpg" alt="명상 장면" class="tips-character">
+                    <div class="tips-overlay"></div>
+                </div>
+                <div class="tips-content">
+                    <h3 id="tn-tip-title" class="section-title tips-title">[개선의 힌트]</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card breathing-tip">
+                            <div class="tip-icon">👁️</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="tn-tip-item1">시선의 높이를 조절합니다.</span>
+                                <p class="tip-detail">목을 똑바로 유지하여 어깨 결림 예방</p>
+                            </div>
+                        </div>
+                        <div class="tip-card environment-tip">
+                            <div class="tip-icon">🔄</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="tn-tip-item2">규칙적인 스트레칭을 합니다.</span>
+                                <p class="tip-detail">1시간에 1회 목을 돌리는 운동</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="keyword-chips floating-chips" aria-label="핵심 키워드">
+                        <span class="chip chip-breath" id="chip-neck-height">시선 높이</span>
+                        <span class="chip chip-posture" id="chip-neck-stretch">목 스트레칭</span>
+                        <span class="chip chip-mindfulness">올바른 자세</span>
+                    </div>
+                </div>
+                <div class="tips-guide">
+                    <div class="guide-image">
+                        <img id="tn-img" src="image/turtle-neck-illustration.jpg" alt="거북목 개선 이미지" class="posture-guide">
+                        <div class="guide-caption">목 건강을 지키세요</div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="next-button-tn" class="next-step-button">다음 스텝</button>
+        </div>
+        
+        <!-- 손의 통증 섹션 -->
+        <div id="hand-pain-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="section-layout">
+                <div class="hero-left">
+                    <h2 class="content-title">손목과 손가락 건강관리</h2>
+                    <p id="hp-intro1" class="intro-text">키보드나 마우스의 사용에 따른 <span class="problem-keyword">반복 동작</span>은, 건초염이나 손목 통증의 원인이 됩니다.</p>
+                    <p id="hp-intro2" class="intro-text"><span class="problem-keyword">손목의 각도</span>와 힘 조절 미흡은 손과 손가락에 지속적인 부담을 주게 됩니다.</p>
+                </div>
+                <div class="hero-right">
+                    <img src="image/icon/wrist.jpg" alt="손목 통증 아이콘" class="content-hero-image">
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3 id="hp-symptom-title" class="section-title">[증상 특징]</h3>
+                <ul class="symptom-list">
+                    <li><span class="icon">🤕</span> <span id="hp-symptom-item1">손목과 손가락의 통증과 저림</span></li>
+                    <li><span class="icon">💢</span> <span id="hp-symptom-item2">장시간 타이핑 시 불편함 증가</span></li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3 id="hp-cause-title" class="section-title">[원인과 메커니즘]</h3>
+                <ul class="cause-list">
+                    <li><span class="icon">①</span> <span id="hp-cause-item1">손목의 각도와 힘 조절 미흡</span></li>
+                    <li><span class="icon">②</span> <span id="hp-cause-item2">반복적인 손목 및 손가락 동작</span></li>
+                </ul>
+            </div>
+
+            <div class="tips-section">
+                <div class="tips-background">
+                    <img src="image/anime-meditation-scene.jpg" alt="명상 장면" class="tips-character">
+                    <div class="tips-overlay"></div>
+                </div>
+                <div class="tips-content">
+                    <h3 id="hp-tip-title" class="section-title tips-title">[개선의 힌트]</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card breathing-tip">
+                            <div class="tip-icon">✋</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="hp-tip-item1">손목 각도를 재검토합니다.</span>
+                                <p class="tip-detail">자연스러운 손목 위치로 부담 감소</p>
+                            </div>
+                        </div>
+                        <div class="tip-card environment-tip">
+                            <div class="tip-icon">🤲</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="hp-tip-item2">손가락 스트레칭을 합니다.</span>
+                                <p class="tip-detail">손을 펴고 접는 운동으로 통증 예방</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="keyword-chips floating-chips" aria-label="핵심 키워드">
+                        <span class="chip chip-breath" id="chip-wrist-angle">손목 각도</span>
+                        <span class="chip chip-posture" id="chip-hand-stretch">손 스트레칭</span>
+                        <span class="chip chip-mindfulness">인체공학</span>
+                    </div>
+                </div>
+                <div class="tips-guide">
+                    <div class="guide-image">
+                        <img id="hp-img" src="image/hand-wrist-pain-ergonomics.jpg" alt="손목 통증 개선 이미지" class="posture-guide">
+                        <div class="guide-caption">올바른 손목 자세</div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="next-button-hp" class="next-step-button">다음 스텝</button>
+        </div>
+        
+        <!-- 눈 건강 섹션 -->
+        <div id="eye-health-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="section-layout">
+                <div class="hero-left">
+                    <h2 class="content-title">눈 건강 관리</h2>
+                    <p id="eye-intro1" class="intro-text">장시간 <span class="problem-keyword">화면 응시</span>는 눈의 피로와 건조함을 유발하며, 시력 저하와 두통의 원인이 됩니다.</p>
+                    <p id="eye-intro2" class="intro-text"><span class="problem-keyword">깜빡임 감소</span>와 근거리 집중은 눈 근육의 긴장과 안구 건조증을 악화시킵니다.</p>
+                </div>
+                <div class="hero-right">
+                    <img src="image/icon/headache.jpg" alt="눈 건강 아이콘" class="content-hero-image">
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3 id="eye-symptom-title" class="section-title">[증상 특징]</h3>
+                <ul class="symptom-list">
+                    <li><span class="icon">👁️</span> <span id="eye-symptom-item1">눈이 뻑뻑하고 건조함</span></li>
+                    <li><span class="icon">😵</span> <span id="eye-symptom-item2">눈의 피로와 침침함</span></li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3 id="eye-cause-title" class="section-title">[원인과 메커니즘]</h3>
+                <ul class="cause-list">
+                    <li><span class="icon">①</span> <span id="eye-cause-item1">화면 집중으로 인한 깜빡임 횟수 감소</span></li>
+                    <li><span class="icon">②</span> <span id="eye-cause-item2">근거리 집중으로 인한 눈 근육 긴장</span></li>
+                </ul>
+            </div>
+
+            <div class="tips-section">
+                <div class="tips-background">
+                    <img src="image/anime-meditation-scene.jpg" alt="명상 장면" class="tips-character">
+                    <div class="tips-overlay"></div>
+                </div>
+                <div class="tips-content">
+                    <h3 id="eye-tip-title" class="section-title tips-title">[개선의 힌트]</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card breathing-tip">
+                            <div class="tip-icon">🔄</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="eye-tip-item1">20-20-20 규칙을 실천합니다.</span>
+                                <p class="tip-detail">20분마다 20피트(6m) 거리를 20초간 바라보기</p>
+                            </div>
+                        </div>
+                        <div class="tip-card environment-tip">
+                            <div class="tip-icon">💧</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="eye-tip-item2">의식적으로 눈을 깜빡입니다.</span>
+                                <p class="tip-detail">인공눈물을 활용해 눈 촉촉하게 유지</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="keyword-chips floating-chips" aria-label="핵심 키워드">
+                        <span class="chip chip-breath">20-20-20</span>
+                        <span class="chip chip-posture">눈 깜빡임</span>
+                        <span class="chip chip-mindfulness">눈 휴식</span>
+                    </div>
+                </div>
+                <div class="tips-guide">
+                    <div class="guide-image"></div>
+                </div>
+            </div>
+
+            <button id="next-button-eye" class="next-step-button">다음 스텝</button>
+        </div>
+        
+        <!-- 허리 건강 섹션 -->
+        <div id="back-health-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="section-layout">
+                <div class="hero-left">
+                    <h2 class="content-title">허리 건강 관리</h2>
+                    <p id="back-intro1" class="intro-text">장시간 <span class="problem-keyword">앉은 자세</span>는 허리 근육과 디스크에 지속적인 부담을 주어 요통과 척추 문제를 유발합니다.</p>
+                    <p id="back-intro2" class="intro-text"><span class="problem-keyword">코어 근육 약화</span>와 구부정한 자세는 허리 통증의 주요 원인이 됩니다.</p>
+                </div>
+                <div class="hero-right">
+                    <img src="image/posture-standing-alignment.jpg" alt="허리 건강 아이콘" class="content-hero-image">
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3 id="back-symptom-title" class="section-title">[증상 특징]</h3>
+                <ul class="symptom-list">
+                    <li><span class="icon">😣</span> <span id="back-symptom-item1">허리 뻐근함과 통증</span></li>
+                    <li><span class="icon">🪑</span> <span id="back-symptom-item2">오래 앉아있을 때 불편함 증가</span></li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3 id="back-cause-title" class="section-title">[원인과 메커니즘]</h3>
+                <ul class="cause-list">
+                    <li><span class="icon">①</span> <span id="back-cause-item1">장시간 앉은 자세로 인한 디스크 압박</span></li>
+                    <li><span class="icon">②</span> <span id="back-cause-item2">코어 근육 약화로 인한 자세 불안정</span></li>
+                </ul>
+            </div>
+
+            <div class="tips-section">
+                <div class="tips-background">
+                    <img src="image/anime-meditation-scene.jpg" alt="명상 장면" class="tips-character">
+                    <div class="tips-overlay"></div>
+                </div>
+                <div class="tips-content">
+                    <h3 id="back-tip-title" class="section-title tips-title">[개선의 힌트]</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card breathing-tip">
+                            <div class="tip-icon">🧍</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="back-tip-item1">1시간마다 일어나 스트레칭합니다.</span>
+                                <p class="tip-detail">허리를 뒤로 젖히고 좌우로 비틀기</p>
+                            </div>
+                        </div>
+                        <div class="tip-card environment-tip">
+                            <div class="tip-icon">💪</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="back-tip-item2">올바른 앉은 자세를 유지합니다.</span>
+                                <p class="tip-detail">등받이 활용, 발은 바닥에 평평하게</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="keyword-chips floating-chips" aria-label="핵심 키워드">
+                        <span class="chip chip-breath">허리 스트레칭</span>
+                        <span class="chip chip-posture">올바른 자세</span>
+                        <span class="chip chip-mindfulness">코어 강화</span>
+                    </div>
+                </div>
+                <div class="tips-guide">
+                    <div class="guide-image">
+                        <img src="image/posture-standing-alignment.jpg" alt="올바른 자세" class="posture-guide">
+                        <div class="guide-caption">올바른 앉은 자세</div>
+                    </div>
+                </div>
+            </div>
+
+            <button id="next-button-back" class="next-step-button">다음 스텝</button>
+        </div>
+        
+        <!-- 얼굴 긴장 섹션 -->
+        <div id="face-tension-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="section-layout">
+                <div class="hero-left">
+                    <h2 class="content-title">얼굴 긴장 완화</h2>
+                    <p id="face-intro1" class="intro-text">무의식적인 <span class="problem-keyword">이 악물기</span>와 표정 긴장은 턱관절 장애와 두통을 유발할 수 있습니다.</p>
+                    <p id="face-intro2" class="intro-text"><span class="problem-keyword">표정근의 지속적인 긴장</span>은 얼굴 피로와 긴장성 두통의 원인이 됩니다.</p>
+                </div>
+                <div class="hero-right">
+                    <img src="image/stress-relief-concept.jpg" alt="얼굴 긴장 아이콘" class="content-hero-image">
+                </div>
+            </div>
+
+            <div class="section-block">
+                <h3 id="face-symptom-title" class="section-title">[증상 특징]</h3>
+                <ul class="symptom-list">
+                    <li><span class="icon">😬</span> <span id="face-symptom-item1">턱과 관자놀이의 긴장감</span></li>
+                    <li><span class="icon">🤕</span> <span id="face-symptom-item2">얼굴 피로와 두통</span></li>
+                </ul>
+            </div>
+
+            <div class="section-block">
+                <h3 id="face-cause-title" class="section-title">[원인과 메커니즘]</h3>
+                <ul class="cause-list">
+                    <li><span class="icon">①</span> <span id="face-cause-item1">스트레스로 인한 무의식적 이 악물기</span></li>
+                    <li><span class="icon">②</span> <span id="face-cause-item2">집중 시 표정 근육의 지속적 긴장</span></li>
+                </ul>
+            </div>
+
+            <div class="tips-section">
+                <div class="tips-background">
+                    <img src="image/anime-meditation-scene.jpg" alt="명상 장면" class="tips-character">
+                    <div class="tips-overlay"></div>
+                </div>
+                <div class="tips-content">
+                    <h3 id="face-tip-title" class="section-title tips-title">[개선의 힌트]</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card breathing-tip">
+                            <div class="tip-icon">😌</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="face-tip-item1">턱에 힘을 빼고 이완합니다.</span>
+                                <p class="tip-detail">입을 살짝 벌려 자연스러운 상태 유지</p>
+                            </div>
+                        </div>
+                        <div class="tip-card environment-tip">
+                            <div class="tip-icon">🙂</div>
+                            <div class="tip-text">
+                                <span class="tip-action" id="face-tip-item2">표정근 스트레칭을 합니다.</span>
+                                <p class="tip-detail">눈을 크게 뜨고, 입을 크게 벌리는 운동</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="keyword-chips floating-chips" aria-label="핵심 키워드">
+                        <span class="chip chip-breath">턱 이완</span>
+                        <span class="chip chip-posture">표정근 스트레칭</span>
+                        <span class="chip chip-mindfulness">얼굴 마사지</span>
+                    </div>
+                </div>
+                <div class="tips-guide">
+                    <div class="guide-image"></div>
+                </div>
+            </div>
+
+            <button id="next-button-face" class="next-step-button">다음 스텝</button>
+        </div>
+        
+        <!-- 건강 가이드 마무리 섹션 -->
+        <div id="guide-complete-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="guide-complete-container">
+                <div class="complete-hero">
+                    <div class="complete-icon">🎉</div>
+                    <h2 class="complete-title">건강 가이드를 모두 살펴보셨습니다!</h2>
+                    <p class="complete-subtitle">작은 습관이 큰 변화를 만듭니다</p>
+                </div>
+                
+                <div class="complete-summary">
+                    <h3 class="summary-title">📋 핵심 요약</h3>
+                    <div class="summary-cards">
+                        <div class="summary-card">
+                            <div class="summary-icon">🧠</div>
+                            <h4>두통/무기력</h4>
+                            <ul>
+                                <li>깊은 호흡 실천하기</li>
+                                <li>올바른 자세 유지하기</li>
+                                <li>규칙적인 휴식 취하기</li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon">🐢</div>
+                            <h4>거북목</h4>
+                            <ul>
+                                <li>모니터 높이 조절하기</li>
+                                <li>목 스트레칭 자주 하기</li>
+                                <li>시선 높이 의식하기</li>
+                            </ul>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-icon">✋</div>
+                            <h4>손의 통증</h4>
+                            <ul>
+                                <li>손목 각도 점검하기</li>
+                                <li>손가락 스트레칭하기</li>
+                                <li>손목 받침대 활용하기</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="complete-next-actions">
+                    <h3 class="actions-title">🚀 다음 단계</h3>
+                    <div class="action-buttons">
+                        <button id="go-checklist-btn" class="complete-action-btn primary">
+                            <span class="btn-icon">✅</span>
+                            <span class="btn-text">건강 체크리스트로 상태 점검하기</span>
+                        </button>
+                        <button id="go-break-btn" class="complete-action-btn secondary">
+                            <span class="btn-icon">🧘</span>
+                            <span class="btn-text">5분 휴식 가이드 시작하기</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="complete-reminder">
+                    <div class="reminder-icon">💡</div>
+                    <p class="reminder-text">
+                        <strong>기억하세요!</strong> 50분 작업 후 10분 휴식, 
+                        하루 1.5~2L 수분 섭취, 정기적인 스트레칭이 건강한 IT 라이프의 핵심입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 휴식 가이드 섹션 -->
+        <div id="rest-guide-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="rest-guide-container">
+                <div class="rest-guide-header">
+                    <h2 class="rest-guide-title">휴식 가이드</h2>
+                    <p class="rest-guide-subtitle">몸과 마음을 위한 간단한 스트레칭과 이완법</p>
+                </div>
+
+                <div class="rest-guide-intro">
+                    <div class="intro-section">
+                        <h3 class="section-heading">휴식 가이드 소개</h3>
+                        <div class="content-box">
+                            <p>장시간 업무로 지친 몸과 마음을 위한 간단하고 효과적인 휴식법을 소개합니다.</p>
+                            <p>각 부위별로 특화된 스트레칭과 이완 기법을 통해 즉각적인 피로 회복을 경험해보세요.</p>
+                            <p>하루 몇 분만 투자해도 장기적인 건강 개선 효과를 얻을 수 있습니다.</p>
+                        </div>
+                    </div>
+
+                    <div class="rest-guides-grid">
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🎬</div>
+                            <h4>전체 휴식 가이드</h4>
+                            <p>목, 어깨, 허리를 포함한 전신 스트레칭으로 전체적인 피로를 해소합니다. 약 5분 소요됩니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-all">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🦴</div>
+                            <h4>뒷목 휴식 가이드</h4>
+                            <p>장시간 모니터를 보며 긴장된 목 뒷근육을 풀어주는 집중 스트레칭입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-neck">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">😌</div>
+                            <h4>얼굴 휴식 가이드</h4>
+                            <p>표정근과 턱 근육의 긴장을 풀어 두통 예방과 얼굴 피로 해소에 도움을 줍니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-face">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">👁️</div>
+                            <h4>눈 휴식 가이드</h4>
+                            <p>화면 응시로 인한 눈의 피로와 건조함을 완화하는 눈 운동과 이완법입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-eye">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">✋</div>
+                            <h4>손 휴식 가이드</h4>
+                            <p>키보드와 마우스 사용으로 지친 손목과 손가락을 위한 스트레칭입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-hand">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🧍</div>
+                            <h4>허리 휴식 가이드</h4>
+                            <p>앉아서 일하는 자세로 인한 허리 부담을 줄이고 코어 근육을 활성화합니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-waist">시작하기</button>
+                        </div>
+                    </div>
+
+                    <div class="rest-guide-tips">
+                        <h3 class="section-heading">💡 효과적인 휴식을 위한 팁</h3>
+                        <div class="content-box">
+                            <ul class="tip-list">
+                                <li>50분 집중 후 10분 휴식 패턴을 유지하세요</li>
+                                <li>스트레칭 시 통증이 느껴지면 즉시 중단하고 강도를 낮추세요</li>
+                                <li>깊고 편안한 호흡과 함께 천천히 동작하세요</li>
+                                <li>하루에 여러 번 짧게 하는 것이 한 번 길게 하는 것보다 효과적입니다</li>
+                                <li>스트레칭 전후로 충분한 수분을 섭취하세요</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 건강 체크리스트 섹션 -->
+        <div id="health-checklist-content" class="tab-content" data-theme-bg="nature-wellness-background.jpg">
+            <div class="tab-background">
+                <img src="image/nature-wellness-background.jpg" alt="자연 웰니스 배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="checklist-container">
+                <div class="checklist-header">
+                    <h2 class="checklist-title">건강 체크리스트</h2>
+                    <p class="checklist-subtitle">지금 이 순간, 나의 상태를 점검해보세요</p>
+                </div>
+                
+                <div class="checklist-grid">
+                    <div class="checklist-section">
+                        <h3 class="section-title">🍽️ 수분 & 식사</h3>
+                        <div class="check-item" data-category="hydration" data-tip="water">
+                            <input type="checkbox" id="check-water" class="check-input">
+                            <label for="check-water" class="check-label">
+                                <span class="check-icon">💧</span>
+                                <span class="check-text">지난 1시간 내에 물을 마셨나요?</span>
+                            </label>
+                        </div>
+                        <div class="check-item" data-category="meal" data-tip="meal">
+                            <input type="checkbox" id="check-meal" class="check-input">
+                            <label for="check-meal" class="check-label">
+                                <span class="check-icon">🍽️</span>
+                                <span class="check-text">오늘 식사를 거르지 않았나요?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3 class="section-title">🐢 목과 어깨</h3>
+                        <div class="check-item" data-category="neck" data-tip="neck-forward">
+                            <input type="checkbox" id="check-neck-forward" class="check-input">
+                            <label for="check-neck-forward" class="check-label">
+                                <span class="check-icon">⚠️</span>
+                                <span class="check-text">목이 앞으로 나와있나요?</span>
+                            </label>
+                        </div>
+                        <div class="check-item" data-category="neck" data-tip="shoulder-tension">
+                            <input type="checkbox" id="check-shoulder" class="check-input">
+                            <label for="check-shoulder" class="check-label">
+                                <span class="check-icon">😰</span>
+                                <span class="check-text">어깨에 긴장이나 결림이 있나요?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3 class="section-title">🪑 자세</h3>
+                        <div class="check-item" data-category="posture" data-tip="back-curved">
+                            <input type="checkbox" id="check-back" class="check-input">
+                            <label for="check-back" class="check-label">
+                                <span class="check-icon">📐</span>
+                                <span class="check-text">허리가 구부정하게 굽어있나요?</span>
+                            </label>
+                        </div>
+                        <div class="check-item" data-category="posture" data-tip="sitting-long">
+                            <input type="checkbox" id="check-sitting" class="check-input">
+                            <label for="check-sitting" class="check-label">
+                                <span class="check-icon">⏰</span>
+                                <span class="check-text">1시간 이상 같은 자세로 앉아있었나요?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3 class="section-title">✋ 손과 손목</h3>
+                        <div class="check-item" data-category="hand" data-tip="hand-pain">
+                            <input type="checkbox" id="check-hand-pain" class="check-input">
+                            <label for="check-hand-pain" class="check-label">
+                                <span class="check-icon">🤕</span>
+                                <span class="check-text">손목이나 손가락에 통증이 있나요?</span>
+                            </label>
+                        </div>
+                        <div class="check-item" data-category="hand" data-tip="wrist-angle">
+                            <input type="checkbox" id="check-wrist" class="check-input">
+                            <label for="check-wrist" class="check-label">
+                                <span class="check-icon">🖱️</span>
+                                <span class="check-text">손목이 꺾인 상태로 타이핑하고 있나요?</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="checklist-section">
+                        <h3 class="section-title">😴 피로도</h3>
+                        <div class="check-item" data-category="fatigue" data-tip="eye-strain">
+                            <input type="checkbox" id="check-eyes" class="check-input">
+                            <label for="check-eyes" class="check-label">
+                                <span class="check-icon">👁️</span>
+                                <span class="check-text">눈이 피로하거나 건조한가요?</span>
+                            </label>
+                        </div>
+                        <div class="check-item" data-category="fatigue" data-tip="headache">
+                            <input type="checkbox" id="check-headache" class="check-input">
+                            <label for="check-headache" class="check-label">
+                                <span class="check-icon">🤯</span>
+                                <span class="check-text">머리가 무겁거나 두통이 있나요?</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="checklist-results">
+                    <div class="results-summary">
+                        <h3>체크 결과</h3>
+                        <p class="check-count">체크된 항목: <span id="checked-count">0</span>개</p>
+                    </div>
+                    <div class="results-tips" id="health-tips">
+                        <p>항목을 체크하면 맞춤 건강 팁을 제공합니다!</p>
+                    </div>
+                </div>
+
+                <div class="checklist-actions">
+                    <button class="reset-checklist-btn">전체 초기화</button>
+                </div>
+
+                <!-- 추천 휴식 가이드 영역 -->
+                <div class="recommended-guides" id="recommended-guides">
+                    <!-- 체크한 항목에 따라 동적으로 추천 가이드가 표시됩니다 -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 푸터 -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-info">
+                <p class="footer-note">본 프로젝트는 대학 과제 목적의 비상업적 웹사이트입니다.</p>
+                <p class="footer-attr">
+                    스톡 이미지 출처: <a href="https://www.freepik.com" target="_blank" rel="noopener noreferrer" class="attribution" aria-label="Designed by Freepik 링크">Designed by Freepik</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- 맨 위로 버튼 -->
+    <button id="scroll-to-top" class="scroll-to-top-btn" aria-label="맨 위로 이동">
+        <span class="scroll-arrow">↑</span>
+    </button>
+    
+    <!-- 타이머 완료 메시지 -->
+    <div class="timer-complete-message hidden" id="timer-complete-message">
+        🎉 휴식 완료! 수고하셨습니다! 🎉
+    </div>
+    
+    <!-- 타이머 진행률 Sticky 박스 (평소에는 숨김) -->
+    <div class="timer-sticky-progress hidden" id="timer-sticky-progress">
+        <div class="sticky-progress-content">
+            <div class="sticky-timer-label">
+                <span>🎬</span>
+                <span id="sticky-timer-label">전체 휴식 가이드 진행 중</span>
+            </div>
+            <div class="progress-bar-container" id="sticky-progress-container">
+                <div class="progress-bar" id="sticky-progress-bar"></div>
+            </div>
+            <div class="timer-display">
+                <div class="time-text">
+                    <span id="sticky-current-time">0:00</span>
+                    <span class="time-separator">/</span>
+                    <span id="sticky-total-time">5:00</span>
+                </div>
+            </div>
+            <div class="timer-buttons">
+                <button class="timer-btn timer-btn-pause" id="sticky-timer-pause">
+                    <span>⏸️</span>
+                    <span>일시정지</span>
+                </button>
+                <button class="timer-btn timer-btn-reset" id="sticky-timer-reset">
+                    <span>✕</span>
+                    <span>닫기</span>
+                </button>
+            </div>
+        </div>
+        <!-- 진행 단계 바 (태블릿 이상에서만 표시) -->
+        <div class="timer-steps-bar" id="timer-steps-bar">
+            <div class="step-box" data-step="1">
+                <span class="step-icon">⏳</span>
+                <span class="step-text">1. 일어나기</span>
+            </div>
+            <div class="step-box" data-step="2">
+                <span class="step-icon">⏳</span>
+                <span class="step-text">2. 목/어깨</span>
+            </div>
+            <div class="step-box" data-step="3">
+                <span class="step-icon">⏳</span>
+                <span class="step-text">3. 깊은호흡</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Sticky 박스 아래 카드 정보 표시 영역 (전체 타이머 모드) -->
+    <div class="sticky-card-display hidden" id="sticky-card-display">
+        <div class="sticky-card-content">
+            <div class="sticky-card-header">
+                <span class="sticky-card-number" id="sticky-card-number">1</span>
+                <h3 class="sticky-card-title" id="sticky-card-title">자리에서 일어나기</h3>
+                <span class="sticky-card-time" id="sticky-card-time">1분</span>
+            </div>
+            <div class="sticky-card-body">
+                <p id="sticky-card-description" class="sticky-card-description">
+                    천천히 자리에서 일어나 몸을 펴보세요. 발끝부터 머리까지 쭉 늘려주며 혈액순환을 도와주세요.
+                </p>
+                <ul class="sticky-card-tips" id="sticky-card-tips">
+                    <li>팔을 위로 뻗어 온몸을 스트레칭</li>
+                    <li>제자리에서 가볍게 걸어보기</li>
+                    <li>발가락을 들었다 내렸다 반복</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
