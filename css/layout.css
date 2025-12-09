@@ -1,0 +1,526 @@
+/* ================================================
+   LAYOUT - 헤더, 네비게이션, 푸터
+   ================================================ */
+
+/* ==================== 헤더 ==================== */
+header {
+    background: rgb(46, 115, 53);
+    color: #fff;
+    padding: 8px 20px;
+    /* Grid로 재구성: 좌측 로고/제목, 중앙 내비, 우측 컨트롤 고정 */
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: 'title nav controls';
+    align-items: center;
+    gap: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px var(--shadow-soft);
+    max-height: 60px;
+    margin: 0;
+}
+
+/* (중간 너비 구간에서는 1단 유지: 2단은 모바일 전용에서 처리) */
+
+/* header::before 제거 - 단색 배경 유지 */
+
+header h1 {
+    margin: 0;
+    cursor: pointer;
+    font-size: clamp(18px, 2vw, 22px);
+    white-space: nowrap;
+    flex-shrink: 0;
+    line-height: 1;
+    grid-area: title;
+}
+
+/* ==================== 헤더 내비게이션 ==================== */
+.header-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    grid-area: nav;
+    justify-self: center;
+}
+
+.header-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.header-nav-item {
+    margin: 0;
+    padding: 0;
+}
+
+.header-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: clamp(12px, 1.6vw, 14px);
+    font-weight: 600;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    border: 2px solid transparent;
+    min-height: 32px;
+    box-sizing: border-box;
+}
+
+.header-nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.header-nav-link.active {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.header-nav-link .nav-icon {
+    font-size: clamp(14px, 1.6vw, 16px);
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.header-nav-link .nav-label {
+    flex-shrink: 0;
+    font-size: clamp(12px, 1.6vw, 14px);
+    line-height: 1;
+}
+
+/* 헤더 컨트롤 */
+.header-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+    flex-shrink: 0;
+    grid-area: controls;
+    justify-self: end;
+}
+
+/* 테마 선택기 */
+.theme-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+}
+
+.selector-label {
+    font-size: 0.8em;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+.theme-options {
+    display: flex;
+    gap: 0.5em;
+}
+
+.theme-option {
+    padding: 0.4em 1em;
+    border-radius: 20px;
+    font-size: 0.75em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.theme-option:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.theme-option.active {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--brand-strong);
+    border-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* 언어 선택기 */
+.language-selector {
+    position: relative;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 6px 14px;
+    border-radius: 16px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    max-height: 36px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.language-selector span {
+    cursor: pointer;
+    margin: 0 1px;
+    padding: 4px 7px;
+    font-weight: bold;
+    font-size: clamp(11px, 1.4vw, 13px);
+    border-radius: 4px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1;
+}
+
+.language-selector span:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.language-selector span.active {
+    color: #ffffff;
+    font-weight: 800;
+}
+
+/* ==================== 네비게이션 ==================== */
+.section-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--muted) 0%, #f0f7f1 100%);
+    padding: clamp(0.8em, 2vh, 1.2em) 0 clamp(1.5em, 2vh, 2em) 0;
+    position: sticky;
+    top: 60px; /* 헤더 높이만큼 */
+    z-index: 99;
+    overflow: visible;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-wrap: wrap;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    margin-top: 0;
+}
+
+/* 헤더가 숨겨지면 섹션 네비게이션이 맨 위로 */
+.section-nav.nav-at-top {
+    top: 0;
+}
+
+/* 기본적으로 섹션 네비게이션 숨기기 */
+.section-nav {
+    display: none !important;
+}
+
+/* 건강 가이드 화면에서만 네비게이션 표시 */
+body.guide-view .section-nav {
+    display: flex !important;
+}
+
+/* 배경 그레인 잔상 문제 방지 */
+.section-nav::before {
+    content: none;
+}
+
+/* 캐러셀 컨테이너 */
+.nav-carousel-container {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    max-width: calc(100% - 100px);
+    position: relative;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.nav-carousel-container::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-carousel {
+    display: flex;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    gap: 0;
+}
+
+.nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid var(--brand);
+    color: var(--brand-strong);
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-arrow:hover {
+    background: var(--brand);
+    color: white;
+    transform: scale(1.1);
+}
+
+.nav-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.nav-arrow:disabled:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--brand-strong);
+}
+
+.nav-arrow span {
+    line-height: 1;
+    margin-top: -2px;
+}
+
+.nav-page-indicator {
+    display: none;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.page-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.page-dot.active {
+    background: var(--brand);
+    transform: scale(1.3);
+}
+
+.page-dot:hover {
+    background: var(--brand-light);
+}
+
+.nav-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 100%);
+    border-radius: 3px 3px 0 0;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+    box-shadow: 0 -2px 8px rgba(46, 125, 50, 0.3);
+    opacity: 1;
+    pointer-events: none;
+    z-index: 10;
+    transform: translateX(0);
+}
+
+/* PC 뷰: 모든 탭을 한 눈에 표시 */
+@media (min-width: 769px) {
+    /* 헤더 바로 아래에 붙도록 네비게이션 바를 위로 이동 */
+    body.guide-view .section-nav {
+        padding: 0.2em 0 1em;
+        top: 44px;
+        margin-top: 0;
+        overflow: visible;
+    }
+    
+    /* 화살표 숨기기 - PC에서는 모든 요소 표시 */
+    .nav-arrow {
+        display: none;
+    }
+    
+    /* 모든 요소를 한 눈에 표시 */
+    .nav-carousel-container {
+        max-width: 100%;
+        overflow: visible;
+        padding: 0;
+    }
+    
+    .nav-carousel {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        transform: none !important;
+        padding: 0 20px;
+    }
+    
+    .nav-item {
+        flex: 0 0 auto;
+        min-width: 120px;
+        max-width: 160px;
+    }
+    
+    /* 녹색 인디케이터 표시 */
+    .nav-indicator {
+        bottom: 0;
+        display: block;
+    }
+    
+    /* 페이지 인디케이터 숨기기 */
+    .nav-page-indicator {
+        display: none !important;
+    }
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: clamp(0.6em, 1.5vh, 0.8em) clamp(1em, 2vw, 1.5em);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+    border-radius: 12px 12px 0 0;
+    min-width: clamp(120px, 15vw, 140px);
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+.nav-item:hover {
+    background: rgba(255, 255, 255, 0.7);
+    transform: translateY(-2px);
+}
+
+.nav-item.active {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--brand-strong);
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.nav-icon {
+    font-size: clamp(1.2em, 2vw, 1.5em);
+    margin-bottom: 0.2em;
+    filter: grayscale(1);
+    transition: filter 0.3s ease;
+}
+
+.nav-item.active .nav-icon,
+.nav-item:hover .nav-icon {
+    filter: grayscale(0);
+}
+
+.nav-text {
+    font-size: clamp(0.85em, 1.5vw, 1em);
+    font-weight: 600;
+    margin-bottom: 0.15em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.nav-description {
+    font-size: clamp(0.65em, 1.1vw, 0.75em);
+    color: #666;
+    text-align: center;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-item.active .nav-description {
+    color: var(--brand);
+    opacity: 1;
+    font-weight: 500;
+}
+
+/* ==================== 메인 콘텐츠 컨테이너 ==================== */
+.content {
+    padding: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    border: none;
+    position: relative;
+    overflow-x: hidden;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* ==================== 푸터 ==================== */
+.site-footer {
+    position: relative;
+    margin-top: 0;
+    overflow: hidden;
+}
+
+.footer-content {
+    background: var(--brand-strong);
+    padding: clamp(12px, 2vh, 16px) 0 clamp(10px, 1.8vh, 12px);
+    max-height: 80px;
+    box-sizing: border-box;
+}
+
+.footer-info {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2em;
+    text-align: center;
+}
+
+.footer-note {
+    font-size: 13px;
+    margin: 0 0 6px 0;
+    opacity: 0.8;
+    color: white;
+    font-weight: 300;
+    line-height: 1.4;
+}
+
+.footer-attr {
+    font-size: 12px;
+    opacity: 0.7;
+    color: white;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.footer-attr a {
+    color: #c8e6c9;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+}
+
+.footer-attr a:hover {
+    color: white;
+}
+
+/* Freepik 저작권 표기 */
+.attributed {
+    margin: 0;
+}
+
+.attributed figcaption {
+    text-align: center;
+    font-size: 0.9em;
+    color: #557a55;
+    margin-top: 6px;
+}
+
+.attribution {
+    color: var(--brand-strong);
+    text-decoration: underline;
+}
+

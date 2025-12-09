@@ -1,0 +1,1469 @@
+/* ================================================
+   CHECKLIST - 건강 체크리스트 전용 스타일
+   ================================================ */
+
+/* 체크리스트 컨테이너 */
+.checklist-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2em;
+    position: relative;
+    z-index: 2;
+}
+
+.checklist-header {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.checklist-title {
+    font-size: 2.5em;
+    color: var(--brand-strong);
+    margin-bottom: 0.5em;
+    font-weight: 300;
+}
+
+.checklist-subtitle {
+    font-size: 1.2em;
+    color: #666;
+    margin: 0;
+}
+
+/* 체크리스트 그리드 */
+.checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2em;
+    margin-bottom: 3em;
+}
+
+.checklist-section {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 1.5em;
+    box-shadow: 0 4px 16px var(--shadow-soft);
+    border-left: 4px solid var(--brand-light);
+}
+
+.checklist-section .section-title {
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: 1.3em;
+    color: var(--brand-strong);
+}
+
+/* 체크 아이템 */
+.check-item {
+    margin-bottom: 1em;
+    transition: all 0.3s ease;
+}
+
+.check-item:last-child {
+    margin-bottom: 0;
+}
+
+.check-input {
+    display: none;
+}
+
+.check-label {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    padding: 0.8em;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    background: rgba(248, 249, 250, 0.8);
+}
+
+.check-label:hover {
+    background: rgba(232, 245, 233, 0.9);
+    border-color: var(--brand-light);
+    transform: translateX(4px);
+}
+
+.check-input:checked + .check-label {
+    background: linear-gradient(135deg, rgba(255, 112, 67, 0.1) 0%, rgba(244, 81, 30, 0.1) 100%);
+    border-color: #ff7043;
+    box-shadow: 0 2px 8px rgba(255, 112, 67, 0.2);
+}
+
+.check-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.check-text {
+    font-size: 1em;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* 체크 결과 */
+.checklist-results {
+    background: linear-gradient(135deg, rgba(46, 125, 50, 0.05) 0%, rgba(102, 187, 106, 0.05) 100%);
+    border-radius: 16px;
+    padding: 2em;
+    margin-bottom: 2em;
+    border: 1px solid rgba(46, 125, 50, 0.1);
+}
+
+.results-summary h3 {
+    color: var(--brand-strong);
+    margin-top: 0;
+    margin-bottom: 1em;
+    font-size: 1.4em;
+}
+
+.check-count {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--brand);
+    margin-bottom: 1em;
+}
+
+.results-tips {
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 1.5em;
+    border-left: 4px solid #ff7043;
+}
+
+/* 팁 그룹 전체 스타일 */
+.tip-group {
+    margin-bottom: 2em;
+}
+
+.tip-group:last-child {
+    margin-bottom: 0;
+}
+
+/* 팁 헤더 (제목과 질병명을 담는 컨테이너) */
+.tip-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1em;
+    margin-bottom: 0.8em;
+    flex-wrap: wrap;
+}
+
+.results-tips h4 {
+    color: #ff7043;
+    margin: 0;
+    font-size: 1.2em;
+    flex: 1;
+    min-width: 200px;
+}
+
+/* 관련 질병 표시 영역 */
+.related-diseases {
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.disease-tag {
+    /* 부드러운 슬레이트 블루 - 눈에 편안한 색상 */
+    background: linear-gradient(135deg, #78909c 0%, #607d8b 100%);
+    color: white;
+    padding: 0.3em 0.9em;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(96, 125, 139, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.disease-tag:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(96, 125, 139, 0.3);
+}
+
+/* 클릭하여 고정된 상태 - 차분한 청록색 */
+.disease-tag.pinned {
+    border-color: #26a69a;
+    box-shadow: 0 4px 12px rgba(38, 166, 154, 0.35), 0 0 0 2px rgba(38, 166, 154, 0.15);
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, #4db6ac 0%, #26a69a 100%);
+}
+
+/* 병명 툴팁 스타일 */
+.disease-tooltip {
+    position: fixed;
+    background: rgba(30, 30, 30, 0.95);
+    color: white;
+    padding: 0.8em 1.2em;
+    border-radius: 8px;
+    font-size: 0.9em;
+    line-height: 1.5;
+    max-width: 320px;
+    z-index: 10000;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(5px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    word-wrap: break-word;
+    will-change: transform, opacity, top, left;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* 스크롤 중 툴팁 부드럽게 이동 */
+.disease-tooltip.scrolling {
+    transition: opacity 0.3s ease;
+}
+
+/* 툴팁 화살표 (기본: 툴팁이 위쪽에 표시될 때 화살표는 아래에) */
+.disease-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(30, 30, 30, 0.95);
+}
+
+/* 툴팁이 아래쪽에 표시될 때 화살표는 위에 */
+.disease-tooltip.bottom::before {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: rgba(30, 30, 30, 0.95);
+}
+
+/* 툴팁 표시 */
+.disease-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 고정된 툴팁 */
+.disease-tooltip.pinned {
+    pointer-events: auto;
+}
+
+/* 모바일 환경에서 툴팁 반응형 조정 */
+@media (max-width: 600px) {
+    .disease-tooltip {
+        max-width: min(280px, calc(100vw - 40px));
+        font-size: 0.85em;
+        padding: 0.7em 1em;
+    }
+    
+    .disease-tag {
+        font-size: 0.8em;
+        padding: 0.25em 0.75em;
+    }
+}
+
+/* 대체 색상 옵션 - 원하는 스타일로 주석 해제하여 사용하세요 */
+
+/* 옵션 1: 부드러운 청록색 (차분하고 건강한 느낌)
+.disease-tag {
+    background: linear-gradient(135deg, #4db6ac 0%, #26a69a 100%);
+    color: white;
+    box-shadow: 0 2px 6px rgba(38, 166, 154, 0.2);
+}
+.disease-tag:hover {
+    box-shadow: 0 4px 10px rgba(38, 166, 154, 0.3);
+}
+*/
+
+/* 옵션 2: 부드러운 라벤더 (매우 부드럽고 편안함)
+.disease-tag {
+    background: linear-gradient(135deg, #9fa8da 0%, #7986cb 100%);
+    color: white;
+    box-shadow: 0 2px 6px rgba(121, 134, 203, 0.2);
+}
+.disease-tag:hover {
+    box-shadow: 0 4px 10px rgba(121, 134, 203, 0.3);
+}
+*/
+
+/* 옵션 3: 부드러운 세이지 그린 (자연스럽고 차분함)
+.disease-tag {
+    background: linear-gradient(135deg, #81c784 0%, #66bb6a 100%);
+    color: white;
+    box-shadow: 0 2px 6px rgba(102, 187, 106, 0.2);
+}
+.disease-tag:hover {
+    box-shadow: 0 4px 10px rgba(102, 187, 106, 0.3);
+}
+*/
+
+/* 옵션 4: 미디엄 그레이 (중립적이고 세련됨)
+.disease-tag {
+    background: linear-gradient(135deg, #90a4ae 0%, #78909c 100%);
+    color: white;
+    box-shadow: 0 2px 6px rgba(120, 144, 156, 0.2);
+}
+.disease-tag:hover {
+    box-shadow: 0 4px 10px rgba(120, 144, 156, 0.3);
+}
+*/
+
+.results-tips ul {
+    margin: 0;
+    padding-left: 1.2em;
+    list-style-type: none;
+}
+
+.results-tips li {
+    margin-bottom: 0.5em;
+    position: relative;
+    padding-left: 1.5em;
+}
+
+.results-tips li:before {
+    content: "💡";
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* 반응형: 작은 화면에서는 세로 정렬 */
+@media (max-width: 600px) {
+    .tip-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .related-diseases {
+        justify-content: flex-start;
+        width: 100%;
+    }
+}
+
+/* 체크리스트 액션 버튼 */
+.checklist-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.5em;
+    flex-wrap: wrap;
+    margin-bottom: 2em;
+}
+
+.reset-checklist-btn {
+    padding: 0.8em 2em;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #757575 0%, #616161 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(117, 117, 117, 0.3);
+}
+
+.reset-checklist-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(117, 117, 117, 0.4);
+}
+
+/* ==================== 추천 휴식 가이드 영역 ==================== */
+.recommended-guides {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.recommended-guides.has-guides {
+    max-height: 600px;
+    opacity: 1;
+    margin-top: 2em;
+    padding: 1.5em;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.08) 0%, rgba(129, 199, 132, 0.08) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(76, 175, 80, 0.15);
+}
+
+.recommended-guides-header {
+    text-align: center;
+    margin-bottom: 1.5em;
+}
+
+.recommended-guides-header h3 {
+    color: var(--brand-strong);
+    margin: 0 0 0.5em 0;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+.recommended-guides-header p {
+    color: #666;
+    margin: 0;
+    font-size: 0.95em;
+}
+
+.recommended-guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1em;
+}
+
+.recommended-guide-card {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    padding: 1em 1.2em;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    border-left: 4px solid var(--brand);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.recommended-guide-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.15);
+    border-left-color: var(--brand-strong);
+}
+
+.guide-card-icon {
+    font-size: 2em;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(129, 199, 132, 0.1) 100%);
+    border-radius: 12px;
+}
+
+.guide-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.guide-card-title {
+    margin: 0 0 0.3em 0;
+    font-size: 1.05em;
+    font-weight: 600;
+    color: var(--brand-strong);
+}
+
+.guide-card-desc {
+    margin: 0;
+    font-size: 0.85em;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* 이동 화살표 아이콘 */
+.guide-play-icon {
+    color: var(--brand);
+    font-size: 1.4em;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+}
+
+.recommended-guide-card:hover .guide-play-icon {
+    opacity: 1;
+    transform: translateX(4px);
+    color: var(--brand-strong);
+}
+
+/* 반응형: 모바일에서 카드 레이아웃 조정 */
+@media (max-width: 600px) {
+    .recommended-guides-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .guide-card-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.6em;
+    }
+}
+
+/* ==================== 5분 휴식 가이드 섹션 ==================== */
+.break-guide-section {
+    margin-top: 2em;
+    background: linear-gradient(135deg, rgba(102, 187, 106, 0.05) 0%, rgba(76, 175, 80, 0.05) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(76, 175, 80, 0.1);
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(-20px);
+}
+
+.break-guide-section.expanded {
+    max-height: 2000px;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==================== 타이머 Sticky 진행률 박스 ==================== */
+.timer-sticky-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.95) 0%, rgba(102, 187, 106, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 3px solid var(--brand-strong);
+    /* Safe Area 대응 (노치) */
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
+/* 스크롤 시 그림자 강화 */
+.timer-sticky-progress.scrolled {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.timer-sticky-progress.hidden {
+    transform: translateY(-100%);
+    pointer-events: none;
+}
+
+.sticky-progress-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(0.3em, 1vw, 0.6em) clamp(0.5em, 2vw, 1.2em);
+    display: grid;
+    gap: clamp(0.3em, 0.8vw, 0.5em);
+}
+
+.sticky-timer-label {
+    font-size: clamp(0.75em, 1.8vw, 0.9em);
+    font-weight: 600;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    justify-content: center;
+}
+
+.timer-sticky-progress .progress-bar-container {
+    height: clamp(6px, 1.2vw, 10px);
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+}
+
+.timer-sticky-progress .progress-bar {
+    background: linear-gradient(90deg, #ffffff 0%, rgba(255, 255, 255, 0.8) 100%);
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.4);
+}
+
+.timer-sticky-progress .timer-display {
+    justify-content: center;
+    margin: 0;
+}
+
+.timer-sticky-progress .time-text {
+    color: white;
+    font-size: clamp(0.85em, 2vw, 1.1em);
+}
+
+.timer-sticky-progress .timer-buttons {
+    justify-content: center;
+    margin-top: 0;
+    gap: clamp(0.4em, 1vw, 0.6em);
+}
+
+.timer-sticky-progress .timer-btn {
+    font-size: clamp(0.7em, 1.6vw, 0.85em);
+    padding: clamp(0.3em, 0.8vw, 0.5em) clamp(0.7em, 1.5vw, 1em);
+}
+
+/* ==================== 진행 단계 바 (태블릿 이상) ==================== */
+.timer-steps-bar {
+    display: flex;
+    gap: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    height: 36px;
+}
+
+.step-box {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+    padding: 0 0.6em;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95em;
+    font-weight: 500;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    transition: all 0.3s ease;
+    position: relative;
+    cursor: pointer;
+    min-width: 0;
+}
+
+/* 단계 번호 뱃지 */
+.step-number-badge {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8em;
+    flex-shrink: 0;
+    transition: all 0.3s ease;
+}
+
+.step-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    font-size: 0.9em;
+}
+
+.step-box:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.step-box:hover .step-number-badge {
+    background: rgba(255, 255, 255, 0.35);
+}
+
+.step-box:last-child {
+    border-right: none;
+}
+
+/* 대기 상태 (기본) */
+.step-box .step-number-badge {
+    opacity: 0.7;
+}
+
+/* 완료 상태 */
+.step-box.completed {
+    background: rgba(76, 175, 80, 0.25);
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.step-box.completed .step-number-badge {
+    background: #4caf50;
+    opacity: 1;
+}
+
+/* 완료 뱃지에 체크 표시 */
+.step-box.completed .step-number-badge::after {
+    content: '✓';
+    position: absolute;
+}
+
+.step-box.completed .step-number-text {
+    display: none;
+}
+
+/* 진행 중 상태 - 안정감 있는 딥그린 */
+.step-box.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    font-weight: 600;
+}
+
+.step-box.active .step-number-badge {
+    background: #2e7d32;
+    opacity: 1;
+    animation: activePulse 2s ease-in-out infinite;
+    box-shadow: 0 0 6px rgba(46, 125, 50, 0.4);
+}
+
+@keyframes activePulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 0 0 6px rgba(46, 125, 50, 0.4);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(46, 125, 50, 0.6);
+    }
+}
+
+/* ==================== 전체 휴식 가이드 모달 (전체 타이머 모드) ==================== */
+.sticky-card-display {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    /* 불투명 자연 그린 배경 - 휴식에 집중할 수 있는 차분한 색상 */
+    background: linear-gradient(
+        160deg, 
+        #e8f5e9 0%,      /* 연한 민트 그린 */
+        #f1f8e9 25%,     /* 라임 그린 틴트 */
+        #e0f2f1 50%,     /* 청록 틴트 */
+        #f1f8e9 75%,     /* 라임 그린 틴트 */
+        #e8f5e9 100%     /* 연한 민트 그린 */
+    );
+    z-index: 999;
+    overflow-y: auto;
+    /* 부드러운 모달 등장 애니메이션 */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                visibility 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Safe Area 대응 - 프로그레스 바와의 충분한 거리 확보 */
+    padding-top: calc(env(safe-area-inset-top) + clamp(185px, 28vh, 250px));
+    padding-bottom: calc(env(safe-area-inset-bottom) + clamp(2em, 4vh, 3em));
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* 모달 활성화 상태 */
+.sticky-card-display:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.sticky-card-display.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* 모달 활성화 시 body 스크롤 잠금 */
+body.rest-modal-active {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+.sticky-card-content {
+    max-width: min(900px, 95vw);
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(0.6em, 2vw, 1.2em);
+    /* 부드러운 등장 애니메이션 */
+    animation: modalCardSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalCardSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* ==================== 단계 전환 슬라이드 애니메이션 ==================== */
+
+/* 다음 단계로 이동 (왼쪽으로 나가고 오른쪽에서 들어옴) */
+.sticky-card-body.slide-out-left {
+    animation: slideOutLeft 0.25s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+.sticky-card-body.slide-in-right {
+    animation: slideInRight 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+/* 이전 단계로 이동 (오른쪽으로 나가고 왼쪽에서 들어옴) */
+.sticky-card-body.slide-out-right {
+    animation: slideOutRight 0.25s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+.sticky-card-body.slide-in-left {
+    animation: slideInLeft 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideOutLeft {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(60px);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-60px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 헤더도 함께 애니메이션 */
+.sticky-card-header.slide-out-left {
+    animation: slideOutLeft 0.25s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+.sticky-card-header.slide-in-right {
+    animation: slideInRight 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+.sticky-card-header.slide-out-right {
+    animation: slideOutRight 0.25s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+.sticky-card-header.slide-in-left {
+    animation: slideInLeft 0.3s cubic-bezier(0, 0, 0.2, 1) forwards;
+}
+
+/* 모달 배경 장식 - 부드러운 원형 그라데이션 */
+.sticky-card-display::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -20%;
+    width: 80vw;
+    height: 80vw;
+    max-width: 600px;
+    max-height: 600px;
+    background: radial-gradient(circle, rgba(129, 199, 132, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.sticky-card-display::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    max-width: 500px;
+    max-height: 500px;
+    background: radial-gradient(circle, rgba(178, 223, 219, 0.2) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.sticky-card-header {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5em, 1.5vw, 1em);
+    margin-bottom: clamp(0.6em, 1.5vw, 1.2em);
+    padding-bottom: clamp(0.5em, 1.2vw, 1em);
+    border-bottom: 2px solid var(--brand-light);
+    flex-wrap: wrap;
+}
+
+.sticky-card-number {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+    color: white;
+    width: clamp(35px, 7vw, 50px);
+    height: clamp(35px, 7vw, 50px);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: clamp(1.1em, 2.5vw, 1.5em);
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.4);
+}
+
+.sticky-card-title {
+    flex: 1;
+    margin: 0;
+    color: var(--brand-strong);
+    font-size: clamp(1.1em, 3vw, 1.6em);
+    font-weight: 600;
+    min-width: clamp(120px, 30vw, 180px);
+}
+
+.sticky-card-time {
+    background: rgba(255, 152, 0, 0.15);
+    color: #f57500;
+    padding: clamp(0.3em, 0.8vw, 0.5em) clamp(0.7em, 2vw, 1.2em);
+    border-radius: 20px;
+    font-size: clamp(0.8em, 1.8vw, 1em);
+    font-weight: 600;
+    border: 1px solid rgba(255, 152, 0, 0.3);
+    box-shadow: 0 1px 4px rgba(255, 152, 0, 0.2);
+}
+
+.sticky-card-body {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: clamp(1em, 2.5vw, 1.8em);
+    box-shadow: 
+        0 4px 20px rgba(0, 0, 0, 0.08),
+        0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.sticky-card-description {
+    font-size: clamp(0.85em, 2vw, 1.05em);
+    line-height: clamp(1.4, 1.5, 1.6);
+    color: #555;
+    margin-bottom: clamp(0.7em, 1.5vw, 1.2em);
+    font-weight: 400;
+}
+
+.sticky-card-tips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.3em, 1vw, 0.6em);
+}
+
+.sticky-card-tips li {
+    padding: clamp(0.4em, 1vw, 0.7em) clamp(0.4em, 1vw, 0.7em) clamp(0.4em, 1vw, 0.7em) clamp(1.8em, 4vw, 2.5em);
+    position: relative;
+    color: #666;
+    line-height: clamp(1.3, 1.4, 1.5);
+    font-size: clamp(0.8em, 1.8vw, 0.95em);
+    background: rgba(232, 245, 233, 0.5);
+    border-radius: 8px;
+    border-left: 3px solid var(--brand);
+    transition: all 0.2s ease;
+}
+
+.sticky-card-tips li:hover {
+    background: rgba(232, 245, 233, 0.8);
+    transform: translateX(4px);
+}
+
+.sticky-card-tips li:before {
+    content: "✓";
+    position: absolute;
+    left: clamp(0.4em, 1vw, 0.7em);
+    top: clamp(0.4em, 1vw, 0.7em);
+    color: var(--brand);
+    font-weight: bold;
+    font-size: clamp(0.95em, 2vw, 1.2em);
+}
+
+/* 세밀한 반응형 조정 - 작은 화면에서 추가 조정 없음 (통일됨) */
+@media (max-width: 768px) {
+    /* align-items는 이미 flex-start로 통일 */
+}
+
+/* 매우 작은 화면 - 활성 단계만 텍스트 표시 */
+@media (max-width: 480px) {
+    .timer-steps-bar {
+        gap: 2px;
+        height: 36px;
+    }
+    
+    .step-box {
+        flex: 0 0 auto;
+        min-width: 40px;
+        padding: 0 0.5em;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .step-number-badge {
+        width: 22px;
+        height: 22px;
+        font-size: 0.8em;
+    }
+    
+    /* 비활성 단계: 숫자 뱃지만 */
+    .step-box .step-text {
+        display: none;
+    }
+    
+    /* 활성 단계: 확장 + 텍스트 표시 */
+    .step-box.active {
+        flex: 1 1 auto;
+        min-width: 120px;
+        padding: 0 0.6em;
+    }
+    
+    .step-box.active .step-text {
+        display: inline;
+        font-size: 0.85em;
+        font-weight: 600;
+    }
+    
+    /* 완료/대기 단계: 숫자 뱃지만 */
+    .step-box.completed,
+    .step-box:not(.active) {
+        flex: 0 0 auto;
+        min-width: 40px;
+    }
+}
+
+/* ==================== 타이머 컨트롤 (삭제된 구 스타일) ==================== */
+.timer-controls {
+    display: none;
+}
+
+.timer-controls.hidden {
+    display: none;
+}
+
+.timer-label {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--brand-strong);
+    margin-bottom: 0.8em;
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+
+/* 진행률 바 */
+.progress-bar-container {
+    position: relative;
+    height: 12px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 6px;
+    margin-bottom: 1em;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar-container:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 100%);
+    border-radius: 6px;
+    transition: width 0.3s ease;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+}
+
+.progress-bar::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 2px;
+}
+
+.progress-bar.completed {
+    background: linear-gradient(90deg, #4caf50 0%, #66bb6a 100%);
+}
+
+/* 시간 표시 */
+.timer-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.time-text {
+    font-size: 1.3em;
+    font-weight: 700;
+    color: var(--brand-strong);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+}
+
+.time-separator {
+    margin: 0 0.3em;
+    opacity: 0.5;
+}
+
+/* 타이머 버튼 그룹 */
+.timer-buttons {
+    display: flex;
+    gap: 0.8em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.timer-btn {
+    padding: 0.7em 1.5em;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timer-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.timer-btn:active {
+    transform: translateY(0);
+}
+
+.timer-btn-start {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+    color: white;
+}
+
+.timer-btn-pause {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+    color: white;
+}
+
+.timer-btn-reset {
+    background: linear-gradient(135deg, #757575 0%, #616161 100%);
+    color: white;
+}
+
+.timer-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.timer-btn:disabled:hover {
+    transform: none;
+}
+
+/* 완료 메시지 */
+.timer-complete-message {
+    background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+    color: white;
+    padding: 1.5em;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 1em;
+    box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+    animation: celebrationPulse 2s ease-in-out infinite;
+}
+
+@keyframes celebrationPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+/* expanded 클래스는 위에서 정의됨 */
+
+.break-guide-header {
+    padding: 1.5em 2em;
+    background: rgba(76, 175, 80, 0.08);
+    border-bottom: 1px solid rgba(76, 175, 80, 0.1);
+    text-align: center;
+}
+
+.break-guide-title {
+    margin: 0 0 0.5em 0;
+    color: var(--brand-strong);
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.break-guide-subtitle {
+    margin: 0 0 1em 0;
+    color: #666;
+    font-size: 1em;
+    font-style: italic;
+}
+
+/* 헤더 내부 타이머 버튼 */
+.header-timer-buttons {
+    margin-top: 1.2em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-timer-buttons .timer-btn {
+    font-size: 1.05em;
+    padding: 0.8em 2em;
+}
+
+.break-guide-content {
+    padding: 2em;
+}
+
+.break-steps {
+    display: grid;
+    gap: 2em;
+    margin-bottom: 2em;
+}
+
+.break-step {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 1.5em;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--brand);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+    max-width: 100%;
+}
+
+.break-step:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 카드 상태별 스타일 */
+
+/* 현재 재생 중 (펼쳐진 상태) - 기본 스타일 */
+.break-step.active:not(.collapsed) {
+    border-left-color: #26a69a;
+    border-left-width: 6px;
+    box-shadow: 0 6px 24px rgba(38, 166, 154, 0.2);
+}
+
+/* 개별 타이머 모드: 활성화된 카드 크게 확대 (전체 타이머 모드에서는 숨김) */
+.break-step.individual-mode.active:not(.collapsed) {
+    border-left-color: #26a69a;
+    border-left-width: 6px;
+    box-shadow: 0 6px 24px rgba(38, 166, 154, 0.2);
+}
+
+/* PC 버전: 개별 타이머 모드에서만 카드 확대 */
+@media (min-width: 769px) {
+    .break-step.individual-mode.active:not(.collapsed) {
+        transform: scale(1.05);
+        max-width: none;
+        margin: 1em -2em;
+        padding: 2.5em 3em;
+        background: rgba(255, 255, 255, 0.98);
+        box-shadow: 0 8px 32px rgba(38, 166, 154, 0.18);
+        z-index: 10;
+    }
+    
+    .break-step.individual-mode.active:not(.collapsed) .step-content {
+        font-size: 1.1em;
+        line-height: 1.8;
+    }
+    
+    .break-step.individual-mode.active:not(.collapsed) .step-tips {
+        font-size: 1.05em;
+    }
+    
+    .break-step.individual-mode.active:not(.collapsed) .step-title {
+        font-size: 1.4em;
+    }
+}
+
+/* 전체 타이머 모드: 카드들 숨기기 */
+body.global-timer-active .break-steps {
+    display: none;
+}
+
+/* 완료된 카드 (접힌 상태) - 초록색 배경 */
+.break-step.completed.collapsed {
+    border-left-color: #4caf50;
+    background: rgba(76, 175, 80, 0.15);
+}
+
+/* 대기 중 카드 (접힌 상태) */
+.break-step.waiting.collapsed {
+    opacity: 0.6;
+}
+
+/* 카드 축소 상태 */
+.break-step.collapsed .step-content {
+    display: none;
+}
+
+.break-step.collapsed {
+    padding: 1em 1.5em;
+}
+
+.break-step.collapsed .step-header {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.8em;
+    border-bottom: 2px solid rgba(76, 175, 80, 0.1);
+    position: relative;
+}
+
+/* 개별 재생 버튼 */
+.step-play-btn {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(46, 125, 50, 0.3);
+    flex-shrink: 0;
+}
+
+.step-play-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.4);
+}
+
+.step-play-btn.playing {
+    background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+}
+
+/* 카드 내부 타이머 */
+.step-timer-inline {
+    margin-top: 1em;
+    padding-top: 1em;
+    border-top: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.step-number {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-strong) 100%);
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2em;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.step-title {
+    flex: 1;
+    margin: 0;
+    color: var(--brand-strong);
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.step-time {
+    background: rgba(255, 152, 0, 0.1);
+    color: #f57500;
+    padding: 0.3em 0.8em;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: 600;
+    border: 1px solid rgba(255, 152, 0, 0.2);
+}
+
+.step-content p {
+    margin-bottom: 1em;
+    color: #555;
+    line-height: 1.6;
+}
+
+.step-tips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.step-tips li {
+    padding: 0.5em 0;
+    position: relative;
+    padding-left: 2em;
+    color: #666;
+    line-height: 1.5;
+}
+
+.step-tips li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--brand);
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.break-guide-footer {
+    background: rgba(255, 152, 0, 0.05);
+    border-radius: 12px;
+    padding: 1.5em;
+    border: 1px solid rgba(255, 152, 0, 0.1);
+}
+
+.guide-tips h4 {
+    margin: 0 0 1em 0;
+    color: #f57500;
+    font-size: 1.2em;
+}
+
+.guide-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.guide-tips li {
+    padding: 0.5em 0;
+    position: relative;
+    padding-left: 2em;
+    color: #666;
+    line-height: 1.5;
+}
+
+.guide-tips li:before {
+    content: "💡";
+    position: absolute;
+    left: 0;
+    font-size: 1.1em;
+}
+

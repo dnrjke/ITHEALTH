@@ -1,0 +1,699 @@
+/* ================================================
+   RESPONSIVE - 모바일 대응 스타일
+   ================================================ */
+
+@media (max-width: 620px) {
+    /* ==================== 네비게이션 캐러셀 (모바일) ==================== */
+    .section-nav {
+        flex-direction: column;
+        padding: 0.8em 0 1.5em;
+        gap: 0;
+    }
+
+    /* 화살표 버튼 숨기기 (모바일에서는 스와이프) */
+    .nav-arrow {
+        display: none;
+    }
+    
+    /* 모바일에서 녹색 인디케이터 숨기기 */
+    .nav-indicator {
+        display: none !important;
+    }
+    
+    /* 탭 인디케이터 표시 (6개) */
+    .nav-page-indicator {
+        display: flex;
+        gap: 6px;
+    }
+    
+    .page-dot {
+        width: 6px;
+        height: 6px;
+    }
+    
+    .page-dot.active {
+        transform: scale(1.5);
+        box-shadow: 0 0 4px var(--brand);
+    }
+
+    /* 캐러셀 컨테이너 - 페이지 단위 스크롤 */
+    .nav-carousel-container {
+        max-width: 100%;
+        width: 100%;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        padding: 0;
+    }
+    
+    .nav-carousel-container::-webkit-scrollbar {
+        display: none;
+    }
+    
+    /* 3개씩 정확히 표시되는 페이지 구성 */
+    .nav-carousel {
+        display: flex;
+        flex-wrap: nowrap;
+        transition: none;
+        transform: none !important;
+        gap: 0;
+        padding: 0;
+    }
+
+    .nav-item {
+        /* 화면을 정확히 3등분 (padding 포함) */
+        width: calc(100vw / 3);
+        min-width: calc(100vw / 3);
+        max-width: calc(100vw / 3);
+        flex: 0 0 calc(100vw / 3);
+        padding: 0.6em 0.3em;
+        scroll-snap-align: start;
+        scroll-snap-stop: always;
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    .nav-icon {
+        font-size: 1.4em;
+        margin-bottom: 0.15em;
+    }
+
+    .nav-text {
+        font-size: 0.8em;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    /* 공간 확보: 모바일에서는 보조 설명 숨김 */
+    .nav-description {
+        display: none;
+    }
+    
+    /* 스와이프 힌트 애니메이션 */
+    .nav-carousel.swipe-hint {
+        animation: swipeHint 1.5s ease-in-out;
+    }
+    
+    @keyframes swipeHint {
+        0%, 100% { transform: translateX(0); }
+        30% { transform: translateX(-30px); }
+        60% { transform: translateX(0); }
+    }
+
+    .footer-content {
+        padding: 12px 0 10px;
+        max-height: 70px;
+    }
+    
+    .footer-note {
+        font-size: 12px;
+    }
+    
+    .footer-attr {
+        font-size: 11px;
+    }
+
+    /* ==================== 메인 히어로 ==================== */
+    #main-content::before {
+        background-attachment: scroll;
+        background-size: cover;
+    }
+    
+    .hero {
+        min-height: 100vh;
+        padding: 1em 0;
+        width: 100%;
+    }
+
+    .hero-content {
+        padding: 1em 0.5em;
+        max-width: 100%;
+    }
+    
+    .hero-text {
+        margin-bottom: 2em;
+    }
+    
+    .hero-title {
+        font-size: clamp(1.5em, 8vw, 2.5em);
+        margin-bottom: 0.5em;
+        white-space: nowrap;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(0.9em, 4vw, 1.3em);
+        margin-bottom: 1em;
+        white-space: nowrap;
+    }
+    
+    .hero-tagline {
+        padding: 0.8em 1.5em;
+    }
+    
+    .tagline-text {
+        font-size: clamp(0.75em, 3vw, 1em);
+        white-space: nowrap;
+    }
+
+    .hero-features {
+        flex-direction: row;
+        gap: 0.8em;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* ==================== 콘텐츠 레이아웃 ==================== */
+    .content {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .tab-content {
+        padding: 1em 0.5em 0;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    /* 모바일 배경 하단 잘림 방지 */
+    .tab-background {
+        position: fixed;
+        top: -60px;
+        left: 0;
+        width: 100vw;
+        height: calc(100vh + 60px);
+        height: calc(100dvh + 60px);
+        min-height: calc(100% + 60px);
+        z-index: -1;
+        transition: opacity 0.5s ease;
+    }
+    
+    .tab-bg-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        object-position: center;
+        filter: brightness(0.4) blur(1px) saturate(1.1);
+    }
+    
+    /* 모바일에서 배경 오버레이 전체 너비로 변경 */
+    .tab-bg-overlay {
+        width: 100%;
+        left: 0;
+        transform: none;
+    }
+
+    .section-layout {
+        grid-template-columns: 1fr;
+        gap: 1em;
+        min-height: auto;
+        padding: 0.8em 0;
+    }
+    
+    .hero-left {
+        padding: 0 0.5em;
+    }
+    
+    .hero-right {
+        padding: 0 0.5em;
+    }
+
+    .content-title {
+        font-size: 1.6em;
+        text-align: center;
+        margin-bottom: 0.5em;
+    }
+
+    .content-hero-image {
+        height: 180px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .info-grid {
+        gap: 1.5em;
+    }
+
+    .info-card {
+        padding: 1.5em;
+    }
+
+    .image-stack {
+        grid-template-rows: auto auto;
+        gap: 1em;
+    }
+
+    .main-illustration {
+        height: 250px;
+    }
+
+    .supporting-image {
+        height: 120px;
+    }
+
+    /* ==================== 텍스트 및 리스트 ==================== */
+    .intro-text {
+        font-size: 0.95em;
+        line-height: 1.6;
+        margin-bottom: 0.8em;
+    }
+
+    .section-title {
+        font-size: 1.2em;
+    }
+
+    .symptom-list li, .cause-list li, .tip-list li {
+        font-size: 1em;
+    }
+
+    .icon {
+        width: 30px;
+        height: 30px;
+        font-size: 1.1em;
+    }
+
+    /* ==================== 팁 섹션 ==================== */
+    .tips-section {
+        min-height: 300px;
+        margin: 20px 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .tips-content {
+        padding: 1.5em;
+        grid-row: 1;
+    }
+
+    .tips-guide {
+        grid-row: 2;
+        padding: 1em;
+    }
+
+    .posture-guide {
+        height: 240px;
+    }
+
+    .tips-title {
+        font-size: 1.4em;
+        margin-bottom: 1em;
+        text-align: center;
+    }
+
+    .tips-grid {
+        grid-template-columns: 1fr;
+        gap: 1em;
+        margin-bottom: 1.5em;
+    }
+
+    .tip-card {
+        padding: 1em;
+    }
+
+    .tip-icon {
+        font-size: 1.5em;
+    }
+
+    .tip-action {
+        font-size: 1em;
+    }
+
+    .tips-character {
+        object-position: center;
+        opacity: 0.1;
+    }
+
+    /* ==================== 버튼 ==================== */
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .action-button {
+        width: 80%;
+        padding: 12px 20px;
+        font-size: 1em;
+    }
+
+    .next-step-button {
+        font-size: 1.1em;
+        padding: 12px 25px;
+    }
+    
+    /* 메인 화면 버튼들 */
+    .checklist-access {
+        flex-direction: row;
+        gap: 1em;
+        padding: 0 1em;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .quick-break-start-button {
+        font-size: clamp(1em, 3vw, 1.1em);
+        padding: 1em 2em;
+        width: auto;
+        min-width: auto;
+    }
+    
+    .checklist-button {
+        font-size: clamp(0.95em, 2.8vw, 1em);
+        padding: 0.9em 1.8em;
+        width: auto;
+        min-width: auto;
+    }
+    
+    .feature-badge {
+        font-size: clamp(0.95em, 3vw, 1.1em);
+        padding: 0.7em 1.5em;
+        width: auto;
+    }
+
+    /* ==================== 체크리스트 ==================== */
+    .checklist-container {
+        padding: 1em 0.8em;
+    }
+    
+    .checklist-header {
+        margin-bottom: 1.5em;
+    }
+    
+    .checklist-grid {
+        grid-template-columns: 1fr;
+        gap: 1em;
+        margin-bottom: 1.5em;
+    }
+    
+    .checklist-section {
+        padding: 1em;
+        border-radius: 12px;
+    }
+    
+    .checklist-section .section-title {
+        font-size: 1.1em;
+        margin-bottom: 0.8em;
+    }
+    
+    .check-label {
+        padding: 0.6em;
+        gap: 0.6em;
+    }
+    
+    .check-icon {
+        font-size: 1.3em;
+    }
+    
+    .check-text {
+        font-size: 0.95em;
+    }
+    
+    .checklist-title {
+        font-size: 1.8em;
+    }
+    
+    .checklist-subtitle {
+        font-size: 1em;
+    }
+    
+    /* 체크 결과 영역 최적화 */
+    .checklist-results {
+        padding: 1em;
+        margin-bottom: 1.5em;
+        border-radius: 12px;
+    }
+    
+    .results-summary h3 {
+        font-size: 1.2em;
+        margin-bottom: 0.6em;
+    }
+    
+    .check-count {
+        font-size: 1em;
+        margin-bottom: 0.8em;
+    }
+    
+    .results-tips {
+        padding: 0.8em;
+        border-radius: 10px;
+    }
+    
+    .results-tips h4 {
+        font-size: 1.05em;
+        min-width: auto;
+    }
+    
+    .results-tips ul {
+        padding-left: 0.5em;
+    }
+    
+    .results-tips li {
+        padding-left: 1.3em;
+        font-size: 0.95em;
+        margin-bottom: 0.4em;
+    }
+    
+    .results-tips li:before {
+        font-size: 0.9em;
+    }
+    
+    .tip-group {
+        margin-bottom: 1.2em;
+    }
+    
+    .tip-header {
+        gap: 0.6em;
+        margin-bottom: 0.5em;
+    }
+    
+    .related-diseases {
+        gap: 0.4em;
+    }
+    
+    .disease-tag {
+        font-size: 0.75em;
+        padding: 0.2em 0.6em;
+    }
+    
+    .checklist-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 1em;
+    }
+    
+    .reset-checklist-btn,
+    .quick-break-btn {
+        width: 100%;
+        max-width: 300px;
+        padding: 0.7em 1.5em;
+        font-size: 0.95em;
+    }
+
+    .break-guide-content {
+        padding: 1.5em;
+    }
+
+    .step-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5em;
+    }
+
+    .step-header .step-time {
+        align-self: flex-end;
+    }
+
+    .break-guide-header {
+        padding: 1em 1.5em;
+    }
+    
+    .header-timer-buttons .timer-btn {
+        font-size: 0.95em;
+        padding: 0.7em 1.5em;
+    }
+
+    /* ==================== Sticky 진행률 박스 반응형 ==================== */
+    .sticky-progress-content {
+        padding: 0.6em 0.8em;
+        gap: 0.4em;
+    }
+
+    .sticky-timer-label {
+        font-size: 0.85em;
+    }
+
+    .timer-sticky-progress .progress-bar-container {
+        height: 6px;
+        margin: 0.2em 0;
+    }
+
+    .timer-sticky-progress .time-text {
+        font-size: 1em;
+    }
+
+    .timer-sticky-progress .timer-buttons {
+        flex-direction: row;
+        gap: 0.5em;
+    }
+
+    .timer-sticky-progress .timer-btn {
+        font-size: 0.85em;
+        padding: 0.6em 1.2em;
+        min-height: 44px;  /* 터치 영역 확보 */
+    }
+
+    /* ==================== 푸터 ==================== */
+    .footer-main {
+        text-align: center;
+    }
+
+    .footer-title {
+        font-size: 1.5em;
+    }
+
+    .footer-description {
+        font-size: 0.9em;
+    }
+
+    /* ==================== 2열 레이아웃 ==================== */
+    .two-column {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    
+    /* ==================== 활성화된 카드 모바일 최적화 ==================== */
+    .break-step.active:not(.collapsed) {
+        /* 모바일에서는 확대하지 않음 */
+        transform: none;
+        margin: 0;
+        padding: 1.5em;
+    }
+}
+
+/* ==================== 극소형 화면 대응 (320px 이하) ==================== */
+@media (max-width: 360px) {
+    .sticky-timer-label span:last-child {
+        font-size: 0.8em;
+    }
+    
+    .timer-sticky-progress .timer-btn span:last-child {
+        font-size: 0.75em;
+    }
+    
+    .sticky-progress-content {
+        padding: 0.5em 0.6em;
+        gap: 0.3em;
+    }
+    
+    .timer-sticky-progress .timer-btn {
+        padding: 0.5em 1em;
+        font-size: 0.8em;
+    }
+}
+
+/* ==================== 모바일 전용 스타일 ==================== */
+@media (max-width: 620px) {
+    /* 헤더 - 모바일 전용 (2단 구조) */
+    header {
+        padding: 6px 12px;
+        max-height: none;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            'title controls'
+            'nav nav';
+        row-gap: 6px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    /* 모바일 섹션 네비게이션 위치 조정 */
+    body.guide-view .section-nav {
+        top: 80px; /* 모바일 헤더 높이 (2단) */
+    }
+    
+    header h1 {
+        font-size: 17px;
+        grid-area: title;
+    }
+    
+    .header-controls { 
+        grid-area: controls; 
+    }
+    
+    .header-nav {
+        grid-area: nav;
+        width: calc(100% + 24px);
+        margin-left: -12px;
+        margin-right: -12px;
+        padding: 6px 12px 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .header-nav::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .header-nav-list {
+        gap: 8px;
+        justify-content: flex-start;
+        flex-wrap: nowrap;
+        padding: 0 12px;
+        min-width: max-content;
+    }
+    
+    .header-nav-item {
+        flex-shrink: 0;
+    }
+    
+    .header-nav-item:first-child {
+        margin-left: 0;
+    }
+    
+    .header-nav-item:last-child {
+        margin-right: 0;
+    }
+    
+    .header-nav-link {
+        padding: 6px 12px;
+        font-size: 12px;
+        min-height: 36px;
+        flex-direction: row;
+        gap: 6px;
+        white-space: nowrap;
+    }
+    
+    .header-nav-link .nav-icon { 
+        font-size: 16px; 
+    }
+    
+    .header-nav-link .nav-label { 
+        font-size: 12px; 
+    }
+    
+    .language-selector {
+        padding: 4px 10px;
+        max-height: 30px;
+    }
+    
+    .language-selector span {
+        font-size: 10px;
+        padding: 3px 5px;
+    }
+}
+

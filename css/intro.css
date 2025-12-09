@@ -1,0 +1,483 @@
+/* ================================================
+   가이드 소개 페이지 스타일
+   ================================================ */
+
+.intro-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3em 2em;
+    position: relative;
+    z-index: 1;
+}
+
+/* 히어로 섹션 */
+.intro-hero {
+    text-align: center;
+    margin-bottom: 4em;
+    padding: 2em 0;
+}
+
+.intro-title {
+    font-size: 2.5em;
+    color: var(--brand-strong);
+    margin-bottom: 1.5em;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.intro-lead {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.lead-text {
+    font-size: 1.4em;
+    color: #555;
+    margin: 0.8em 0;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* 섹션 공통 */
+.intro-section {
+    margin-bottom: 4em;
+}
+
+.section-heading {
+    font-size: 1.8em;
+    color: var(--brand);
+    margin-bottom: 1.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--brand-light);
+    font-weight: 400;
+}
+
+/* 콘텐츠 박스 */
+.content-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--brand-light);
+}
+
+.content-box p {
+    font-size: 1.15em;
+    line-height: 1.8;
+    color: #444;
+    margin: 1em 0;
+}
+
+/* 정보 카드 그리드 */
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    margin-top: 2em;
+}
+
+.info-card-intro {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 3px solid var(--brand-light);
+}
+
+.info-card-intro:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.info-card-intro h4 {
+    color: var(--brand-strong);
+    font-size: 1.4em;
+    margin-bottom: 0.8em;
+    font-weight: 500;
+}
+
+.info-card-intro p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.05em;
+}
+
+/* 기능 리스트 */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    padding: 1.2em 0;
+    border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #444;
+}
+
+.feature-list li:last-child {
+    border-bottom: none;
+}
+
+.feature-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.feature-list strong {
+    color: var(--brand);
+    font-weight: 600;
+}
+
+/* 기후 정보 */
+.climate-info {
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+}
+
+.climate-info p {
+    color: #555;
+    margin-bottom: 2em;
+}
+
+.climate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5em;
+}
+
+.climate-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5em;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.climate-icon {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.climate-card h5 {
+    color: var(--brand);
+    font-size: 1.2em;
+    margin-bottom: 0.8em;
+    font-weight: 500;
+}
+
+.climate-card p {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 푸터 메시지 */
+.intro-footer {
+    margin-top: 5em;
+    text-align: center;
+}
+
+.message-box {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(102, 187, 106, 0.05) 100%);
+    padding: 2.5em;
+    border-radius: 16px;
+    border: 2px solid var(--brand-light);
+    margin-bottom: 2em;
+}
+
+.message-box h3 {
+    color: var(--brand-strong);
+    font-size: 1.8em;
+    margin-bottom: 1em;
+    font-weight: 400;
+}
+
+.message-box p {
+    color: #555;
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin: 1em 0;
+}
+
+/* 빠른 접근 섹션 */
+.intro-quick-access {
+    margin-bottom: 4em;
+}
+
+.quick-access-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5em;
+    margin-top: 2em;
+}
+
+.quick-access-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    padding: 1.8em 1.5em;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--brand-light);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.quick-access-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(46, 125, 50, 0.2);
+    border-color: var(--brand);
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.quick-access-btn .qa-icon {
+    font-size: 2.5em;
+    margin-bottom: 0.2em;
+}
+
+.quick-access-btn .qa-label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--brand-strong);
+}
+
+.quick-access-btn .qa-desc {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* CTA 버튼 */
+.cta-button {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+    color: white;
+    border: none;
+    padding: 1.2em 3em;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
+    transition: all 0.3s ease;
+    text-transform: none;
+    letter-spacing: 0.5px;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    .intro-container {
+        padding: 2em 1.5em;
+    }
+
+    .intro-title {
+        font-size: 2em;
+    }
+
+    .lead-text {
+        font-size: 1.2em;
+    }
+
+    .section-heading {
+        font-size: 1.5em;
+    }
+
+    .info-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+    }
+
+    .climate-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-button {
+        padding: 1em 2em;
+        font-size: 1.1em;
+    }
+}
+
+/* ================================================
+   휴식 가이드 페이지 스타일
+   ================================================ */
+
+.rest-guide-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3em 2em;
+    position: relative;
+    z-index: 1;
+}
+
+.rest-guide-header {
+    text-align: center;
+    margin-bottom: 4em;
+    padding: 2em 0;
+}
+
+.rest-guide-title {
+    font-size: 2.5em;
+    color: var(--brand-strong);
+    margin-bottom: 0.5em;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.rest-guide-subtitle {
+    font-size: 1.3em;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+}
+
+.rest-guide-intro {
+    position: relative;
+    z-index: 1;
+}
+
+.rest-guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    margin-top: 3em;
+    margin-bottom: 4em;
+}
+
+.rest-guide-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 3px solid var(--brand-light);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.rest-guide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.rest-guide-card .card-icon {
+    font-size: 3em;
+    margin-bottom: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.rest-guide-card h4 {
+    color: var(--brand-strong);
+    font-size: 1.4em;
+    margin: 0;
+    font-weight: 500;
+}
+
+.rest-guide-card p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.05em;
+    margin: 0;
+    flex: 1;
+}
+
+.guide-card-btn {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+    color: white;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.guide-card-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(46, 125, 50, 0.4);
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
+}
+
+.rest-guide-tips {
+    margin-top: 3em;
+}
+
+.rest-guide-tips .tip-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rest-guide-tips .tip-list li {
+    padding: 1.2em 0;
+    padding-left: 2.5em;
+    border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+    position: relative;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #444;
+}
+
+.rest-guide-tips .tip-list li:last-child {
+    border-bottom: none;
+}
+
+.rest-guide-tips .tip-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--brand);
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+/* 휴식 가이드 반응형 */
+@media (max-width: 768px) {
+    .rest-guide-container {
+        padding: 2em 1.5em;
+    }
+
+    .rest-guide-title {
+        font-size: 2em;
+    }
+
+    .rest-guide-subtitle {
+        font-size: 1.1em;
+    }
+
+    .rest-guides-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+    }
+
+    .rest-guide-card {
+        padding: 1.5em;
+    }
+
+    .rest-guide-tips .tip-list li {
+        font-size: 1em;
+        padding-left: 2em;
+    }
+}
+
