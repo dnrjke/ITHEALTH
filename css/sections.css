@@ -44,9 +44,10 @@
     top: 0;
     bottom: 0;
     /* 중앙 정렬, 콘텐츠 래퍼보다 작게 설정하여 좌우 배경 노출 */
+    width: 100%;
+    max-width: 1100px;
     left: 50%;
     transform: translateX(-50%);
-    width: min(1100px, 88vw);
     background: linear-gradient(
         45deg,
         rgba(255, 255, 255, 0.88) 0%,

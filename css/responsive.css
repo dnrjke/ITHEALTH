@@ -211,6 +211,7 @@
         left: 0;
         transform: none;
         width: 100%;
+        max-width: none;
     }
 
     .tab-content-wrapper {
