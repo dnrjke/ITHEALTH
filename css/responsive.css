@@ -213,6 +213,11 @@
         transform: none;
     }
 
+    .tab-content-wrapper {
+        max-width: 100%;
+        width: 100%;
+    }
+
     .section-layout {
         grid-template-columns: 1fr;
         gap: 1em;
