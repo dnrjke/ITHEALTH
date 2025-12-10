@@ -55,6 +55,17 @@
     );
 }
 
+.tab-content-wrapper {
+    position: relative;
+    /* tab-bg-overlay와 같은 중앙 정렬 및 너비 */
+    margin: 0 auto;
+    max-width: min(1200px, 92vw);
+    width: 100%;
+    padding: 0;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
 .tab-content img {
     max-width: 100%;
     height: auto;
