@@ -50,7 +50,9 @@
     right: auto;
     transform: none;
     margin: 0 auto;
-    width: min(1200px, 92vw);
+    /* PC 뷰 배경 노출 기믹: 콘텐츠 래퍼보다 의도적으로 작은 너비 설정 */
+    width: 88vw;
+    max-width: 1100px; /* 점프 방지를 위해 max-width 사용 */
     background: linear-gradient(
         45deg,
         rgba(255, 255, 255, 0.88) 0%,
@@ -66,8 +68,10 @@
     right: auto;
     transform: none;
     margin: 0 auto;
-    width: min(1200px, 92vw);
-    padding: 0;
+    width: 92vw;
+    max-width: 1200px; /* 점프 방지를 위해 max-width 사용 */
+    /* 내부 요소 우측 잘림 방지를 위한 좌우 패딩 추가 */
+    padding: 0 1em;
     box-sizing: border-box;
     z-index: 1;
     overflow: hidden;
@@ -1097,7 +1101,7 @@
     .tab-content-wrapper {
         margin: 0 auto;
         width: 100%;
-        padding: 0;
+        padding: 0; /* 모바일에서는 패딩 제거 (.tab-content에 이미 0.5em 패딩 있음) */
     }
 
     .tab-content-wrapper .section-layout {
@@ -1121,8 +1125,9 @@
     }
 
     .tab-content-wrapper .content-hero-image {
-        height: 180px;
-        min-height: 180px;
+        height: auto; /* 종횡비 유지를 위해 auto로 변경 */
+        min-height: 180px; /* 최소 높이는 유지 */
+        max-width: 100%; /* 너비 제한 */
     }
 
     .tab-content-wrapper .section-block {
