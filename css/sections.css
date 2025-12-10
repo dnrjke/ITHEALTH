@@ -57,10 +57,10 @@
 
 .tab-content-wrapper {
     position: relative;
-    /* tab-bg-overlay와 같은 중앙 정렬 및 너비 */
-    margin: 0 auto;
-    max-width: min(1200px, 92vw);
-    width: 100%;
+    /* tab-bg-overlay와 정확히 동일한 중앙 정렬 및 너비 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1200px, 92vw);
     padding: 0;
     box-sizing: border-box;
     z-index: 1;
@@ -1074,7 +1074,7 @@
 }
 
 /* 모바일 대응 */
-@media (max-width: 768px) {
+@media (max-width: 620px) {
     .tab-background {
         top: -80px;
         height: calc(100vh + 80px + 70px); /* 헤더(80px) + 푸터(70px) */
@@ -1084,7 +1084,8 @@
 
     /* 모바일에서 래퍼 내부 요소들 */
     .tab-content-wrapper {
-        max-width: 100%;
+        left: 0;
+        transform: none;
         width: 100%;
         padding: 0;
     }

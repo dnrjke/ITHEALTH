@@ -987,7 +987,7 @@ body.rest-modal-active {
 }
 
 /* 세밀한 반응형 조정 - 작은 화면에서 추가 조정 없음 (통일됨) */
-@media (max-width: 768px) {
+@media (max-width: 620px) {
     /* align-items는 이미 flex-start로 통일 */
 }
 
