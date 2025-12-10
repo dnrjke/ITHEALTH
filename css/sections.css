@@ -43,11 +43,10 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
-    /* .tab-bg-image가 차지한 영역과 정확히 일치 */
-    width: 100%;
-    height: 100%;
+    /* 중앙 정렬, 콘텐츠 래퍼보다 작게 설정하여 좌우 배경 노출 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(1100px, 88vw);
     background: linear-gradient(
         45deg,
         rgba(255, 255, 255, 0.88) 0%,

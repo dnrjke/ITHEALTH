@@ -206,12 +206,11 @@
         filter: brightness(0.4) blur(1px) saturate(1.1);
     }
     
-    /* 모바일에서도 배경 오버레이는 전체 화면 커버 */
+    /* 모바일에서 배경 오버레이 전체 너비로 확장 */
     .tab-bg-overlay {
         left: 0;
-        right: 0;
+        transform: none;
         width: 100%;
-        height: 100%;
     }
 
     .tab-content-wrapper {
