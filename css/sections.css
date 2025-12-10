@@ -64,6 +64,174 @@
     padding: 0;
     box-sizing: border-box;
     z-index: 1;
+    overflow: hidden;
+}
+
+/* 래퍼 내부 모든 요소가 너비를 넘지 않도록 보장 */
+.tab-content-wrapper * {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 section-layout 재정의 */
+.tab-content-wrapper .section-layout {
+    width: 100%;
+    max-width: 100%;
+    padding: 2em 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 section-block 재정의 */
+.tab-content-wrapper .section-block {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 tips-section 재정의 */
+.tab-content-wrapper .tips-section {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 텍스트 요소들 */
+.tab-content-wrapper .intro-text,
+.tab-content-wrapper .content-title,
+.tab-content-wrapper .section-title {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    hyphens: auto;
+}
+
+/* 래퍼 내부 이미지 요소들 */
+.tab-content-wrapper img {
+    max-width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 버튼 */
+.tab-content-wrapper .next-step-button {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 tips-grid */
+.tab-content-wrapper .tips-grid {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 tip-card */
+.tab-content-wrapper .tip-card {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 래퍼 내부 keyword-chips */
+.tab-content-wrapper .keyword-chips {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+}
+
+/* 래퍼 내부 chip */
+.tab-content-wrapper .chip {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 래퍼 내부 hero-left, hero-right */
+.tab-content-wrapper .hero-left,
+.tab-content-wrapper .hero-right {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 래퍼 내부 리스트 요소들 */
+.tab-content-wrapper .symptom-list,
+.tab-content-wrapper .cause-list,
+.tab-content-wrapper .tip-list {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 리스트 아이템 */
+.tab-content-wrapper .symptom-list li,
+.tab-content-wrapper .cause-list li,
+.tab-content-wrapper .tip-list li {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+
+/* 래퍼 내부 tips-content */
+.tab-content-wrapper .tips-content {
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 래퍼 내부 tips-guide */
+.tab-content-wrapper .tips-guide {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 guide-image */
+.tab-content-wrapper .guide-image {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* 래퍼 내부 section-layout의 그리드 조정 */
+.tab-content-wrapper .section-layout {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(1em, 3vw, 3em);
+}
+
+/* 래퍼 내부 tips-section의 그리드 조정 */
+.tab-content-wrapper .tips-section {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 280px);
+    overflow: hidden;
+}
+
+/* 래퍼 내부 tips-grid 조정 */
+.tab-content-wrapper .tips-grid {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    gap: clamp(0.8em, 2vw, 1.5em);
+}
+
+/* 래퍼 내부 content-hero-image */
+.tab-content-wrapper .content-hero-image {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 250px;
+    object-fit: cover;
+}
+
+/* 래퍼 내부 problem-keyword */
+.tab-content-wrapper .problem-keyword {
+    display: inline;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 .tab-content img {
@@ -912,6 +1080,43 @@
         height: calc(100vh + 80px + 70px); /* 헤더(80px) + 푸터(70px) */
         height: calc(100dvh + 80px + 70px);
         min-height: calc(100% + 80px + 70px);
+    }
+
+    /* 모바일에서 래퍼 내부 요소들 */
+    .tab-content-wrapper {
+        max-width: 100%;
+        width: 100%;
+        padding: 0;
+    }
+
+    .tab-content-wrapper .section-layout {
+        grid-template-columns: 1fr;
+        gap: 1em;
+        padding: 0.8em 0;
+    }
+
+    .tab-content-wrapper .tips-section {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+    }
+
+    .tab-content-wrapper .tips-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tab-content-wrapper .hero-left,
+    .tab-content-wrapper .hero-right {
+        padding: 0;
+    }
+
+    .tab-content-wrapper .content-hero-image {
+        height: 180px;
+        min-height: 180px;
+    }
+
+    .tab-content-wrapper .section-block {
+        padding: 1.2em;
+        margin-bottom: 1.2em;
     }
 
     .guide-complete-container {
