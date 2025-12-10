@@ -206,11 +206,12 @@
         filter: brightness(0.4) blur(1px) saturate(1.1);
     }
     
-    /* 모바일에서 배경 오버레이 전체 너비로 변경 */
+    /* 모바일에서 배경 오버레이가 .tab-content의 0.5em 패딩 영역까지 확장 */
     .tab-bg-overlay {
-        width: 100%;
-        left: 0;
-        transform: none;
+        left: -0.5em;
+        right: -0.5em;
+        width: calc(100% + 1em); /* 0.5em + 100% + 0.5em */
+        margin: 0;
     }
 
     .tab-content-wrapper {

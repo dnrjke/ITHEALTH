@@ -21,8 +21,11 @@
 .tab-background {
     position: fixed;
     top: -60px; /* 헤더 높이만큼 위로 확장 */
-    left: 0;
-    width: 100vw;
+    /* PC 뷰 정렬 통일: 중앙 컨테이너 영역과 일치 */
+    width: 100%;
+    max-width: 1200px;
+    left: 50%;
+    transform: translateX(-50%);
     height: calc(100vh + 60px);
     height: calc(100dvh + 60px); /* 모바일 동적 뷰포트 높이 지원 */
     min-height: calc(100% + 60px);
@@ -42,11 +45,12 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    /* 중앙 고정, 폭 제한: 좌우로 본 배경 노출 */
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(1200px, 92vw);
+    /* 더 안정적인 margin: auto 방식으로 중앙 정렬 */
+    left: auto;
     right: auto;
+    transform: none;
+    margin: 0 auto;
+    width: min(1200px, 92vw);
     background: linear-gradient(
         45deg,
         rgba(255, 255, 255, 0.88) 0%,
@@ -58,8 +62,10 @@
 .tab-content-wrapper {
     position: relative;
     /* tab-bg-overlay와 정확히 동일한 중앙 정렬 및 너비 */
-    left: 50%;
-    transform: translateX(-50%);
+    left: auto;
+    right: auto;
+    transform: none;
+    margin: 0 auto;
     width: min(1200px, 92vw);
     padding: 0;
     box-sizing: border-box;
@@ -1076,6 +1082,11 @@
 /* 모바일 대응 */
 @media (max-width: 620px) {
     .tab-background {
+        /* 모바일에서는 전체 너비로 복원 */
+        left: 0;
+        transform: none;
+        width: 100vw;
+        max-width: none;
         top: -80px;
         height: calc(100vh + 80px + 70px); /* 헤더(80px) + 푸터(70px) */
         height: calc(100dvh + 80px + 70px);
@@ -1084,8 +1095,7 @@
 
     /* 모바일에서 래퍼 내부 요소들 */
     .tab-content-wrapper {
-        left: 0;
-        transform: none;
+        margin: 0 auto;
         width: 100%;
         padding: 0;
     }
