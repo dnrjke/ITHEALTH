@@ -200,7 +200,6 @@ header h1 {
     background: linear-gradient(135deg, var(--muted) 0%, #f0f7f1 100%);
     padding: clamp(0.8em, 2vh, 1.2em) 0 clamp(1.5em, 2vh, 2em) 0;
     position: sticky;
-    top: 60px; /* 헤더 높이만큼 */
     z-index: 99;
     overflow: visible;
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
@@ -209,6 +208,8 @@ header h1 {
     gap: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     margin-top: 0;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 /* 헤더가 숨겨지면 섹션 네비게이션이 맨 위로 */
@@ -224,6 +225,8 @@ header h1 {
 /* 건강 가이드 화면에서만 네비게이션 표시 */
 body.guide-view .section-nav {
     display: flex !important;
+    top: 0;
+    width: 100%;
 }
 
 /* 배경 그레인 잔상 문제 방지 */
@@ -297,9 +300,12 @@ body.guide-view .section-nav {
 .nav-page-indicator {
     display: none;
     justify-content: center;
+    align-items: center;
     gap: 8px;
     width: 100%;
+    max-width: 100%;
     padding-top: 10px;
+    box-sizing: border-box;
 }
 
 .page-dot {
@@ -340,9 +346,10 @@ body.guide-view .section-nav {
     /* 헤더 바로 아래에 붙도록 네비게이션 바를 위로 이동 */
     body.guide-view .section-nav {
         padding: 0.2em 0 1em;
-        top: 44px;
+        top: 0;
         margin-top: 0;
         overflow: visible;
+        width: 100%;
     }
 
     /* 화살표 숨기기 - PC에서는 모든 요소 표시 */
