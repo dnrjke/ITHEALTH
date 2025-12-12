@@ -254,7 +254,7 @@ body.guide-view .section-nav {
 }
 
 .nav-arrow {
-    display: flex;
+    display: none !important;
     align-items: center;
     justify-content: center;
     width: 40px;
@@ -336,7 +336,7 @@ body.guide-view .section-nav {
 }
 
 /* PC 뷰: 모든 탭을 한 눈에 표시 */
-@media (min-width: 769px) {
+@media (min-width: 1201px) {
     /* 헤더 바로 아래에 붙도록 네비게이션 바를 위로 이동 */
     body.guide-view .section-nav {
         padding: 0.2em 0 1em;
@@ -344,10 +344,10 @@ body.guide-view .section-nav {
         margin-top: 0;
         overflow: visible;
     }
-    
+
     /* 화살표 숨기기 - PC에서는 모든 요소 표시 */
     .nav-arrow {
-        display: none;
+        display: none !important;
     }
     
     /* 모든 요소를 한 눈에 표시 */

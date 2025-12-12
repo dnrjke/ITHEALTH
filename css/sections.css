@@ -1074,7 +1074,7 @@
 }
 
 /* 모바일 대응 */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     .tab-background {
         top: -80px;
         height: calc(100vh + 80px + 70px); /* 헤더(80px) + 푸터(70px) */

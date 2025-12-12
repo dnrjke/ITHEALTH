@@ -987,7 +987,7 @@ body.rest-modal-active {
 }
 
 /* 세밀한 반응형 조정 - 작은 화면에서 추가 조정 없음 (통일됨) */
-@media (max-width: 768px) {
+@media (max-width: 1200px) {
     /* align-items는 이미 flex-start로 통일 */
 }
 
@@ -1271,7 +1271,7 @@ body.rest-modal-active {
 }
 
 /* PC 버전: 개별 타이머 모드에서만 카드 확대 */
-@media (min-width: 769px) {
+@media (min-width: 1201px) {
     .break-step.individual-mode.active:not(.collapsed) {
         transform: scale(1.05);
         max-width: none;

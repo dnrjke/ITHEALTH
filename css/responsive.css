@@ -2,7 +2,7 @@
    RESPONSIVE - 모바일 대응 스타일
    ================================================ */
 
-@media (max-width: 620px) {
+@media (max-width: 1200px) {
     /* ==================== 네비게이션 캐러셀 (모바일) ==================== */
     .section-nav {
         flex-direction: column;
