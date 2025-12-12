@@ -45,7 +45,7 @@
     /* 중앙 고정, 폭 제한: 좌우로 본 배경 노출 */
     left: 50%;
     transform: translateX(-50%);
-    width: min(1200px, 92vw);
+    width: min(1200px, 92%);
     right: auto;
     background: linear-gradient(
         45deg,
@@ -53,13 +53,14 @@
         rgba(255, 255, 255, 0.82) 50%,
         rgba(255, 255, 255, 0.85) 100%
     );
+    box-sizing: border-box;
 }
 
 .tab-content-wrapper {
     position: relative;
     /* tab-bg-overlay와 같은 중앙 정렬 및 너비 */
     margin: 0 auto;
-    max-width: min(1200px, 92vw);
+    max-width: min(1200px, 92%);
     width: 100%;
     padding: 0;
     box-sizing: border-box;

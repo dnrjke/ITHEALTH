@@ -8,6 +8,8 @@
         flex-direction: column;
         padding: 0.8em 0 1.5em;
         gap: 0;
+        width: 100%;
+        box-sizing: border-box;
     }
 
     /* 화살표 버튼 숨기기 (모바일에서는 스와이프) */
@@ -24,6 +26,11 @@
     .nav-page-indicator {
         display: flex;
         gap: 6px;
+        justify-content: center;
+        width: 100%;
+        box-sizing: border-box;
+        padding-left: 0;
+        padding-right: 0;
     }
     
     .page-dot {
@@ -47,6 +54,7 @@
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
         padding: 0;
+        box-sizing: border-box;
     }
     
     .nav-carousel-container::-webkit-scrollbar {
@@ -624,7 +632,8 @@
     
     /* 모바일 섹션 네비게이션 위치 조정 */
     body.guide-view .section-nav {
-        top: 80px; /* 모바일 헤더 높이 (2단) */
+        top: 0;
+        width: 100%;
     }
     
     header h1 {
