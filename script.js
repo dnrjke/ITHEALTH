@@ -493,260 +493,8 @@ function initNavigation() {
    ================================================ */
 
 function initI18n() {
-    const translations = {
-        KR: {
-            tabs: { headache: '두통/무기력', turtle: '거북목', hand: '손의 통증', eye: '눈 건강', back: '허리 건강', face: '얼굴 긴장' },
-            navDesc: { headache: '깊은 호흡과 자세 개선', turtle: '목과 어깨 건강', hand: '손목과 손가락 케어', eye: '눈의 피로와 건조함', back: '앉은 자세와 코어', face: '표정근과 턱 이완' },
-            hero: {
-                title: '건강한 IT 라이프',
-                subtitle: '매일의 작은 변화가 당신의 일상을 바꿉니다',
-                description: '지속 가능한 건강 습관으로 더 나은 내일을 만나보세요',
-                features: ['마음챙김과 호흡', '자세 개선', '피로 회복']
-            },
-            theme: {
-                label: '테마',
-                anime: '애니메',
-                modern: '모던'
-            },
-            headache: {
-                intro1: '장시간의 데스크워크에 의해 <span class="problem-keyword">얕은 호흡</span>이 습관화되면, 뇌로의 산소 공급이 부족하며, 두통이나 집중력 저하로 이어질 수 있습니다.',
-                intro2: '<span class="problem-keyword">무너진 자세</span>는 혈액순환을 방해하며, 피로감과 무기력증을 불러일으키는 원인이 됩니다.',
-                symptomTitle: '[증상 특징]',
-                symptom1: '오후가 되면 머리가 무거워짐',
-                symptom2: '왠지 모르게 의욕이 나지 않음',
-                causeTitle: '[원인과 메커니즘]',
-                cause1: '얕은 호흡으로 인한 산소 부족',
-                cause2: '자세 불균형으로 인한 혈류 장애',
-                tip1: '깊은 호흡을 의식합니다.',
-                tip2: '데스크 환경을 재정비합니다.',
-                chipBreath: '깊은 호흡',
-                chipPosture: '자연스러운 자세',
-                chipMindfulness: '마음챙김'
-            },
-            turtle: {
-                symptomTitle: '증상 설명',
-                symptomDesc: '스마트폰이나 모니터를 장시간 내려다보는 자세는 목 근육에 과도한 부담을 주어, "거북목"이라고 불리는 증상을 일으킵니다.',
-                causeTitle: '원인 분석',
-                cause1: '잘못된 시선 위치로 인한 목의 긴장',
-                cause2: '장시간 고정된 자세',
-                tipTitle: '개선 팁',
-                tip1: '시선의 높이를 조절하고, 목을 똑바로 유지하여 어깨 결림이나 두통의 예방에 도움이 됩니다.',
-                tip2: '1시간에 1회는 목을 돌리는 등, 간단한 스트레칭을 도입하세요.'
-            },
-            hand: {
-                symptomTitle: '증상 설명',
-                symptomDesc: '키보드나 마우스의 사용에 따른 반복 동작은, 건초염이나 손목 통증의 원인이 됩니다.',
-                causeTitle: '원인 분석',
-                cause1: '손목의 각도와 힘 조절 미흡',
-                cause2: '반복적인 손목 및 손가락 동작',
-                tipTitle: '개선 팁',
-                tip1: '손목의 각도나 힘을 주는 방법을 재검토하여, 부담을 줄이는 노력이 필요합니다.',
-                tip2: '작업의 합간에 손을 펴고 접는 운동이나, 손가락의 스트레칭을 도입함으로써, 통증의 예방에 도움이 됩니다.'
-            },
-            intro: {
-                mainTitle: 'IT&HEALTH 가이드에 오신 것을 환영합니다',
-                lead1: '장시간 데스크워크로 몸에 무리가 가고 있지는 않나요?',
-                lead2: '자세가 무너지고 있지는 않나요?',
-                purposeTitle: '우리의 미션',
-                purpose1: 'IT 작업은 현대인에게 피할 수 없는 일입니다.',
-                purpose2: '그렇기에 몸을 지키는 지식이 필요합니다.',
-                purpose3: '당신이 궁금해할 건강 정보를 여기 모았습니다.',
-                contentTitle: '주요 건강 정보',
-                card1Title: '두통과 무기력',
-                card1Desc: '장시간의 얕은 호흡과 무너진 자세로 인한 두통과 집중력 저하를 예방하는 방법을 알아보세요.',
-                card2Title: '거북목 증상',
-                card2Desc: '모니터를 장시간 내려다보는 자세로 인한 목과 어깨의 부담을 줄이는 실용적인 팁을 제공합니다.',
-                card3Title: '손목과 손가락',
-                card3Desc: '키보드와 마우스 사용으로 인한 건초염과 손목 통증을 예방하고 관리하는 방법을 소개합니다.',
-                howtoTitle: '이 가이드 활용하기',
-                howto1: '건강 체크리스트로 지금 바로 내 상태를 점검하세요',
-                howto2: '5분 휴식 가이드를 통해 즉시 실천 가능한 스트레칭을 경험하세요',
-                howto3: '증상별 가이드에서 내게 필요한 건강 정보를 찾아보세요',
-                howto4: '규칙적인 실천으로 장기적인 건강 개선을 이루세요',
-                workspaceTitle: '건강한 작업 환경 만들기',
-                workspaceDesc: '쾌적한 작업 공간은 신체 건강과 업무 효율에 직접적인 영향을 미칩니다.',
-                climateTempTitle: '적절한 온습도',
-                climateTempDesc: '작업 공간의 온도는 18~24°C, 습도는 40~60%가 적절하며 쾌적한 환경 유지가 중요합니다.',
-                climateHydrationTitle: '충분한 수분 섭취',
-                climateHydrationDesc: '하루 1.5~2리터의 물을 마시며 장시간 작업 시 수분 보충을 잊지 마세요.',
-                climateAirTitle: '실내 공기 질',
-                climateAirDesc: '2~3시간마다 환기하여 신선한 공기를 순환시키고 쾌적한 작업 환경을 유지하세요.',
-                messageTitle: '건강한 IT 라이프를 시작하세요',
-                message1: '심각한 증상이 지속되거나 악화된다면 반드시 의료 전문가와 상담하세요.',
-                message2: '작은 습관의 변화가 큰 건강의 차이를 만듭니다. 오늘부터 시작해보세요!',
-                cta: '건강 가이드 시작하기 →'
-            },
-            next: '다음 스텝'
-        },
-        EN: {
-            tabs: { headache: 'Headache/Fatigue', turtle: 'Text Neck', hand: 'Hand Pain', eye: 'Eye Health', back: 'Back Health', face: 'Facial Tension' },
-            navDesc: { headache: 'Deep breathing & posture', turtle: 'Neck & shoulder health', hand: 'Wrist & finger care', eye: 'Eye fatigue & dryness', back: 'Sitting posture & core', face: 'Facial muscles & jaw' },
-            hero: {
-                title: 'Healthy IT Life',
-                subtitle: 'Small daily changes transform your routine',
-                description: 'Meet a better tomorrow with sustainable health habits',
-                features: ['Mindfulness & Breathing', 'Posture Improvement', 'Fatigue Recovery']
-            },
-            theme: {
-                label: 'Theme',
-                anime: 'Anime',
-                modern: 'Modern'
-            },
-            headache: {
-                intro1: 'Prolonged desk work can make <span class="problem-keyword">shallow breathing</span> a habit, reducing oxygen supply to the brain and leading to headaches and poor concentration.',
-                intro2: '<span class="problem-keyword">Collapsed posture</span> hinders circulation, causing fatigue and listlessness.',
-                symptomTitle: '[Symptoms]',
-                symptom1: 'Heavy head in the afternoon',
-                symptom2: 'Low motivation for no clear reason',
-                causeTitle: '[Causes & Mechanism]',
-                cause1: 'Oxygen shortage due to shallow breathing',
-                cause2: 'Circulatory disturbance from poor posture',
-                tip1: 'Practice deep breathing.',
-                tip2: 'Review and optimize your desk setup.',
-                chipBreath: 'Deep Breathing',
-                chipPosture: 'Natural Posture',
-                chipMindfulness: 'Mindfulness'
-            },
-            turtle: {
-                symptomTitle: 'Symptoms',
-                symptomDesc: 'Looking down at a phone or monitor for long periods overloads neck muscles, leading to "text neck."',
-                causeTitle: 'Causes',
-                cause1: 'Neck tension from wrong eye level',
-                cause2: 'Prolonged fixed posture',
-                tipTitle: 'Tips',
-                tip1: 'Adjust screen height and keep the neck neutral to prevent stiffness and headaches.',
-                tip2: 'Do simple stretches at least once per hour.'
-            },
-            hand: {
-                symptomTitle: 'Symptoms',
-                symptomDesc: 'Repetitive keyboard/mouse use can cause tenosynovitis and wrist pain.',
-                causeTitle: 'Causes',
-                cause1: 'Poor wrist angle and force control',
-                cause2: 'Repetitive wrist and finger motions',
-                tipTitle: 'Tips',
-                tip1: 'Reassess wrist angle and force to reduce strain.',
-                tip2: 'Stretch fingers and wrists during breaks to prevent pain.'
-            },
-            intro: {
-                mainTitle: 'Welcome to IT&HEALTH Guide',
-                lead1: 'Are you overworking your body with long desk hours?',
-                lead2: 'Is your posture deteriorating?',
-                purposeTitle: 'Our Mission',
-                purpose1: 'IT work is unavoidable for modern people.',
-                purpose2: 'That is why knowledge to protect your body is necessary.',
-                purpose3: 'We have gathered the health information you need here.',
-                contentTitle: 'Main Health Topics',
-                card1Title: 'Headaches & Fatigue',
-                card1Desc: 'Learn how to prevent headaches and concentration decline caused by shallow breathing and poor posture.',
-                card2Title: 'Text Neck',
-                card2Desc: 'Practical tips to reduce neck and shoulder strain from prolonged screen viewing.',
-                card3Title: 'Wrist & Fingers',
-                card3Desc: 'Methods to prevent and manage tenosynovitis and wrist pain from keyboard and mouse use.',
-                howtoTitle: 'How to Use This Guide',
-                howto1: 'Check your current state with the Health Checklist',
-                howto2: 'Experience practical stretches with the 5-Minute Break Guide',
-                howto3: 'Find health information you need in symptom-specific guides',
-                howto4: 'Achieve long-term health improvement through regular practice',
-                workspaceTitle: 'Creating a Healthy Work Environment',
-                workspaceDesc: 'A comfortable workspace directly impacts your physical health and work efficiency.',
-                climateTempTitle: 'Proper Temperature & Humidity',
-                climateTempDesc: 'Ideal workspace temperature is 18~24°C with 40~60% humidity for a comfortable environment.',
-                climateHydrationTitle: 'Adequate Hydration',
-                climateHydrationDesc: 'Drink 1.5-2 liters of water daily and stay hydrated during long work sessions.',
-                climateAirTitle: 'Indoor Air Quality',
-                climateAirDesc: 'Ventilate every 2-3 hours to circulate fresh air and maintain a pleasant work environment.',
-                messageTitle: 'Start Your Healthy IT Life',
-                message1: 'If serious symptoms persist or worsen, always consult medical professionals.',
-                message2: 'Small habit changes make big health differences. Start today!',
-                cta: 'Start Health Guide →'
-            },
-            next: 'Next Step'
-        },
-        JP: {
-            tabs: { headache: '頭痛・無気力', turtle: 'スマホ首', hand: '手の痛み', eye: '目の健康', back: '腰の健康', face: '顔の緊張' },
-            navDesc: { headache: '深い呼吸と姿勢改善', turtle: '首と肩の健康', hand: '手首と指のケア', eye: '目の疲れと乾燥', back: '座り姿勢とコア', face: '表情筋と顎の緩和' },
-            hero: {
-                title: '健康的なITライフ',
-                subtitle: '毎日の小さな変化があなたの日常を変える',
-                description: '持続可能な健康習慣でより良い明日に出会おう',
-                features: ['マインドフルネス・呼吸', '姿勢改善', '疲労回復']
-            },
-            theme: {
-                label: 'テーマ',
-                anime: 'アニメ',
-                modern: 'モダン'
-            },
-            headache: {
-                intro1: '長時間のデスクワークで<span class="problem-keyword">浅い呼吸</span>が習慣化すると、脳への酸素供給が不足し、頭痛や集中力低下につながります。',
-                intro2: '<span class="problem-keyword">崩れた姿勢</span>は血流を妨げ、疲労感や無気力感の原因になります。',
-                symptomTitle: '[症状の特徴]',
-                symptom1: '午後になると頭が重くなる',
-                symptom2: 'なんとなくやる気が出ない',
-                causeTitle: '[原因とメカニズム]',
-                cause1: '浅い呼吸による酸素不足',
-                cause2: '姿勢の崩れによる血流障害',
-                tip1: '深い呼吸を意識する。',
-                tip2: 'デスク環境を見直す。',
-                chipBreath: '深い呼吸',
-                chipPosture: '自然な姿勢',
-                chipMindfulness: 'マインドフルネス'
-            },
-            turtle: {
-                symptomTitle: '症状説明',
-                symptomDesc: 'スマホやモニターを長時間見下ろす姿勢は首に過負荷を与え、「スマホ首」を引き起こします。',
-                causeTitle: '原因分析',
-                cause1: '視線の高さが合わず首が緊張',
-                cause2: '長時間の固定姿勢',
-                tipTitle: '改善ヒント',
-                tip1: '視線の高さを調整し、首をまっすぐに保つ。',
-                tip2: '1時間に1回は首回しなど簡単なストレッチを。'
-            },
-            hand: {
-                symptomTitle: '症状説明',
-                symptomDesc: 'キーボードやマウスの反復動作は腱鞘炎や手首の痛みを引き起こします。',
-                causeTitle: '原因分析',
-                cause1: '手首の角度と力加減の不足',
-                cause2: '手首・指の反復動作',
-                tipTitle: '改善ヒント',
-                tip1: '手首の角度や力の入れ方を見直し、負担を減らす。',
-                tip2: '休憩中に手や指のストレッチを取り入れる。'
-            },
-            intro: {
-                mainTitle: 'IT&HEALTHガイドへようこそ',
-                lead1: '長時間のデスクワーク、体に負担がかかっていませんか。',
-                lead2: '姿勢が崩れていませんか。',
-                purposeTitle: '私たちのミッション',
-                purpose1: 'IT作業は、現代人にとって避けられないものです。',
-                purpose2: 'だからこそ、体を守る知識が必要です。',
-                purpose3: 'あなたの気になる健康情報をここにまとめました。',
-                contentTitle: '主な健康情報',
-                card1Title: '頭痛・無気力',
-                card1Desc: '長時間の浅い呼吸と崩れた姿勢による頭痛や集中力低下を予防する方法を学びましょう。',
-                card2Title: 'スマホ首',
-                card2Desc: 'モニターを長時間見下ろす姿勢による首と肩の負担を軽減する実用的なヒントを提供します。',
-                card3Title: '手首と指',
-                card3Desc: 'キーボードとマウスの使用による腱鞘炎や手首の痛みを予防・管理する方法を紹介します。',
-                howtoTitle: 'このガイドの活用法',
-                howto1: '健康チェックリストで今すぐ自分の状態を確認',
-                howto2: '5分休憩ガイドでストレッチを体験',
-                howto3: '症状別ガイドで必要な健康情報を探す',
-                howto4: '定期的な実践で長期的な健康改善を実現',
-                workspaceTitle: '健康的な作業環境を作る',
-                workspaceDesc: '快適な作業空間は身体の健康と業務効率に直接的な影響を与えます。',
-                climateTempTitle: '適切な温湿度',
-                climateTempDesc: '作業空間の温度は18~24°C、湿度は40~60%が適切で、快適な環境維持が重要です。',
-                climateHydrationTitle: '十分な水分摂取',
-                climateHydrationDesc: '1日1.5~2リットルの水を飲み、長時間作業時は水分補給を忘れずに。',
-                climateAirTitle: '室内空気質',
-                climateAirDesc: '2~3時間ごとに換気して新鮮な空気を循環させ、快適な作業環境を保ちましょう。',
-                messageTitle: '健康的なITライフを始めよう',
-                message1: '深刻な症状が続くか悪化する場合は、必ず医療専門家にご相談ください。',
-                message2: '小さな習慣の変化が大きな健康の違いを生みます。今日から始めましょう！',
-                cta: '健康ガイドを開始 →'
-            },
-            next: '次のステップ'
-        }
-    };
+    // 외부 번역 파일(i18n/translations.js)에서 로드된 translations 객체 사용
+    // translations 객체는 전역 스코프에서 사용 가능
 
     function updateElement(selector, text) {
         if (!text) return;
@@ -828,27 +576,87 @@ function initI18n() {
         }
         
         // 거북목 섹션
+        if (t.turtle.intro1) document.getElementById('tn-intro1').innerHTML = t.turtle.intro1;
+        if (t.turtle.intro2) document.getElementById('tn-intro2').innerHTML = t.turtle.intro2;
         updateElement('tn-symptom-title', t.turtle.symptomTitle);
-        updateElement('tn-symptom-desc', t.turtle.symptomDesc);
+        if (t.turtle.symptom1) updateElement('tn-symptom-item1', t.turtle.symptom1);
+        if (t.turtle.symptom2) updateElement('tn-symptom-item2', t.turtle.symptom2);
         updateElement('tn-cause-title', t.turtle.causeTitle);
         updateElement('tn-cause-item1', t.turtle.cause1);
         updateElement('tn-cause-item2', t.turtle.cause2);
         updateElement('tn-tip-title', t.turtle.tipTitle);
         updateElement('tn-tip-item1', t.turtle.tip1);
         updateElement('tn-tip-item2', t.turtle.tip2);
-        
+        if (t.turtle.chipHeight) updateElement('chip-neck-height', t.turtle.chipHeight);
+        if (t.turtle.chipStretch) updateElement('chip-neck-stretch', t.turtle.chipStretch);
+
         // 손 통증 섹션
+        if (t.hand.intro1) document.getElementById('hp-intro1').innerHTML = t.hand.intro1;
+        if (t.hand.intro2) document.getElementById('hp-intro2').innerHTML = t.hand.intro2;
         updateElement('hp-symptom-title', t.hand.symptomTitle);
-        updateElement('hp-symptom-desc', t.hand.symptomDesc);
+        if (t.hand.symptom1) updateElement('hp-symptom-item1', t.hand.symptom1);
+        if (t.hand.symptom2) updateElement('hp-symptom-item2', t.hand.symptom2);
         updateElement('hp-cause-title', t.hand.causeTitle);
         updateElement('hp-cause-item1', t.hand.cause1);
         updateElement('hp-cause-item2', t.hand.cause2);
         updateElement('hp-tip-title', t.hand.tipTitle);
         updateElement('hp-tip-item1', t.hand.tip1);
         updateElement('hp-tip-item2', t.hand.tip2);
-        
+        if (t.hand.chipAngle) updateElement('chip-wrist-angle', t.hand.chipAngle);
+        if (t.hand.chipStretch) updateElement('chip-hand-stretch', t.hand.chipStretch);
+
+        // 눈 건강 섹션
+        if (t.eye) {
+            if (t.eye.intro1) document.getElementById('eye-intro1').innerHTML = t.eye.intro1;
+            if (t.eye.intro2) document.getElementById('eye-intro2').innerHTML = t.eye.intro2;
+            updateElement('eye-symptom-title', t.eye.symptomTitle);
+            updateElement('eye-symptom-item1', t.eye.symptom1);
+            updateElement('eye-symptom-item2', t.eye.symptom2);
+            updateElement('eye-cause-title', t.eye.causeTitle);
+            updateElement('eye-cause-item1', t.eye.cause1);
+            updateElement('eye-cause-item2', t.eye.cause2);
+            updateElement('eye-tip-title', t.eye.tipTitle);
+            updateElement('eye-tip-item1', t.eye.tip1);
+            updateElement('eye-tip-item2', t.eye.tip2);
+        }
+
+        // 허리 건강 섹션
+        if (t.back) {
+            if (t.back.intro1) document.getElementById('back-intro1').innerHTML = t.back.intro1;
+            if (t.back.intro2) document.getElementById('back-intro2').innerHTML = t.back.intro2;
+            updateElement('back-symptom-title', t.back.symptomTitle);
+            updateElement('back-symptom-item1', t.back.symptom1);
+            updateElement('back-symptom-item2', t.back.symptom2);
+            updateElement('back-cause-title', t.back.causeTitle);
+            updateElement('back-cause-item1', t.back.cause1);
+            updateElement('back-cause-item2', t.back.cause2);
+            updateElement('back-tip-title', t.back.tipTitle);
+            updateElement('back-tip-item1', t.back.tip1);
+            updateElement('back-tip-item2', t.back.tip2);
+        }
+
+        // 얼굴 긴장 섹션
+        if (t.face) {
+            if (t.face.intro1) document.getElementById('face-intro1').innerHTML = t.face.intro1;
+            if (t.face.intro2) document.getElementById('face-intro2').innerHTML = t.face.intro2;
+            updateElement('face-symptom-title', t.face.symptomTitle);
+            updateElement('face-symptom-item1', t.face.symptom1);
+            updateElement('face-symptom-item2', t.face.symptom2);
+            updateElement('face-cause-title', t.face.causeTitle);
+            updateElement('face-cause-item1', t.face.cause1);
+            updateElement('face-cause-item2', t.face.cause2);
+            updateElement('face-tip-title', t.face.tipTitle);
+            updateElement('face-tip-item1', t.face.tip1);
+            updateElement('face-tip-item2', t.face.tip2);
+        }
+
         // 버튼
         updateElement('next-button', t.next);
+        updateElement('next-button-tn', t.next);
+        updateElement('next-button-hp', t.next);
+        updateElement('next-button-eye', t.next);
+        updateElement('next-button-back', t.next);
+        updateElement('next-button-face', t.next);
         
         // 가이드 소개 페이지
         if (t.intro) {
