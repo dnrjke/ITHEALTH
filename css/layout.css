@@ -202,8 +202,6 @@ header h1 {
     position: sticky;
     z-index: 99;
     overflow: visible;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                top 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     flex-wrap: wrap;
     gap: 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -251,7 +249,6 @@ body.guide-view .section-nav {
 
 .nav-carousel {
     display: flex;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     gap: 0;
 }
@@ -314,7 +311,6 @@ body.guide-view .section-nav {
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.2);
     cursor: pointer;
-    transition: all 0.3s ease;
 }
 
 .page-dot.active {
@@ -333,7 +329,6 @@ body.guide-view .section-nav {
     height: 3px;
     background: linear-gradient(90deg, var(--brand) 0%, var(--brand-light) 100%);
     border-radius: 3px 3px 0 0;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
     box-shadow: 0 -2px 8px rgba(46, 125, 50, 0.3);
     opacity: 1;
     pointer-events: none;
@@ -398,7 +393,6 @@ body.guide-view .section-nav {
     padding: clamp(0.6em, 1.5vh, 0.8em) clamp(1em, 2vw, 1.5em);
     cursor: pointer;
     position: relative;
-    transition: all 0.3s ease;
     border-radius: 12px 12px 0 0;
     min-width: clamp(120px, 15vw, 140px);
     z-index: 1;
@@ -407,7 +401,6 @@ body.guide-view .section-nav {
 
 .nav-item:hover {
     background: rgba(255, 255, 255, 0.7);
-    transform: translateY(-2px);
 }
 
 .nav-item.active {
@@ -420,7 +413,6 @@ body.guide-view .section-nav {
     font-size: clamp(1.2em, 2vw, 1.5em);
     margin-bottom: 0.2em;
     filter: grayscale(1);
-    transition: filter 0.3s ease;
 }
 
 .nav-item.active .nav-icon,
@@ -441,7 +433,6 @@ body.guide-view .section-nav {
     color: #666;
     text-align: center;
     opacity: 0.8;
-    transition: opacity 0.3s ease;
     white-space: nowrap;
 }
 
