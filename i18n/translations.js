@@ -344,6 +344,83 @@ const translations = {
             cardTip1_1: '팔을 위로 뻗어 온몸을 스트레칭',
             cardTip1_2: '제자리에서 가볍게 걸어보기',
             cardTip1_3: '발가락을 들었다 내렸다 반복'
+        },
+        // --- 휴식 가이드 데이터 ---
+        restGuideData: {
+            'rest-all': {
+                label: '전체 휴식 가이드',
+                steps: [
+                    { title: '자리에서 일어나기', time: '1분', description: '천천히 자리에서 일어나 몸을 펴보세요. 발끝부터 머리까지 쭉 늘려주며 혈액순환을 도와주세요.', tips: ['팔을 위로 뻗어 온몸을 스트레칭', '제자리에서 가볍게 걸어보기', '발가락을 들었다 내렸다 반복'] },
+                    { title: '목과 어깨 스트레칭', time: '2분', description: '목과 어깨의 긴장을 풀어주는 스트레칭으로 뭉친 근육을 이완시켜주세요.', tips: ['목을 좌우로 천천히 돌리기 (각 방향 5회)', '어깨를 위로 올렸다가 뒤로 돌리며 내리기', '고개를 좌우로 기울여 목 옆근육 늘리기', '턱을 가슴 쪽으로 당겨 목 뒷근육 스트레칭'] },
+                    { title: '깊은 호흡과 명상', time: '2분', description: '마음을 차분히 하고 깊은 호흡으로 스트레스를 해소해보세요.', tips: ['편안한 자세로 앉거나 서기', '4초 들이마시고 6초 내쉬기 반복', '눈을 감고 현재 순간에 집중하기', '몸의 긴장 부위를 의식적으로 이완시키기'] }
+                ]
+            },
+            'rest-neck': {
+                label: '뒷목 휴식 가이드',
+                steps: [
+                    { title: '목 풀어주기', time: '1분', description: '긴장된 목 근육을 부드럽게 풀어주는 준비 동작입니다.', tips: ['어깨를 내리고 목에 힘을 빼기', '턱을 살짝 당겨 목 뒤를 길게 늘리기', '고개를 천천히 좌우로 돌리기 (각 5회)'] },
+                    { title: '뒷목 스트레칭', time: '1분 30초', description: '목 뒤쪽 근육을 집중적으로 늘려주는 스트레칭입니다.', tips: ['양손을 깍지 끼고 머리 뒤에 대기', '턱을 가슴 쪽으로 부드럽게 당기기', '15초 유지 후 천천히 돌아오기 (3회 반복)', '통증이 있으면 강도를 줄이세요'] },
+                    { title: '목 근육 이완', time: '1분', description: '스트레칭한 근육을 이완시키고 마무리합니다.', tips: ['어깨를 위로 올렸다가 떨어뜨리기 (5회)', '목을 좌우로 기울여 옆 근육 늘리기', '깊은 호흡과 함께 긴장 풀기'] }
+                ]
+            },
+            'rest-face': {
+                label: '얼굴 휴식 가이드',
+                steps: [
+                    { title: '얼굴 근육 인식', time: '1분', description: '평소 긴장하고 있던 얼굴 근육을 인식하고 의식적으로 풀어줍니다.', tips: ['이마에 주름이 잡혀있지 않은지 확인', '눈썹 사이 힘 빼기', '턱에 힘이 들어가 있지 않은지 체크'] },
+                    { title: '표정근 스트레칭', time: '1분 30초', description: '얼굴의 다양한 근육을 움직여 긴장을 해소합니다.', tips: ['눈을 크게 떴다가 꽉 감기 (5회)', '입을 크게 벌려 "아" 하기', '볼을 부풀렸다가 오므리기 (5회)', '혀를 입 안에서 돌리기 (좌우 각 5회)'] },
+                    { title: '턱 이완 및 마무리', time: '1분', description: '긴장이 모이기 쉬운 턱 근육을 집중적으로 이완합니다.', tips: ['입을 살짝 벌려 턱에 힘 빼기', '턱을 좌우로 부드럽게 움직이기', '관자놀이를 부드럽게 원을 그리며 마사지'] }
+                ]
+            },
+            'rest-eye': {
+                label: '눈 휴식 가이드',
+                steps: [
+                    { title: '눈 감고 휴식', time: '1분', description: '화면에서 눈을 떼고 눈의 피로를 회복시킵니다.', tips: ['눈을 감고 편안하게 휴식', '손바닥을 비벼 따뜻하게 한 후 눈 위에 올리기', '깊은 호흡과 함께 눈 주변 긴장 풀기'] },
+                    { title: '눈 운동', time: '1분 30초', description: '눈 근육을 움직여 피로를 풀고 혈액순환을 돕습니다.', tips: ['눈을 위-아래로 천천히 움직이기 (10회)', '눈을 좌-우로 천천히 움직이기 (10회)', '눈을 시계 방향으로 크게 돌리기 (5회)', '반시계 방향으로도 돌리기 (5회)'] },
+                    { title: '원거리 응시', time: '1분', description: '20-20-20 규칙으로 눈의 초점 근육을 이완시킵니다.', tips: ['창밖이나 먼 곳(6m 이상)을 바라보기', '20초 이상 먼 곳에 초점 맞추기', '눈을 깜빡여 눈물로 눈 촉촉하게 유지'] }
+                ]
+            },
+            'rest-hand': {
+                label: '손 휴식 가이드',
+                steps: [
+                    { title: '손목 풀기', time: '1분', description: '키보드와 마우스 사용으로 긴장된 손목을 풀어줍니다.', tips: ['손목을 시계/반시계 방향으로 돌리기 (각 10회)', '손목을 위아래로 꺾어 스트레칭', '손을 털어 긴장 풀기'] },
+                    { title: '손가락 스트레칭', time: '1분 30초', description: '손가락 관절과 힘줄을 늘려주는 스트레칭입니다.', tips: ['손가락을 쫙 펴고 5초 유지', '주먹을 꽉 쥐고 5초 유지 (5회 반복)', '각 손가락을 하나씩 뒤로 젖혀 스트레칭', '손바닥을 마주보고 손목 꺾기'] },
+                    { title: '손 마사지', time: '1분', description: '손 전체의 피로를 풀어주는 마사지입니다.', tips: ['엄지로 손바닥 가운데를 누르며 마사지', '손등을 부드럽게 문지르기', '손가락 사이사이를 가볍게 눌러주기'] }
+                ]
+            }
+        },
+        // --- 질병 정보 ---
+        diseases: {
+            '거북목증후군': '목이 앞으로 쭉 빠진 자세로 인해 경추의 정상적인 C자 곡선이 일자로 변형되는 증상입니다. 두통, 어깨 결림, 목 통증을 유발합니다.',
+            '경추디스크': '목뼈 사이의 디스크가 튀어나와 신경을 압박하여 팔 저림, 어깨 통증, 손 저림 등의 증상을 일으킵니다.',
+            '근막통증증후군': '근육과 근막에 압통점이 생겨 통증을 일으키는 질환입니다. 장시간 같은 자세 유지 시 발생하기 쉽습니다.',
+            '어깨충돌증후군': '어깨를 들 때 어깨뼈와 힘줄이 부딪혀 염증과 통증을 유발하는 질환입니다.',
+            '척추측만증': '척추가 좌우로 휘어지는 질환으로, 자세 불균형이 주요 원인입니다.',
+            '요추디스크': '허리뼈 사이의 디스크가 튀어나와 신경을 압박하는 질환입니다.',
+            '심부정맥혈전증': '다리 깊숙한 정맥에 혈전(피떡)이 생기는 질환입니다.',
+            '하지정맥류': '다리 정맥의 판막 기능 이상으로 혈액이 역류해 정맥이 부풀어 오르는 질환입니다.',
+            '손목터널증후군': '손목의 정중신경이 압박되어 손저림, 손목 통증을 일으키는 질환입니다.',
+            '건초염': '힘줄을 감싸는 건초에 염증이 생기는 질환입니다.',
+            '드퀘르뱅병': '엄지손가락 쪽 힘줄과 건초에 생기는 염증성 질환입니다.',
+            'VDT증후군': '영상표시단말기를 장시간 사용하여 발생하는 눈의 피로, 시력 저하 등의 증상입니다.',
+            '안구건조증': '눈물 분비가 부족하거나 눈물이 빨리 증발하여 눈이 건조해지는 질환입니다.',
+            '긴장성두통': '머리 주변 근육의 긴장으로 인해 발생하는 두통입니다.',
+            '편두통': '머리 한쪽이 욱신거리는 박동성 두통으로, 구토나 빛·소리에 대한 민감성을 동반할 수 있습니다.',
+            '만성피로증후군': '충분한 휴식에도 개선되지 않는 지속적인 피로 상태입니다.',
+            '집중력저하': '주의력과 집중력이 떨어지는 상태로, 산소 부족, 피로, 스트레스가 주요 원인입니다.',
+            '저혈당증': '혈당이 정상 이하로 떨어지는 상태입니다.'
+        },
+        // --- 건강 팁 ---
+        healthTips: {
+            water: { title: '수분 보충이 필요해요', tips: ['지금 당장 물 한 컵을 마셔보세요', '1시간마다 알람을 설정해 물을 마시는 습관을 만들어보세요', '카페인 음료보다는 물이나 허브차를 선택하세요'] },
+            meal: { title: '규칙적인 식사가 필요해요', tips: ['바쁘더라도 식사를 거르지 마세요', '간단한 간식이라도 챙겨 드세요', '아침 식사는 뇌 활동과 집중력에 중요합니다', '과식보다는 소량씩 자주 먹는 것이 좋습니다'] },
+            'neck-forward': { title: '목 자세 교정이 필요해요', tips: ['턱을 살짝 당기고 목을 길게 늘려보세요', '모니터 높이를 눈높이와 맞춰주세요', '30분마다 목을 좌우로 천천히 돌려주세요'] },
+            'shoulder-tension': { title: '어깨 긴장 완화가 필요해요', tips: ['어깨를 위로 올렸다가 뒤로 돌리며 내려주세요', '깊게 숨을 들이마시며 어깨 힘을 빼보세요', '목과 어깨 마사지를 5분간 해보세요'] },
+            'back-curved': { title: '허리 자세 개선이 필요해요', tips: ['등받이에 허리를 밀착시켜 앉아보세요', '발을 바닥에 평평하게 놓고 앉으세요', '허리 뒤에 쿠션을 놓아 곡선을 유지해보세요'] },
+            'sitting-long': { title: '움직임이 필요한 시간이에요', tips: ['지금 당장 자리에서 일어나 2-3분 걸어보세요', '제자리에서 스트레칭을 5분간 해보세요', '50분 일하고 10분 휴식하는 패턴을 만들어보세요'] },
+            'hand-pain': { title: '손목 케어가 필요해요', tips: ['손목을 원을 그리며 천천히 돌려주세요', '손가락을 쫙 펼쳤다가 주먹을 쥐는 운동을 반복하세요', '손목 받침대를 사용해 타이핑하세요'] },
+            'wrist-angle': { title: '손목 각도 조정이 필요해요', tips: ['키보드와 손목이 일직선이 되도록 조정하세요', '마우스 패드에 손목 받침대를 사용하세요', '팔꿈치가 90도가 되도록 의자 높이를 조절하세요'] },
+            'eye-strain': { title: '눈 휴식이 필요해요', tips: ['20-20-20 법칙: 20분마다 20피트(6m) 거리를 20초간 바라보세요', '눈을 감고 10초간 휴식을 취하세요', '인공눈물을 사용해 눈을 촉촉하게 해주세요'] },
+            headache: { title: '두통 완화가 필요해요', tips: ['깊은 호흡을 5분간 해보세요', '목과 어깨 마사지를 부드럽게 해주세요', '충분한 수분 섭취와 잠깐의 휴식을 취하세요'] }
         }
     },
     // ========== ENGLISH ==========
@@ -550,6 +627,80 @@ const translations = {
             cardTip1_1: 'Stretch arms up to stretch whole body',
             cardTip1_2: 'Walk lightly in place',
             cardTip1_3: 'Raise and lower toes repeatedly'
+        },
+        restGuideData: {
+            'rest-all': {
+                label: 'Full Rest Guide',
+                steps: [
+                    { title: 'Stand Up', time: '1 min', description: 'Slowly stand up and stretch your body from toes to head to help blood circulation.', tips: ['Stretch arms up for full body stretch', 'Walk lightly in place', 'Raise and lower toes repeatedly'] },
+                    { title: 'Neck & Shoulder Stretch', time: '2 min', description: 'Release tension in neck and shoulders through stretching to relax tight muscles.', tips: ['Rotate neck slowly left and right (5 times each)', 'Raise shoulders up then roll back and down', 'Tilt head side to side to stretch neck muscles', 'Tuck chin to chest to stretch back of neck'] },
+                    { title: 'Deep Breathing & Meditation', time: '2 min', description: 'Calm your mind and relieve stress through deep breathing.', tips: ['Sit or stand in comfortable position', 'Inhale 4 seconds, exhale 6 seconds', 'Close eyes and focus on present moment', 'Consciously relax tense areas'] }
+                ]
+            },
+            'rest-neck': {
+                label: 'Neck Rest Guide',
+                steps: [
+                    { title: 'Loosen Neck', time: '1 min', description: 'Gently loosen tense neck muscles as preparation.', tips: ['Lower shoulders and relax neck', 'Tuck chin slightly to lengthen back of neck', 'Slowly turn head left and right (5 times each)'] },
+                    { title: 'Back of Neck Stretch', time: '1 min 30 sec', description: 'Focus on stretching the back neck muscles.', tips: ['Clasp hands behind head', 'Gently pull chin toward chest', 'Hold 15 sec then slowly release (repeat 3 times)', 'Reduce intensity if there is pain'] },
+                    { title: 'Neck Relaxation', time: '1 min', description: 'Relax stretched muscles and finish.', tips: ['Raise shoulders then drop them (5 times)', 'Tilt neck side to side', 'Release tension with deep breathing'] }
+                ]
+            },
+            'rest-face': {
+                label: 'Face Rest Guide',
+                steps: [
+                    { title: 'Facial Awareness', time: '1 min', description: 'Become aware of and consciously relax tense facial muscles.', tips: ['Check if forehead has wrinkles', 'Relax between eyebrows', 'Check if jaw is clenched'] },
+                    { title: 'Facial Muscle Stretch', time: '1 min 30 sec', description: 'Move various facial muscles to release tension.', tips: ['Open eyes wide then squeeze shut (5 times)', 'Open mouth wide and say "ah"', 'Puff up cheeks then pucker (5 times)', 'Roll tongue inside mouth (5 times each direction)'] },
+                    { title: 'Jaw Relaxation', time: '1 min', description: 'Focus on relaxing jaw muscles where tension often accumulates.', tips: ['Slightly open mouth to release jaw tension', 'Gently move jaw side to side', 'Massage temples in circular motion'] }
+                ]
+            },
+            'rest-eye': {
+                label: 'Eye Rest Guide',
+                steps: [
+                    { title: 'Rest with Eyes Closed', time: '1 min', description: 'Take eyes off screen and recover from eye fatigue.', tips: ['Close eyes and relax', 'Rub palms to warm then place over eyes', 'Release eye area tension with deep breathing'] },
+                    { title: 'Eye Exercises', time: '1 min 30 sec', description: 'Move eye muscles to relieve fatigue and improve circulation.', tips: ['Move eyes slowly up and down (10 times)', 'Move eyes slowly left and right (10 times)', 'Roll eyes clockwise in big circles (5 times)', 'Roll counterclockwise as well (5 times)'] },
+                    { title: 'Distance Gazing', time: '1 min', description: 'Relax eye focus muscles with 20-20-20 rule.', tips: ['Look out window or at distant point (6m+)', 'Focus on far distance for 20+ seconds', 'Blink to keep eyes moist'] }
+                ]
+            },
+            'rest-hand': {
+                label: 'Hand Rest Guide',
+                steps: [
+                    { title: 'Wrist Loosening', time: '1 min', description: 'Release wrist tension from keyboard and mouse use.', tips: ['Rotate wrists clockwise/counterclockwise (10 times each)', 'Bend wrists up and down to stretch', 'Shake hands to release tension'] },
+                    { title: 'Finger Stretching', time: '1 min 30 sec', description: 'Stretch finger joints and tendons.', tips: ['Spread fingers wide and hold 5 sec', 'Make tight fist and hold 5 sec (repeat 5 times)', 'Bend each finger back one at a time', 'Press palms together and bend wrists'] },
+                    { title: 'Hand Massage', time: '1 min', description: 'Massage to relieve overall hand fatigue.', tips: ['Press center of palm with thumb while massaging', 'Gently rub back of hands', 'Lightly press between fingers'] }
+                ]
+            }
+        },
+        diseases: {
+            'Text Neck Syndrome': 'A condition where the normal C-curve of the cervical spine becomes straightened due to forward head posture. Causes headaches, shoulder stiffness, and neck pain.',
+            'Cervical Disc': 'The disc between neck vertebrae protrudes and compresses nerves, causing arm numbness, shoulder pain, and hand tingling.',
+            'Myofascial Pain Syndrome': 'A condition where trigger points in muscles and fascia cause pain. Common with prolonged static posture.',
+            'Shoulder Impingement': 'Inflammation and pain when shoulder bones and tendons collide during arm raising.',
+            'Scoliosis': 'Lateral curvature of the spine, mainly caused by postural imbalance.',
+            'Lumbar Disc': 'A condition where the disc between lower back vertebrae protrudes and compresses nerves.',
+            'Deep Vein Thrombosis': 'Blood clots form in deep leg veins. Risk increases with prolonged sitting.',
+            'Varicose Veins': 'Leg veins bulge due to valve dysfunction causing blood to flow backward.',
+            'Carpal Tunnel Syndrome': 'Compression of median nerve in wrist causes hand numbness and wrist pain.',
+            'Tendinitis': 'Inflammation of the tendon sheath surrounding tendons.',
+            'De Quervain Disease': 'Inflammatory condition of thumb-side tendons and sheaths.',
+            'VDT Syndrome': 'Eye fatigue, vision problems from prolonged screen use.',
+            'Dry Eye': 'Eyes become dry from insufficient tears or rapid tear evaporation.',
+            'Tension Headache': 'Headache caused by tension in muscles around the head.',
+            'Migraine': 'Pulsating headache on one side, may include nausea and light/sound sensitivity.',
+            'Chronic Fatigue Syndrome': 'Persistent fatigue that doesn\'t improve with rest.',
+            'Poor Concentration': 'Decreased attention and focus, mainly caused by oxygen deficiency, fatigue, stress.',
+            'Hypoglycemia': 'Blood sugar drops below normal levels.'
+        },
+        healthTips: {
+            water: { title: 'You need hydration', tips: ['Drink a glass of water right now', 'Set hourly reminders to drink water', 'Choose water or herbal tea over caffeinated drinks'] },
+            meal: { title: 'You need regular meals', tips: ['Don\'t skip meals even when busy', 'Have at least a small snack', 'Breakfast is important for brain activity and concentration', 'Small frequent meals are better than overeating'] },
+            'neck-forward': { title: 'You need neck posture correction', tips: ['Tuck chin slightly and lengthen neck', 'Adjust monitor to eye level', 'Slowly rotate neck every 30 minutes'] },
+            'shoulder-tension': { title: 'You need shoulder tension relief', tips: ['Raise shoulders then roll back and down', 'Take deep breath and relax shoulders', 'Massage neck and shoulders for 5 minutes'] },
+            'back-curved': { title: 'You need back posture improvement', tips: ['Sit with back against backrest', 'Keep feet flat on floor while sitting', 'Place cushion behind lower back to maintain curve'] },
+            'sitting-long': { title: 'Time to move', tips: ['Stand up and walk 2-3 minutes right now', 'Do stretching for 5 minutes at your seat', 'Work 50 minutes, rest 10 minutes pattern'] },
+            'hand-pain': { title: 'You need wrist care', tips: ['Slowly rotate wrists in circles', 'Repeat spreading fingers then making fists', 'Use wrist rest when typing'] },
+            'wrist-angle': { title: 'You need wrist angle adjustment', tips: ['Adjust keyboard so wrist is straight', 'Use wrist rest on mouse pad', 'Adjust chair height so elbows are at 90 degrees'] },
+            'eye-strain': { title: 'You need eye rest', tips: ['20-20-20 rule: Every 20 min, look 20 feet away for 20 sec', 'Close eyes and rest for 10 seconds', 'Use artificial tears to keep eyes moist'] },
+            headache: { title: 'You need headache relief', tips: ['Do deep breathing for 5 minutes', 'Gently massage neck and shoulders', 'Get adequate hydration and brief rest'] }
         }
     },
     // ========== JAPANESE ==========
@@ -756,6 +907,80 @@ const translations = {
             cardTip1_1: '腕を上に伸ばして全身ストレッチ',
             cardTip1_2: 'その場で軽く歩く',
             cardTip1_3: 'つま先を上げ下げを繰り返す'
+        },
+        restGuideData: {
+            'rest-all': {
+                label: '全身休憩ガイド',
+                steps: [
+                    { title: '席を立つ', time: '1分', description: 'ゆっくり席を立って体を伸ばしてください。つま先から頭まで伸ばして血液循環を助けましょう。', tips: ['腕を上に伸ばして全身ストレッチ', 'その場で軽く歩く', 'つま先を上げ下げを繰り返す'] },
+                    { title: '首と肩のストレッチ', time: '2分', description: '首と肩の緊張をほぐすストレッチで凝った筋肉をリラックスさせましょう。', tips: ['首をゆっくり左右に回す(各5回)', '肩を上げて後ろに回しながら下ろす', '頭を左右に傾けて首の横の筋肉を伸ばす', '顎を胸に向けて首の後ろの筋肉をストレッチ'] },
+                    { title: '深呼吸と瞑想', time: '2分', description: '心を落ち着かせ、深呼吸でストレスを解消しましょう。', tips: ['楽な姿勢で座るか立つ', '4秒吸って6秒吐くを繰り返す', '目を閉じて今の瞬間に集中する', '緊張している部位を意識的にリラックスさせる'] }
+                ]
+            },
+            'rest-neck': {
+                label: '首の休憩ガイド',
+                steps: [
+                    { title: '首をほぐす', time: '1分', description: '緊張した首の筋肉を優しくほぐす準備運動です。', tips: ['肩を下げて首の力を抜く', '顎を軽く引いて首の後ろを長く伸ばす', '頭をゆっくり左右に回す(各5回)'] },
+                    { title: '首の後ろのストレッチ', time: '1分30秒', description: '首の後ろの筋肉を集中的に伸ばすストレッチです。', tips: ['両手を組んで頭の後ろに当てる', '顎を胸に向けて優しく引く', '15秒維持してゆっくり戻る(3回繰り返す)', '痛みがあれば強度を下げてください'] },
+                    { title: '首の筋肉のリラックス', time: '1分', description: 'ストレッチした筋肉をリラックスさせて終了します。', tips: ['肩を上げて落とす(5回)', '首を左右に傾けて横の筋肉を伸ばす', '深呼吸と共に緊張を解く'] }
+                ]
+            },
+            'rest-face': {
+                label: '顔の休憩ガイド',
+                steps: [
+                    { title: '顔の筋肉を意識', time: '1分', description: '普段緊張している顔の筋肉を意識して解きほぐします。', tips: ['額にしわが寄っていないか確認', '眉間の力を抜く', '顎に力が入っていないかチェック'] },
+                    { title: '表情筋ストレッチ', time: '1分30秒', description: '顔のさまざまな筋肉を動かして緊張を解消します。', tips: ['目を大きく開けてギュッと閉じる(5回)', '口を大きく開けて「あ」と言う', '頬を膨らませてすぼめる(5回)', '舌を口の中で回す(左右各5回)'] },
+                    { title: '顎のリラックスと仕上げ', time: '1分', description: '緊張が溜まりやすい顎の筋肉を集中的にリラックスさせます。', tips: ['口を軽く開けて顎の力を抜く', '顎を左右に優しく動かす', 'こめかみを円を描くように優しくマッサージ'] }
+                ]
+            },
+            'rest-eye': {
+                label: '目の休憩ガイド',
+                steps: [
+                    { title: '目を閉じて休憩', time: '1分', description: '画面から目を離して目の疲れを回復させます。', tips: ['目を閉じてリラックス', '手のひらを擦って温めてから目の上に当てる', '深呼吸と共に目の周りの緊張を解く'] },
+                    { title: '目の運動', time: '1分30秒', description: '目の筋肉を動かして疲れを取り血液循環を助けます。', tips: ['目をゆっくり上下に動かす(10回)', '目をゆっくり左右に動かす(10回)', '目を時計回りに大きく回す(5回)', '反時計回りにも回す(5回)'] },
+                    { title: '遠くを見る', time: '1分', description: '20-20-20ルールで目のピント筋肉をリラックスさせます。', tips: ['窓の外や遠く(6m以上)を見る', '20秒以上遠くに焦点を合わせる', '瞬きをして涙で目を潤す'] }
+                ]
+            },
+            'rest-hand': {
+                label: '手の休憩ガイド',
+                steps: [
+                    { title: '手首をほぐす', time: '1分', description: 'キーボードとマウスの使用で緊張した手首をほぐします。', tips: ['手首を時計/反時計回りに回す(各10回)', '手首を上下に曲げてストレッチ', '手を振って緊張を解く'] },
+                    { title: '指のストレッチ', time: '1分30秒', description: '指の関節と腱を伸ばすストレッチです。', tips: ['指を大きく開いて5秒維持', 'ギュッと握って5秒維持(5回繰り返す)', '各指を一本ずつ後ろに反らせてストレッチ', '手のひらを合わせて手首を曲げる'] },
+                    { title: '手のマッサージ', time: '1分', description: '手全体の疲れを取るマッサージです。', tips: ['親指で手のひらの中央を押しながらマッサージ', '手の甲を優しくさする', '指の間を軽く押す'] }
+                ]
+            }
+        },
+        diseases: {
+            'ストレートネック': '前に突き出した姿勢により頸椎の正常なC字カーブが直線化する症状です。頭痛、肩こり、首の痛みを引き起こします。',
+            '頸椎椎間板ヘルニア': '首の骨の間の椎間板が飛び出して神経を圧迫し、腕のしびれ、肩の痛み、手のしびれなどを引き起こします。',
+            '筋膜性疼痛症候群': '筋肉と筋膜にトリガーポイントができて痛みを引き起こす疾患です。長時間同じ姿勢で発生しやすいです。',
+            '肩インピンジメント症候群': '腕を上げる時に肩の骨と腱がぶつかり炎症と痛みを引き起こす疾患です。',
+            '脊柱側弯症': '背骨が左右に曲がる疾患で、姿勢の不均衡が主な原因です。',
+            '腰椎椎間板ヘルニア': '腰の骨の間の椎間板が飛び出して神経を圧迫する疾患です。',
+            '深部静脈血栓症': '足の深い静脈に血栓ができる疾患です。長時間座っていると発生リスクが高まります。',
+            '下肢静脈瘤': '足の静脈の弁機能異常により血液が逆流して静脈が膨れる疾患です。',
+            '手根管症候群': '手首の正中神経が圧迫されて手のしびれ、手首の痛みを引き起こす疾患です。',
+            '腱鞘炎': '腱を包む腱鞘に炎症が起こる疾患です。',
+            'ドケルバン病': '親指側の腱と腱鞘に起こる炎症性疾患です。',
+            'VDT症候群': '画面を長時間見ることで発生する目の疲れ、視力低下などの症状です。',
+            'ドライアイ': '涙の分泌が不足したり涙がすぐ蒸発して目が乾く疾患です。',
+            '緊張型頭痛': '頭の周りの筋肉の緊張により発生する頭痛です。',
+            '偏頭痛': '頭の片側がズキズキする拍動性の頭痛で、吐き気や光・音への過敏を伴うことがあります。',
+            '慢性疲労症候群': '十分な休息でも改善しない持続的な疲労状態です。',
+            '集中力低下': '注意力と集中力が低下した状態で、酸素不足、疲労、ストレスが主な原因です。',
+            '低血糖症': '血糖値が正常以下に下がる状態です。'
+        },
+        healthTips: {
+            water: { title: '水分補給が必要です', tips: ['今すぐコップ一杯の水を飲んでください', '1時間ごとにアラームを設定して水を飲む習慣を作りましょう', 'カフェイン飲料より水やハーブティーを選びましょう'] },
+            meal: { title: '規則的な食事が必要です', tips: ['忙しくても食事を抜かないでください', '簡単なおやつでも食べてください', '朝食は脳の活動と集中力に重要です', '過食より少量ずつ頻繁に食べる方が良いです'] },
+            'neck-forward': { title: '首の姿勢矯正が必要です', tips: ['顎を軽く引いて首を長く伸ばしてください', 'モニターの高さを目の高さに合わせてください', '30分ごとに首をゆっくり左右に回してください'] },
+            'shoulder-tension': { title: '肩の緊張緩和が必要です', tips: ['肩を上げて後ろに回しながら下ろしてください', '深く息を吸いながら肩の力を抜いてください', '首と肩を5分間マッサージしてください'] },
+            'back-curved': { title: '腰の姿勢改善が必要です', tips: ['背もたれに腰を密着させて座ってください', '足を床に平らに置いて座ってください', '腰の後ろにクッションを置いてカーブを維持してください'] },
+            'sitting-long': { title: '動く時間です', tips: ['今すぐ席を立って2〜3分歩いてください', 'その場でストレッチを5分間してください', '50分仕事して10分休むパターンを作りましょう'] },
+            'hand-pain': { title: '手首のケアが必要です', tips: ['手首を円を描くようにゆっくり回してください', '指を広げて握る運動を繰り返してください', '手首レストを使ってタイピングしてください'] },
+            'wrist-angle': { title: '手首の角度調整が必要です', tips: ['キーボードと手首が一直線になるように調整してください', 'マウスパッドに手首レストを使用してください', '肘が90度になるように椅子の高さを調節してください'] },
+            'eye-strain': { title: '目の休憩が必要です', tips: ['20-20-20ルール：20分ごとに20フィート(6m)先を20秒見てください', '目を閉じて10秒休憩してください', '人工涙液を使って目を潤してください'] },
+            headache: { title: '頭痛緩和が必要です', tips: ['深呼吸を5分間してください', '首と肩を優しくマッサージしてください', '十分な水分摂取と短い休憩を取ってください'] }
         }
     }
 };

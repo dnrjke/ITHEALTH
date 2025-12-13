@@ -211,7 +211,12 @@ function initNavigation() {
         if (targetContent) {
             targetContent.classList.add('active');
             document.body.classList.remove('main-view');
-            
+
+            // 휴식 가이드 탭으로 이동 시 타이머 상태 초기화
+            if (tabId === 'rest-guide-content') {
+                document.dispatchEvent(new CustomEvent('resetRestGuide'));
+            }
+
             // 건강 가이드 탭일 때만 섹션 네비게이션 표시
             if (isGuideTab) {
                 document.body.classList.add('guide-view');
@@ -694,10 +699,7 @@ function initI18n() {
             updateElement('intro-card3-title', t.intro.card3Title);
             updateElement('intro-card3-desc', t.intro.card3Desc);
             updateElement('intro-howto-title', t.intro.howtoTitle);
-            updateElement('intro-howto-1', t.intro.howto1);
-            updateElement('intro-howto-2', t.intro.howto2);
-            updateElement('intro-howto-3', t.intro.howto3);
-            updateElement('intro-howto-4', t.intro.howto4);
+            // howto 1-4는 data-i18n-html로 처리됨 (HTML 포함)
             updateElement('intro-workspace-title', t.intro.workspaceTitle);
             updateElement('intro-workspace-desc', t.intro.workspaceDesc);
             updateElement('climate-temp-title', t.intro.climateTempTitle);
@@ -2029,36 +2031,87 @@ function initTimer() {
     }
 
     function setupProgressBarSeek() {
-        // Sticky 진행률 바
+        // 진행바 드래그/슬라이드 공통 함수
+        function setupProgressBarDrag(container, mode, onSeek) {
+            let isDragging = false;
+
+            function handleSeek(clientX) {
+                if (!timerState.isRunning && !timerState.isPaused) return;
+
+                const rect = container.getBoundingClientRect();
+                const seekX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+                const percentage = seekX / rect.width;
+                const newTime = Math.floor(percentage * timerState.totalTime);
+
+                timerState.currentTime = Math.max(0, Math.min(newTime, timerState.totalTime));
+                onSeek();
+            }
+
+            // 마우스 이벤트 (데스크톱)
+            container.addEventListener('mousedown', (e) => {
+                if (mode === 'global' && timerState.mode !== 'global') return;
+                e.preventDefault();
+                isDragging = true;
+                handleSeek(e.clientX);
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                if (mode === 'global' && timerState.mode !== 'global') return;
+                handleSeek(e.clientX);
+            });
+
+            document.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // 터치 이벤트 (모바일)
+            container.addEventListener('touchstart', (e) => {
+                if (mode === 'global' && timerState.mode !== 'global') return;
+                isDragging = true;
+                handleSeek(e.touches[0].clientX);
+            }, { passive: true });
+
+            container.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                if (mode === 'global' && timerState.mode !== 'global') return;
+                e.preventDefault();
+                handleSeek(e.touches[0].clientX);
+            }, { passive: false });
+
+            container.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+
+            // 클릭 이벤트도 유지
+            container.addEventListener('click', (e) => {
+                if (mode === 'global' && timerState.mode !== 'global') return;
+                if (!timerState.isRunning && !timerState.isPaused) return;
+                handleSeek(e.clientX);
+            });
+
+            // 커서 스타일
+            container.style.cursor = 'pointer';
+        }
+
+        // Sticky 진행률 바 설정
         const stickyProgressContainer = document.getElementById('sticky-progress-container');
         if (stickyProgressContainer) {
-            stickyProgressContainer.addEventListener('click', (e) => {
-                if (timerState.mode !== 'global' || !timerState.isRunning) return;
-                
-                const rect = stickyProgressContainer.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const percentage = clickX / rect.width;
-                const newTime = Math.floor(percentage * timerState.totalTime);
-                
-                timerState.currentTime = Math.max(0, Math.min(newTime, timerState.totalTime));
+            setupProgressBarDrag(stickyProgressContainer, 'global', () => {
                 updateGlobalTimerUI();
                 checkGlobalStepTransition();
             });
         }
-        
+
+        // 개별 스텝 진행률 바 설정
         document.querySelectorAll('[data-step-timer]').forEach(stepTimer => {
             const progressContainer = stepTimer.querySelector('.progress-bar-container');
-            progressContainer.addEventListener('click', (e) => {
-                const stepNum = parseInt(stepTimer.dataset.stepTimer);
-                if (timerState.mode !== 'individual' || timerState.currentStep !== stepNum || !timerState.isRunning) return;
-                
-                const rect = progressContainer.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                const percentage = clickX / rect.width;
-                const newTime = Math.floor(percentage * timerState.totalTime);
-                
-                timerState.currentTime = Math.max(0, Math.min(newTime, timerState.totalTime));
-                updateIndividualTimerUI();
+            const stepNum = parseInt(stepTimer.dataset.stepTimer);
+
+            setupProgressBarDrag(progressContainer, 'individual', () => {
+                if (timerState.mode === 'individual' && timerState.currentStep === stepNum) {
+                    updateIndividualTimerUI();
+                }
             });
         });
     }
@@ -2167,6 +2220,80 @@ function initTimer() {
     setupProgressBarSeek();
     setupCardToggle();
     setupStepsBarClickHandlers();
+
+    // 휴식 가이드 탭으로 이동 시 전체 UI 초기화
+    document.addEventListener('resetRestGuide', () => {
+        // 타이머가 실행 중이면 중지
+        if (timerState.isRunning || timerState.isPaused) {
+            clearInterval(timerState.intervalId);
+        }
+
+        // 타이머 상태 초기화
+        timerState.isRunning = false;
+        timerState.isPaused = false;
+        timerState.currentTime = 0;
+        timerState.mode = null;
+        timerState.guideType = null;
+        timerState.currentStep = null;
+        timerState.steps = [];
+        previousStepNum = null;
+
+        // UI 요소 초기화
+        const stickyProgress = document.getElementById('timer-sticky-progress');
+        const stickyCardDisplay = document.getElementById('sticky-card-display');
+        const globalStartBtn = document.getElementById('global-timer-start');
+        const completeMessage = document.getElementById('timer-complete-message');
+
+        if (stickyProgress) stickyProgress.classList.add('hidden');
+        if (stickyCardDisplay) stickyCardDisplay.classList.add('hidden');
+        if (globalStartBtn) globalStartBtn.classList.remove('hidden');
+        if (completeMessage) completeMessage.classList.add('hidden');
+
+        // 진행률 바 초기화
+        const progressBar = document.getElementById('sticky-progress-bar');
+        if (progressBar) progressBar.style.width = '0%';
+
+        // 시간 표시 초기화
+        const currentTimeEl = document.getElementById('sticky-current-time');
+        if (currentTimeEl) currentTimeEl.textContent = '0:00';
+
+        // 일시정지 버튼 텍스트 리셋
+        const pauseBtn = document.getElementById('sticky-timer-pause');
+        if (pauseBtn) {
+            const btnText = pauseBtn.querySelector('span:last-child');
+            if (btnText) btnText.textContent = '일시정지';
+        }
+
+        // 스텝 카드 상태 초기화
+        document.querySelectorAll('.break-step').forEach(card => {
+            card.classList.remove('completed', 'active', 'waiting', 'collapsed', 'individual-mode');
+        });
+
+        // 개별 타이머 UI 초기화
+        document.querySelectorAll('[data-step-timer]').forEach(timer => {
+            timer.classList.add('hidden');
+        });
+
+        // 개별 재생 버튼 초기화
+        document.querySelectorAll('.step-play-btn').forEach(btn => {
+            btn.classList.remove('playing');
+            const icon = btn.querySelector('span');
+            if (icon) icon.textContent = '▶️';
+        });
+
+        // body 클래스 정리
+        document.body.classList.remove('global-timer-active');
+
+        // 스크롤 잠금 해제
+        if (typeof unlockScroll === 'function') {
+            unlockScroll();
+        }
+
+        // 스텝바 상태 초기화
+        document.querySelectorAll('.step-box').forEach(box => {
+            box.classList.remove('active', 'completed');
+        });
+    });
 }
 
 
