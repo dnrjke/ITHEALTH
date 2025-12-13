@@ -507,7 +507,26 @@ function initI18n() {
     function setLang(lang) {
         const t = translations[lang];
         if (!t) return;
-        
+
+        // data-i18n 속성을 가진 요소들 처리
+        function getNestedValue(obj, path) {
+            return path.split('.').reduce((current, key) => current && current[key], obj);
+        }
+
+        // data-i18n 속성 처리 (textContent)
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            const value = getNestedValue(t, key);
+            if (value) el.textContent = value;
+        });
+
+        // data-i18n-html 속성 처리 (innerHTML)
+        document.querySelectorAll('[data-i18n-html]').forEach(el => {
+            const key = el.getAttribute('data-i18n-html');
+            const value = getNestedValue(t, key);
+            if (value) el.innerHTML = value;
+        });
+
         // 네비게이션
         const navHeadache = document.getElementById('nav-headache');
         const navTurtle = document.getElementById('nav-turtle');
