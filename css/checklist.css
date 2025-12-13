@@ -204,9 +204,19 @@
     border: 2px solid transparent;
 }
 
-.disease-tag:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(96, 125, 139, 0.3);
+/* 호버 효과는 진정한 호버를 지원하는 기기에서만 적용 */
+@media (hover: hover) and (pointer: fine) {
+    .disease-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(96, 125, 139, 0.3);
+    }
+}
+
+/* 모바일에서 터치 후 호버 상태 제거 */
+@media (hover: none) {
+    .disease-tag {
+        -webkit-tap-highlight-color: transparent;
+    }
 }
 
 /* 클릭하여 고정된 상태 - 차분한 청록색 */

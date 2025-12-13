@@ -334,6 +334,7 @@ function initNavigation() {
             introCta.addEventListener('click', () => {
                 showContent('headache-content');
                 updateHeaderNav('guide');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
         
