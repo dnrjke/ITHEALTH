@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT&HEALTH</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/sections.css">
+    <link rel="stylesheet" href="css/intro.css">
+    <link rel="stylesheet" href="css/checklist.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="main-view">
+    <header>
+        <h1 id="main-title">IT&HEALTH</h1>
+        
+        <nav class="header-nav" aria-label="주요 메뉴">
+            <ul class="header-nav-list">
+                <li class="header-nav-item">
+                    <a href="#" class="header-nav-link active" data-nav="guide">
+                        <span class="nav-icon">📖</span>
+                        <span class="nav-label" id="nav-guide-text">건강 가이드</span>
+                    </a>
+                </li>
+                <li class="header-nav-item">
+                    <a href="#" class="header-nav-link" data-nav="rest-guide">
+                        <span class="nav-icon">🧘</span>
+                        <span class="nav-label" id="nav-rest-text">휴식 가이드</span>
+                    </a>
+                </li>
+                <li class="header-nav-item">
+                    <a href="#" class="header-nav-link" data-nav="checklist">
+                        <span class="nav-icon">✅</span>
+                        <span class="nav-label" id="nav-check-text">체크리스트</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <div class="header-controls">
+            <div class="language-selector" aria-label="언어 선택">
+                <span class="lang-option active" data-lang="KR" role="button" tabindex="0" aria-pressed="true">KR</span> |
+                <span class="lang-option" data-lang="EN" role="button" tabindex="0" aria-pressed="false">EN</span> |
+                <span class="lang-option" data-lang="JP" role="button" tabindex="0" aria-pressed="false">JP</span>
+            </div>
+        </div>
+    </header>
+    
+    <nav class="section-nav">
+        <button class="nav-arrow nav-arrow-left" aria-label="이전 탭들">
+            <span>‹</span>
+        </button>
+        <div class="nav-carousel-container">
+            <div class="nav-carousel">
+                <div id="nav-headache" class="nav-item active" data-tab="headache">
+                    <span class="nav-icon">🧠</span>
+                    <span class="nav-text">두통/무기력</span>
+                    <div class="nav-description">깊은 호흡과 자세 개선</div>
+                </div>
+                <div id="nav-turtle" class="nav-item" data-tab="turtle-neck">
+                    <span class="nav-icon">🐢</span>
+                    <span class="nav-text">거북목</span>
+                    <div class="nav-description">목과 어깨 건강</div>
+                </div>
+                <div id="nav-hand" class="nav-item" data-tab="hand-pain">
+                    <span class="nav-icon">✋</span>
+                    <span class="nav-text">손의 통증</span>
+                    <div class="nav-description">손목과 손가락 케어</div>
+                </div>
+                <div id="nav-eye" class="nav-item" data-tab="eye-health">
+                    <span class="nav-icon">👁️</span>
+                    <span class="nav-text">눈 건강</span>
+                    <div class="nav-description">눈의 피로와 건조함</div>
+                </div>
+                <div id="nav-back" class="nav-item" data-tab="back-health">
+                    <span class="nav-icon">🧍</span>
+                    <span class="nav-text">허리 건강</span>
+                    <div class="nav-description">앉은 자세와 코어</div>
+                </div>
+                <div id="nav-face" class="nav-item" data-tab="face-tension">
+                    <span class="nav-icon">😌</span>
+                    <span class="nav-text">얼굴 긴장</span>
+                    <div class="nav-description">표정근과 턱 이완</div>
+                </div>
+            </div>
+        </div>
+        <button class="nav-arrow nav-arrow-right" aria-label="다음 탭들">
+            <span>›</span>
+        </button>
+        <div class="nav-indicator"></div>
+    </nav>
+    
+    <main class="content">
+        <div id="main-content" class="tab-content active">
+            <div class="hero">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 id="poster-title" class="hero-title">건강한 IT 라이프</h1>
+                        <p id="poster-subtitle" class="hero-subtitle">매일의 작은 변화가 당신의 일상을 바꿉니다</p>
+                        <div class="hero-tagline">
+                            <span id="poster-description" class="tagline-text">지속 가능한 건강 습관으로 더 나은 내일을 만나보세요</span>
+                        </div>
+                    </div>
+                    <div class="checklist-access">
+                        <button id="start-guide-btn" class="start-guide-button">
+                            <span class="start-icon">🚀</span>
+                            <span id="btn-start-text" class="start-text">시작하기</span>
+                        </button>
+                        <button id="quick-break-start-btn" class="quick-break-start-button">
+                            <span class="break-icon">🎬</span>
+                            <span id="btn-break-text" class="break-text">5분 휴식하기</span>
+                        </button>
+                        <button id="health-checklist-btn" class="checklist-button">
+                            <span class="checklist-icon">📋</span>
+                            <span id="btn-check-text" class="checklist-text">건강 체크리스트</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="intro-content" class="tab-content">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="intro-container">
+                <div class="intro-hero">
+                    <h2 class="intro-title" id="intro-main-title">IT&HEALTH 가이드에 오신 것을 환영합니다</h2>
+                    <div class="intro-lead">
+                        <p class="lead-text" id="intro-lead-1">장시간 데스크워크로 몸에 무리가 가고 있지는 않나요?</p>
+                        <p class="lead-text" id="intro-lead-2">자세가 무너지고 있지는 않나요?</p>
+                    </div>
+                </div>
+                <div class="intro-quick-access">
+                    <h3 class="section-heading">🚀 바로가기</h3>
+                    <div class="quick-access-buttons">
+                        <button class="quick-access-btn" data-target="guide">
+                            <span class="qa-icon">📖</span>
+                            <span id="qa-guide-label" class="qa-label">건강 가이드</span>
+                        </button>
+                        <button class="quick-access-btn" data-target="rest-guide">
+                            <span class="qa-icon">🧘</span>
+                            <span id="qa-rest-label" class="qa-label">휴식 가이드</span>
+                        </button>
+                        <button class="quick-access-btn" data-target="checklist">
+                            <span class="qa-icon">✅</span>
+                            <span id="qa-check-label" class="qa-label">체크리스트</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="intro-footer">
+                    <div class="message-box">
+                        <h3 id="intro-message-title">건강한 IT 라이프를 시작하세요</h3>
+                        <p id="intro-message-1">심각한 증상이 지속되거나 악화된다면 반드시 의료 전문가와 상담하세요.</p>
+                    </div>
+                    <button class="cta-button" id="intro-cta">건강 가이드 둘러보기 →</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="headache-content" class="tab-content">
+            <div class="tab-background">
+                <img src="image/gua-sha-leaves-resize.jpg" alt="배경" class="tab-bg-image">
+                <div class="tab-bg-overlay"></div>
+            </div>
+            <div class="tab-content-wrapper">
+                <div class="section-layout">
+                    <div class="hero-left">
+                        <h2 id="headache-title" class="content-title">두통과 무기력 해결하기</h2>
+                        <p id="intro1" class="intro-text">...</p>
+                        <p id="intro2" class="intro-text">...</p>
+                    </div>
+                    <div class="hero-right"><img src="image/icon/headache.jpg" class="content-hero-image"></div>
+                </div>
+                <div class="section-block">
+                    <h3 id="symptom-title" class="section-title">[증상 특징]</h3>
+                    <ul class="symptom-list">
+                        <li><span class="icon">🙁</span> <span id="symptom-item1">...</span></li>
+                        <li><span class="icon">✨</span> <span id="symptom-item2">...</span></li>
+                    </ul>
+                </div>
+                <div class="section-block">
+                    <h3 id="cause-title" class="section-title">[원인과 메커니즘]</h3>
+                    <ul class="cause-list">
+                        <li><span class="icon">①</span> <span id="cause-item1">...</span></li>
+                        <li><span class="icon">②</span> <span id="cause-item2">...</span></li>
+                    </ul>
+                </div>
+                <div class="tips-section">
+                    <div class="tips-content">
+                        <h3 id="tip-title" class="section-title tips-title">[개선의 힌트]</h3>
+                        <div class="tips-grid">
+                            <div class="tip-card breathing-tip">
+                                <div class="tip-text">
+                                    <span class="tip-action" id="tip-item1">...</span>
+                                    <p class="tip-detail" id="tip-detail1">...</p>
+                                </div>
+                            </div>
+                            <div class="tip-card environment-tip">
+                                <div class="tip-text">
+                                    <span class="tip-action" id="tip-item2">...</span>
+                                    <p class="tip-detail" id="tip-detail2">...</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keyword-chips">
+                            <span class="chip" id="chip-breath-text">깊은 호흡</span>
+                            <span class="chip" id="chip-posture-text">자연스러운 자세</span>
+                            <span class="chip" id="chip-mindfulness-text">마음챙김</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="next-button" class="next-step-button">다음 스텝</button>
+            </div>
+        </div>
+        
+        <div id="guide-complete-content" class="tab-content">
+             <div class="guide-complete-container">
+                <div class="complete-hero">
+                    <h2 id="comp-title" class="complete-title">건강 가이드를 모두 살펴보셨습니다!</h2>
+                    <p id="comp-sub" class="complete-subtitle">작은 습관이 큰 변화를 만듭니다</p>
+                </div>
+                <div class="complete-summary">
+                    <h3 id="comp-summary-title" class="summary-title">핵심 요약</h3>
+                    </div>
+                <div class="complete-next-actions">
+                    <h3 id="comp-action-title" class="actions-title">다음 단계</h3>
+                    <div class="action-buttons">
+                        <button id="go-checklist-btn" class="complete-action-btn primary">
+                            <span id="btn-comp-check">건강 체크리스트로 이동</span>
+                        </button>
+                        <button id="go-break-btn" class="complete-action-btn secondary">
+                            <span id="btn-comp-rest">5분 휴식 가이드 시작하기</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="rest-guide-content" class="tab-content">
+            <div class="rest-guide-container">
+                <div class="rest-guide-header">
+                    <h2 id="rg-title" class="rest-guide-title">휴식 가이드</h2>
+                    <p id="rg-sub" class="rest-guide-subtitle">몸과 마음을 위한 간단한 스트레칭</p>
+                </div>
+                <div class="rest-guide-intro">
+                    <h3 id="rg-intro-title">가이드 소개</h3>
+                    <div class="content-box">
+                        <p id="rg-intro-1">지친 몸을 위한 효과적인 휴식법입니다.</p>
+                        <p id="rg-intro-2">부위별 스트레칭으로 피로를 풀어보세요.</p>
+                    </div>
+                    <div class="rest-guides-grid">
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🎬</div>
+                            <h4 id="card-all-title">전체 휴식 가이드</h4>
+                            <p id="card-all-desc">전신 스트레칭 (5분)</p>
+                            <button class="guide-card-btn" data-guide="rest-all" id="btn-start-all">시작하기</button>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="health-checklist-content" class="tab-content">
+            <div class="checklist-container">
+                <div class="checklist-header">
+                    <h2 id="chk-title" class="checklist-title">건강 체크리스트</h2>
+                    <p id="chk-subtitle" class="checklist-subtitle">지금 이 순간, 나의 상태를 점검해보세요</p>
+                </div>
+                <div class="checklist-grid">
+                    <div class="checklist-section">
+                        <h3 id="chk-sec-hydration" class="section-title">🍽️ 수분 & 식사</h3>
+                        <div class="check-item" data-category="hydration" data-tip="water">
+                            <input type="checkbox" id="check-water" class="check-input">
+                            <label for="check-water" class="check-label">
+                                <span class="check-text" id="chk-q-water">지난 1시간 내에 물을 마셨나요?</span>
+                            </label>
+                        </div>
+                        <div class="check-item" data-category="meal" data-tip="meal">
+                            <input type="checkbox" id="check-meal" class="check-input">
+                            <label for="check-meal" class="check-label">
+                                <span class="check-text" id="chk-q-meal">오늘 식사를 거르지 않았나요?</span>
+                            </label>
+                        </div>
+                    </div>
+                    </div>
+                <div class="checklist-results">
+                    <div class="results-summary">
+                        <h3 id="chk-res-title">체크 결과</h3>
+                        <p class="check-count"><span id="chk-count-label">체크된 항목:</span> <span id="checked-count">0</span></p>
+                    </div>
+                    <div class="results-tips" id="health-tips">
+                        <p id="chk-default-msg">항목을 체크하면 맞춤 건강 팁을 제공합니다!</p>
+                    </div>
+                </div>
+                <div class="checklist-actions">
+                    <button id="chk-reset-btn" class="reset-checklist-btn">전체 초기화</button>
+                </div>
+                <div class="recommended-guides" id="recommended-guides"></div>
+            </div>
+        </div>
+    </main>
+    
+    <div class="timer-sticky-progress hidden" id="timer-sticky-progress">
+        <div class="sticky-progress-content">
+            <div class="sticky-timer-label">
+                <span id="timer-label-icon">🎬</span>
+                <span id="sticky-timer-label">전체 휴식 가이드 진행 중</span>
+            </div>
+            <div class="timer-buttons">
+                <button class="timer-btn timer-btn-pause" id="sticky-timer-pause">
+                    <span>⏸️</span>
+                    <span id="btn-pause-text">일시정지</span>
+                </button>
+                <button class="timer-btn timer-btn-reset" id="sticky-timer-reset">
+                    <span>✕</span>
+                    <span id="btn-close-text">닫기</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="timer-complete-message hidden" id="timer-complete-message">
+        🎉 <span id="msg-complete">완료! 수고하셨습니다!</span> 🎉
+    </div>
+
+    <script src="i18n/translations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
