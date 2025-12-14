@@ -220,11 +220,14 @@
 
 /* 래퍼 내부 content-hero-image */
 .tab-content-wrapper .content-hero-image {
-    width: 100%;
+    width: auto;
     max-width: 100%;
     height: auto;
     min-height: 250px;
+    max-height: 400px;
     object-fit: contain;
+    margin: 0 auto;
+    display: block;
 }
 
 /* 래퍼 내부 problem-keyword */
@@ -816,11 +819,15 @@ html[lang="ja"] .hero-subtitle {
 
 /* ==================== 이미지 레이아웃 ==================== */
 .content-hero-image {
-    width: 100%;
-    height: 400px;
-    object-fit: cover;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
     border-radius: 20px;
     box-shadow: 0 12px 40px var(--shadow-medium);
+    margin: 0 auto;
+    display: block;
 }
 
 .info-grid {
@@ -1112,14 +1119,23 @@ html[lang="ja"] .hero-subtitle {
         grid-template-columns: 1fr;
     }
 
-    .tab-content-wrapper .hero-left,
+    .tab-content-wrapper .hero-left {
+        padding: 0 1.5em;
+    }
+
     .tab-content-wrapper .hero-right {
         padding: 0;
     }
 
     .tab-content-wrapper .content-hero-image {
-        height: 180px;
+        width: auto;
+        max-width: 100%;
+        height: auto;
         min-height: 180px;
+        max-height: 250px;
+        object-fit: contain;
+        margin: 0 auto;
+        display: block;
     }
 
     .tab-content-wrapper .section-block {

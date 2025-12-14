@@ -255,11 +255,7 @@
         min-height: auto;
         padding: 0.8em 0;
     }
-    
-    .hero-left {
-        padding: 0 1.5em;
-    }
-    
+
     .hero-right {
         padding: 0 0.5em;
     }
@@ -271,9 +267,14 @@
     }
 
     .content-hero-image {
-        height: 180px;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 250px;
         object-fit: contain;
         border-radius: 12px;
+        margin: 0 auto;
+        display: block;
     }
 
     .info-grid {
