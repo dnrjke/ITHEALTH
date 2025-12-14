@@ -1968,6 +1968,7 @@ function initTimer() {
 
                 isDragging = true;
                 thumb.classList.add('active');
+                container.classList.add('dragging'); // transition 제거
 
                 // Rect 업데이트
                 updateContainerRect();
@@ -1999,6 +2000,7 @@ function initTimer() {
 
                 isDragging = false;
                 thumb.classList.remove('active');
+                container.classList.remove('dragging'); // transition 복구
 
                 // RAF 루프 정지
                 if (rafId) {
