@@ -74,10 +74,13 @@
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
         padding: 0;
         box-sizing: border-box;
+    }
+
+    .nav-carousel-container.snapping {
+        scroll-behavior: smooth;
     }
     
     .nav-carousel-container::-webkit-scrollbar {
@@ -101,8 +104,6 @@
         max-width: calc(100vw / 3);
         flex: 0 0 calc(100vw / 3);
         padding: 0.6em 0.3em;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
         box-sizing: border-box;
         margin: 0;
     }

@@ -115,7 +115,7 @@ function initNavigation() {
         
         if (targetItem && navCarouselContainer && window.innerWidth <= 768) {
             let scrollLeft;
-            
+
             // 첫 번째 항목: 왼쪽 끝 정렬
             if (tabIndex === 0) {
                 scrollLeft = 0;
@@ -128,11 +128,18 @@ function initNavigation() {
             else {
                 scrollLeft = targetItem.offsetLeft - (navCarouselContainer.offsetWidth / 2) + (targetItem.offsetWidth / 2);
             }
-            
+
+            // 탭 클릭 시에만 smooth scroll 적용
+            navCarouselContainer.classList.add('snapping');
             navCarouselContainer.scrollTo({
                 left: scrollLeft,
                 behavior: 'smooth'
             });
+
+            // 스크롤 완료 후 snapping 클래스 제거
+            setTimeout(() => {
+                navCarouselContainer.classList.remove('snapping');
+            }, 500);
         }
         
         currentTabIndex = tabIndex;
@@ -2195,7 +2202,7 @@ function initTimer() {
    ================================================ */
 
 function initBackgroundBlurUp() {
-    // 모든 배경 이미지에 blur-up 효과 적용
+    // 1. 탭 배경 이미지에 blur-up 효과 적용
     const bgImages = document.querySelectorAll('.tab-bg-image');
 
     bgImages.forEach((img) => {
@@ -2214,6 +2221,21 @@ function initBackgroundBlurUp() {
             });
         }
     });
+
+    // 2. 메인 hero 배경 이미지 프리로드 및 blur-up
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+        const highResImage = new Image();
+        highResImage.src = 'image/main_floral_calm.webp';
+
+        highResImage.onload = () => {
+            mainContent.classList.add('loaded');
+        };
+
+        highResImage.onerror = () => {
+            mainContent.classList.add('loaded');
+        };
+    }
 }
 
 
