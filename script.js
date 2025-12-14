@@ -36,6 +36,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initSectionGuides();
     console.log('✅ 섹션별 추천 가이드 초기화 완료');
 
+    // 8. 배경 이미지 blur-up 효과 초기화
+    initBackgroundBlurUp();
+    console.log('✅ 배경 이미지 blur-up 초기화 완료');
+
     console.log('🎉 모든 초기화 완료!');
 });
 
@@ -2184,6 +2188,32 @@ function initTimer() {
 
     console.log('✅ initTimer 초기화 완료');
     console.log('🌐 전역 함수 사용 가능: window.ITHealth.startGuide(guideType), window.ITHealth.resetGuide()');
+}
+
+/* ================================================
+   BACKGROUND BLUR-UP - 배경 이미지 블러 업 효과
+   ================================================ */
+
+function initBackgroundBlurUp() {
+    // 모든 배경 이미지에 blur-up 효과 적용
+    const bgImages = document.querySelectorAll('.tab-bg-image');
+
+    bgImages.forEach((img) => {
+        // 이미 로드된 경우 즉시 loaded 클래스 추가
+        if (img.complete && img.naturalHeight !== 0) {
+            img.classList.add('loaded');
+        } else {
+            // 로드 완료 시 loaded 클래스 추가
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+            });
+
+            // 에러 발생 시에도 blur 제거 (흐릿한 상태로 남지 않도록)
+            img.addEventListener('error', () => {
+                img.classList.add('loaded');
+            });
+        }
+    });
 }
 
 
