@@ -224,7 +224,7 @@
     max-width: 100%;
     height: auto;
     min-height: 250px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 /* 래퍼 내부 problem-keyword */
@@ -340,10 +340,10 @@
     white-space: nowrap;
 }
 
-/* Japanese: Use consistent font to avoid kanji emphasis issue */
+/* Japanese: Use consistent font and apply italic like other languages */
 html[lang="ja"] .hero-subtitle {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS PMincho', 'Noto Serif JP', serif;
-    font-style: normal;
+    font-style: italic;
     font-weight: 400;
 }
 

@@ -31,7 +31,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initChecklist();
         console.log('✅ 체크리스트 초기화 완료');
     }, 200);
-    
+
+    // 7. 섹션별 추천 가이드 초기화 (모바일 전용)
+    initSectionGuides();
+    console.log('✅ 섹션별 추천 가이드 초기화 완료');
+
     console.log('🎉 모든 초기화 완료!');
 });
 
@@ -692,6 +696,11 @@ function initI18n() {
         if (typeof window.ITHealth?.updateChecklist === 'function') {
             window.ITHealth.updateChecklist();
         }
+
+        // 섹션 가이드가 있으면 업데이트 (언어 변경 시)
+        if (typeof window.ITHealth?.updateSectionGuides === 'function') {
+            window.ITHealth.updateSectionGuides();
+        }
     }
 
     const langButtons = document.querySelectorAll('.lang-option');
@@ -1177,6 +1186,81 @@ function initChecklist() {
 
     // 초기 업데이트
     updateCheckCount();
+}
+
+/* ================================================
+   SECTION GUIDES - 건강 가이드 섹션별 추천 가이드 (모바일 전용)
+   ================================================ */
+
+function initSectionGuides() {
+    // 섹션별 추천 가이드 매핑 (섹션 ID → 추천 가이드 타입들)
+    const sectionGuideMap = {
+        'turtle-neck-recommended-guides': ['rest-neck', 'rest-face'],
+        'hand-pain-recommended-guides': ['rest-hand'],
+        'eye-health-recommended-guides': ['rest-eye'],
+        'back-health-recommended-guides': ['rest-waist'],
+        'face-tension-recommended-guides': ['rest-face']
+    };
+
+    // 가이드 아이콘 매핑
+    const guideIcons = {
+        'rest-all': '🎬',
+        'rest-neck': '🦴',
+        'rest-face': '😌',
+        'rest-eye': '👁️',
+        'rest-hand': '✋',
+        'rest-waist': '🧍'
+    };
+
+    // 각 섹션에 추천 가이드 생성
+    Object.entries(sectionGuideMap).forEach(([containerId, guideTypes]) => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        // 현재 언어 가져오기
+        const lang = localStorage.getItem('lang') || 'KR';
+        const translations = window.translations?.[lang];
+
+        // 추천 가이드 HTML 생성
+        let guidesHtml = '<div class="recommended-guides-grid">';
+
+        guideTypes.forEach(guideType => {
+            const restGuideData = translations?.restGuideData?.[guideType];
+            const recommendData = translations?.checklist?.guideRecommend?.[guideType];
+
+            const icon = guideIcons[guideType] || '🎬';
+            const title = restGuideData?.label || guideType;
+            const desc = recommendData?.desc || '';
+
+            guidesHtml += `
+                <div class="recommended-guide-card" data-guide="${guideType}">
+                    <div class="guide-card-icon">${icon}</div>
+                    <div class="guide-card-content">
+                        <h4 class="guide-card-title">${title}</h4>
+                        <p class="guide-card-desc">${desc}</p>
+                    </div>
+                    <div class="guide-play-icon">›</div>
+                </div>
+            `;
+        });
+
+        guidesHtml += '</div>';
+        container.innerHTML = guidesHtml;
+
+        // 각 카드에 클릭 이벤트 추가
+        container.querySelectorAll('.recommended-guide-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const guideType = card.dataset.guide;
+                if (guideType && window.ITHealth?.startGuide) {
+                    window.ITHealth.startGuide(guideType);
+                }
+            });
+        });
+    });
+
+    // 언어 변경 시 섹션 가이드 업데이트를 위해 전역에 노출
+    window.ITHealth = window.ITHealth || {};
+    window.ITHealth.updateSectionGuides = initSectionGuides;
 }
 
 /* ================================================

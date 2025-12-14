@@ -2,7 +2,30 @@
    RESPONSIVE - 모바일 대응 스타일
    ================================================ */
 
+/* ==================== 데스크탑: 모바일 전용 가이드 숨김 ==================== */
+.mobile-only-guides {
+    display: none;
+}
+
+/* ==================== 섹션별 추천 가이드 (체크리스트 스타일 재사용) ==================== */
+.section-recommended-guides {
+    margin-top: 1.5em;
+    padding: 1.5em;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.08) 0%, rgba(129, 199, 132, 0.08) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(76, 175, 80, 0.15);
+}
+
 @media (max-width: 1200px) {
+    /* ==================== 데스크탑/모바일 가이드 카드 전환 ==================== */
+    .desktop-only-guide {
+        display: none !important;
+    }
+
+    .mobile-only-guides {
+        display: block !important;
+    }
+
     /* ==================== 네비게이션 캐러셀 (모바일) ==================== */
     .section-nav {
         flex-direction: column;
@@ -234,7 +257,7 @@
     }
     
     .hero-left {
-        padding: 0 0.5em;
+        padding: 0 1.5em;
     }
     
     .hero-right {
@@ -249,7 +272,7 @@
 
     .content-hero-image {
         height: 180px;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: 12px;
     }
 
