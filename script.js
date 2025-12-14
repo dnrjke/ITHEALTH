@@ -212,11 +212,6 @@ function initNavigation() {
             targetContent.classList.add('active');
             document.body.classList.remove('main-view');
 
-            // 휴식 가이드 탭으로 이동 시 타이머 상태 초기화
-            if (tabId === 'rest-guide-content') {
-                document.dispatchEvent(new CustomEvent('resetRestGuide'));
-            }
-
             // 건강 가이드 탭일 때만 섹션 네비게이션 표시
             if (isGuideTab) {
                 document.body.classList.add('guide-view');
@@ -497,14 +492,16 @@ function initI18n() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             const value = getNestedValue(t, key);
-            if (value) el.textContent = value;
+            // 빈 문자열도 허용 (영어의 countUnit 같은 경우)
+            if (value !== undefined && value !== null) el.textContent = value;
         });
 
         // data-i18n-html 속성 처리 (innerHTML)
         document.querySelectorAll('[data-i18n-html]').forEach(el => {
             const key = el.getAttribute('data-i18n-html');
             const value = getNestedValue(t, key);
-            if (value) el.innerHTML = value;
+            // 빈 문자열도 허용
+            if (value !== undefined && value !== null) el.innerHTML = value;
         });
 
         // 네비게이션
@@ -1171,9 +1168,12 @@ function initChecklist() {
             });
         }
 
-    // updateCheckCount를 전역으로 노출 (언어 변경 시 호출용)
+    // updateCheckCount와 updateRecommendedGuides를 전역으로 노출 (언어 변경 시 호출용)
     window.ITHealth = window.ITHealth || {};
-    window.ITHealth.updateChecklist = updateCheckCount;
+    window.ITHealth.updateChecklist = function() {
+        updateCheckCount();
+        updateRecommendedGuides();
+    };
 
     // 초기 업데이트
     updateCheckCount();
@@ -2005,80 +2005,6 @@ function initTimer() {
     setupProgressBarSeek();
     setupCardToggle();
     setupStepsBarClickHandlers();
-
-    // 휴식 가이드 탭으로 이동 시 전체 UI 초기화
-    document.addEventListener('resetRestGuide', () => {
-        // 타이머가 실행 중이면 중지
-        if (timerState.isRunning || timerState.isPaused) {
-            clearInterval(timerState.intervalId);
-        }
-
-        // 타이머 상태 초기화
-        timerState.isRunning = false;
-        timerState.isPaused = false;
-        timerState.currentTime = 0;
-        timerState.mode = null;
-        timerState.guideType = null;
-        timerState.currentStep = null;
-        timerState.steps = [];
-        previousStepNum = null;
-
-        // UI 요소 초기화
-        const stickyProgress = document.getElementById('timer-sticky-progress');
-        const stickyCardDisplay = document.getElementById('sticky-card-display');
-        const globalStartBtn = document.getElementById('global-timer-start');
-        const completeMessage = document.getElementById('timer-complete-message');
-
-        if (stickyProgress) stickyProgress.classList.add('hidden');
-        if (stickyCardDisplay) stickyCardDisplay.classList.add('hidden');
-        if (globalStartBtn) globalStartBtn.classList.remove('hidden');
-        if (completeMessage) completeMessage.classList.add('hidden');
-
-        // 진행률 바 초기화
-        const progressBar = document.getElementById('sticky-progress-bar');
-        if (progressBar) progressBar.style.width = '0%';
-
-        // 시간 표시 초기화
-        const currentTimeEl = document.getElementById('sticky-current-time');
-        if (currentTimeEl) currentTimeEl.textContent = '0:00';
-
-        // 일시정지 버튼 텍스트 리셋
-        const pauseBtn = document.getElementById('sticky-timer-pause');
-        if (pauseBtn) {
-            const btnText = pauseBtn.querySelector('span:last-child');
-            if (btnText) btnText.textContent = '일시정지';
-        }
-
-        // 스텝 카드 상태 초기화
-        document.querySelectorAll('.break-step').forEach(card => {
-            card.classList.remove('completed', 'active', 'waiting', 'collapsed', 'individual-mode');
-        });
-
-        // 개별 타이머 UI 초기화
-        document.querySelectorAll('[data-step-timer]').forEach(timer => {
-            timer.classList.add('hidden');
-        });
-
-        // 개별 재생 버튼 초기화
-        document.querySelectorAll('.step-play-btn').forEach(btn => {
-            btn.classList.remove('playing');
-            const icon = btn.querySelector('span');
-            if (icon) icon.textContent = '▶️';
-        });
-
-        // body 클래스 정리
-        document.body.classList.remove('global-timer-active');
-
-        // 스크롤 잠금 해제
-        if (typeof unlockScroll === 'function') {
-            unlockScroll();
-        }
-
-        // 스텝바 상태 초기화
-        document.querySelectorAll('.step-box').forEach(box => {
-            box.classList.remove('active', 'completed');
-        });
-    });
 
     // ==================== 전역 함수 노출 및 버튼 직접 연결 ====================
     // startGlobalTimer와 resetTimer를 전역으로 노출하여 어디서든 호출 가능하도록 함
