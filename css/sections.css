@@ -247,9 +247,9 @@
 
 .tab-content img {
     max-width: 100%;
-    height: auto;
+    height: 100%;
     display: block;
-    margin: 25px auto;
+    margin: 0;
 }
 
 /* ==================== 메인 히어로 섹션 ==================== */
