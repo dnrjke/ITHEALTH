@@ -229,7 +229,7 @@
 
 /* 병명 툴팁 스타일 */
 .disease-tooltip {
-    position: absolute;
+    position: fixed;
     background: rgba(30, 30, 30, 0.95);
     color: white;
     padding: 0.8em 1.2em;
@@ -244,6 +244,35 @@
     transition: opacity 0.3s ease, transform 0.3s ease;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
     word-wrap: break-word;
+    will-change: transform, opacity, top, left;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+/* 스크롤 중 툴팁 부드럽게 이동 */
+.disease-tooltip.scrolling {
+    transition: opacity 0.3s ease;
+    /* GPU 레이어 유지 및 하드웨어 가속 강제 */
+    transform: translate3d(0, 0, 0);
+}
+
+/* 툴팁 화살표 (기본: 툴팁이 위쪽에 표시될 때 화살표는 아래에) */
+.disease-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(30, 30, 30, 0.95);
+}
+
+/* 툴팁이 아래쪽에 표시될 때 화살표는 위에 */
+.disease-tooltip.bottom::before {
+    top: auto;
+    bottom: 100%;
+    border-top-color: transparent;
+    border-bottom-color: rgba(30, 30, 30, 0.95);
 }
 
 /* 툴팁 표시 */
@@ -1068,7 +1097,7 @@ body.rest-modal-active {
     border-radius: 6px;
     margin-bottom: 1em;
     cursor: pointer;
-    overflow: hidden;
+    overflow: visible; /* 썸이 진행바 위로 표시되도록 */
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -1104,15 +1133,15 @@ body.rest-modal-active {
 .progress-thumb {
     position: absolute;
     top: 50%;
-    transform: translate(-50%, -50%) scale(0);
     width: 16px;
     height: 16px;
     background: white;
     border-radius: 50%;
     opacity: 0;
+    transform: translate(-50%, -50%) scale(0);
     transition: opacity 0.2s ease, transform 0.2s ease;
     pointer-events: none;
-    z-index: 10;
+    z-index: 15;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -1120,6 +1149,18 @@ body.rest-modal-active {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
     transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 모바일 터치 영역 확대 */
+.progress-thumb::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px;
+    height: 44px;
+    pointer-events: auto;
 }
 
 /* 시간 표시 */
