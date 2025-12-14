@@ -514,6 +514,11 @@ function initI18n() {
         const t = translations[lang];
         if (!t) return;
 
+        // HTML lang 속성 설정 (CSS에서 언어별 스타일링에 사용)
+        const htmlLang = lang === 'JP' ? 'ja' : lang === 'EN' ? 'en' : 'ko';
+        document.documentElement.lang = htmlLang;
+        document.documentElement.dataset.langCode = lang;
+
         // data-i18n 속성을 가진 요소들 처리
         function getNestedValue(obj, path) {
             return path.split('.').reduce((current, key) => current && current[key], obj);
@@ -1129,63 +1134,95 @@ function initChecklist() {
             }, { passive: true });
         }
         
-        // 추천 가이드 매핑 데이터
-        const guideRecommendations = {
-            'neck-forward': { guide: 'rest-neck', icon: '🦴', title: '뒷목 휴식 가이드', desc: '목 근육을 풀어주는 집중 스트레칭' },
-            'shoulder-tension': { guide: 'rest-neck', icon: '🦴', title: '뒷목 휴식 가이드', desc: '어깨와 목의 긴장을 해소하세요' },
-            'back-curved': { guide: 'rest-waist', icon: '🧍', title: '허리 휴식 가이드', desc: '허리 부담을 줄이고 코어를 활성화' },
-            'sitting-long': { guide: 'rest-waist', icon: '🧍', title: '허리 휴식 가이드', desc: '오래 앉아있을 때 필요한 스트레칭' },
-            'hand-pain': { guide: 'rest-hand', icon: '✋', title: '손 휴식 가이드', desc: '손목과 손가락의 피로를 풀어주세요' },
-            'wrist-angle': { guide: 'rest-hand', icon: '✋', title: '손 휴식 가이드', desc: '타이핑으로 지친 손을 케어하세요' },
-            'eye-strain': { guide: 'rest-eye', icon: '👁️', title: '눈 휴식 가이드', desc: '화면 응시로 피로한 눈을 쉬게 해주세요' },
-            'headache': { guide: 'rest-face', icon: '😌', title: '얼굴 휴식 가이드', desc: '표정근과 턱 긴장을 풀어 두통 완화' },
-            'water': { guide: 'rest-all', icon: '🎬', title: '전체 휴식 가이드', desc: '5분간 전신 스트레칭과 휴식' },
-            'meal': { guide: 'rest-all', icon: '🎬', title: '전체 휴식 가이드', desc: '몸과 마음을 돌보는 종합 휴식' }
+        // 추천 가이드 매핑 데이터 (tipKey -> guideType)
+        const guideRecommendationsMap = {
+            'neck-forward': 'rest-neck',
+            'shoulder-tension': 'rest-neck',
+            'back-curved': 'rest-waist',
+            'sitting-long': 'rest-waist',
+            'hand-pain': 'rest-hand',
+            'wrist-angle': 'rest-hand',
+            'eye-strain': 'rest-eye',
+            'headache': 'rest-face',
+            'water': 'rest-all',
+            'meal': 'rest-all'
         };
+
+        // 가이드 아이콘 데이터
+        const guideIcons = {
+            'rest-all': '🎬',
+            'rest-neck': '🦴',
+            'rest-face': '😌',
+            'rest-eye': '👁️',
+            'rest-hand': '✋',
+            'rest-waist': '🧍'
+        };
+
+        // 추천 가이드 데이터 가져오기 (번역 적용)
+        function getGuideRecommendation(guideType) {
+            const lang = localStorage.getItem('lang') || 'KR';
+            const translations = window.translations?.[lang];
+            const restGuideData = translations?.restGuideData?.[guideType];
+            const recommendData = translations?.checklist?.guideRecommend?.[guideType];
+
+            return {
+                guide: guideType,
+                icon: guideIcons[guideType] || '🎬',
+                title: restGuideData?.label || guideType,
+                desc: recommendData?.desc || ''
+            };
+        }
 
         // 추천 가이드 업데이트 함수
         function updateRecommendedGuides() {
             const checkedInputs = document.querySelectorAll('.check-input:checked');
             const recommendedGuidesContainer = document.getElementById('recommended-guides');
-            
+
             if (!recommendedGuidesContainer) return;
-            
+
             // 체크된 항목이 없으면 숨김
             if (checkedInputs.length === 0) {
                 recommendedGuidesContainer.innerHTML = '';
                 recommendedGuidesContainer.classList.remove('has-guides');
                 return;
             }
-            
+
             // 추천 가이드 수집 (중복 제거)
-            const recommendedGuides = new Map();
-            
+            const recommendedGuides = new Set();
+
             checkedInputs.forEach(input => {
                 const tipKey = input.closest('.check-item').dataset.tip;
-                const recommendation = guideRecommendations[tipKey];
-                
-                if (recommendation && !recommendedGuides.has(recommendation.guide)) {
-                    recommendedGuides.set(recommendation.guide, recommendation);
+                const guideType = guideRecommendationsMap[tipKey];
+
+                if (guideType) {
+                    recommendedGuides.add(guideType);
                 }
             });
-            
+
             // 추천 가이드가 없으면 숨김
             if (recommendedGuides.size === 0) {
                 recommendedGuidesContainer.innerHTML = '';
                 recommendedGuidesContainer.classList.remove('has-guides');
                 return;
             }
-            
+
+            // 번역 데이터 가져오기
+            const lang = localStorage.getItem('lang') || 'KR';
+            const translations = window.translations?.[lang];
+            const recommendTitle = translations?.checklist?.recommendTitle || '🎯 맞춤 휴식 가이드';
+            const recommendSubtitle = translations?.checklist?.recommendSubtitle || '체크하신 항목에 따라 추천하는 휴식 가이드입니다';
+
             // 추천 가이드 HTML 생성
             let guidesHtml = `
                 <div class="recommended-guides-header">
-                    <h3>🎯 맞춤 휴식 가이드</h3>
-                    <p>체크하신 항목에 따라 추천하는 휴식 가이드입니다</p>
+                    <h3>${recommendTitle}</h3>
+                    <p>${recommendSubtitle}</p>
                 </div>
                 <div class="recommended-guides-grid">
             `;
-            
-            recommendedGuides.forEach((rec, guideType) => {
+
+            recommendedGuides.forEach(guideType => {
+                const rec = getGuideRecommendation(guideType);
                 guidesHtml += `
                     <div class="recommended-guide-card" data-guide="${guideType}">
                         <div class="guide-card-icon">${rec.icon}</div>
@@ -1197,7 +1234,7 @@ function initChecklist() {
                     </div>
                 `;
             });
-            
+
             guidesHtml += '</div>';
             recommendedGuidesContainer.innerHTML = guidesHtml;
             recommendedGuidesContainer.classList.add('has-guides');
@@ -1243,267 +1280,40 @@ function initTimer() {
     const globalTimerStart = document.getElementById('global-timer-start');
     
     // ==================== 가이드 데이터 정의 ====================
-    const guideData = {
-        'rest-all': {
-            label: '전체 휴식 가이드',
-            icon: '🎬',
-            steps: [
-                {
-                    step: 1,
-                    duration: 60,
-                    title: '자리에서 일어나기',
-                    time: '1분',
-                    description: '천천히 자리에서 일어나 몸을 펴보세요. 발끝부터 머리까지 쭉 늘려주며 혈액순환을 도와주세요.',
-                    tips: [
-                        '팔을 위로 뻗어 온몸을 스트레칭',
-                        '제자리에서 가볍게 걸어보기',
-                        '발가락을 들었다 내렸다 반복'
-                    ]
-                },
-                {
-                    step: 2,
-                    duration: 120,
-                    title: '목과 어깨 스트레칭',
-                    time: '2분',
-                    description: '목과 어깨의 긴장을 풀어주는 스트레칭으로 뭉친 근육을 이완시켜주세요.',
-                    tips: [
-                        '목을 좌우로 천천히 돌리기 (각 방향 5회)',
-                        '어깨를 위로 올렸다가 뒤로 돌리며 내리기',
-                        '고개를 좌우로 기울여 목 옆근육 늘리기',
-                        '턱을 가슴 쪽으로 당겨 목 뒷근육 스트레칭'
-                    ]
-                },
-                {
-                    step: 3,
-                    duration: 120,
-                    title: '깊은 호흡과 명상',
-                    time: '2분',
-                    description: '마음을 차분히 하고 깊은 호흡으로 스트레스를 해소해보세요.',
-                    tips: [
-                        '편안한 자세로 앉거나 서기',
-                        '4초 들이마시고 6초 내쉬기 반복',
-                        '눈을 감고 현재 순간에 집중하기',
-                        '몸의 긴장 부위를 의식적으로 이완시키기'
-                    ]
-                }
-            ]
-        },
-        'rest-neck': {
-            label: '뒷목 휴식 가이드',
-            icon: '🦴',
-            steps: [
-                {
-                    step: 1,
-                    duration: 60,
-                    title: '목 풀어주기',
-                    time: '1분',
-                    description: '긴장된 목 근육을 부드럽게 풀어주는 준비 동작입니다.',
-                    tips: [
-                        '어깨를 내리고 목에 힘을 빼기',
-                        '턱을 살짝 당겨 목 뒤를 길게 늘리기',
-                        '고개를 천천히 좌우로 돌리기 (각 5회)'
-                    ]
-                },
-                {
-                    step: 2,
-                    duration: 90,
-                    title: '뒷목 스트레칭',
-                    time: '1분 30초',
-                    description: '목 뒤쪽 근육을 집중적으로 늘려주는 스트레칭입니다.',
-                    tips: [
-                        '양손을 깍지 끼고 머리 뒤에 대기',
-                        '턱을 가슴 쪽으로 부드럽게 당기기',
-                        '15초 유지 후 천천히 돌아오기 (3회 반복)',
-                        '통증이 있으면 강도를 줄이세요'
-                    ]
-                },
-                {
-                    step: 3,
-                    duration: 60,
-                    title: '목 근육 이완',
-                    time: '1분',
-                    description: '스트레칭한 근육을 이완시키고 마무리합니다.',
-                    tips: [
-                        '어깨를 위로 올렸다가 떨어뜨리기 (5회)',
-                        '목을 좌우로 기울여 옆 근육 늘리기',
-                        '깊은 호흡과 함께 긴장 풀기'
-                    ]
-                }
-            ]
-        },
-        'rest-face': {
-            label: '얼굴 휴식 가이드',
-            icon: '😌',
-            steps: [
-                {
-                    step: 1,
-                    duration: 60,
-                    title: '얼굴 근육 인식',
-                    time: '1분',
-                    description: '평소 긴장하고 있던 얼굴 근육을 인식하고 의식적으로 풀어줍니다.',
-                    tips: [
-                        '이마에 주름이 잡혀있지 않은지 확인',
-                        '눈썹 사이 힘 빼기',
-                        '턱에 힘이 들어가 있지 않은지 체크'
-                    ]
-                },
-                {
-                    step: 2,
-                    duration: 90,
-                    title: '표정근 스트레칭',
-                    time: '1분 30초',
-                    description: '얼굴의 다양한 근육을 움직여 긴장을 해소합니다.',
-                    tips: [
-                        '눈을 크게 떴다가 꽉 감기 (5회)',
-                        '입을 크게 벌려 "아" 하기',
-                        '볼을 부풀렸다가 오므리기 (5회)',
-                        '혀를 입 안에서 돌리기 (좌우 각 5회)'
-                    ]
-                },
-                {
-                    step: 3,
-                    duration: 60,
-                    title: '턱 이완 및 마무리',
-                    time: '1분',
-                    description: '긴장이 모이기 쉬운 턱 근육을 집중적으로 이완합니다.',
-                    tips: [
-                        '입을 살짝 벌려 턱에 힘 빼기',
-                        '턱을 좌우로 부드럽게 움직이기',
-                        '관자놀이를 부드럽게 원을 그리며 마사지'
-                    ]
-                }
-            ]
-        },
-        'rest-eye': {
-            label: '눈 휴식 가이드',
-            icon: '👁️',
-            steps: [
-                {
-                    step: 1,
-                    duration: 60,
-                    title: '눈 감고 휴식',
-                    time: '1분',
-                    description: '화면에서 눈을 떼고 눈의 피로를 회복시킵니다.',
-                    tips: [
-                        '눈을 감고 편안하게 휴식',
-                        '손바닥을 비벼 따뜻하게 한 후 눈 위에 올리기',
-                        '깊은 호흡과 함께 눈 주변 긴장 풀기'
-                    ]
-                },
-                {
-                    step: 2,
-                    duration: 90,
-                    title: '눈 운동',
-                    time: '1분 30초',
-                    description: '눈 근육을 움직여 피로를 풀고 혈액순환을 돕습니다.',
-                    tips: [
-                        '눈을 위-아래로 천천히 움직이기 (10회)',
-                        '눈을 좌-우로 천천히 움직이기 (10회)',
-                        '눈을 시계 방향으로 크게 돌리기 (5회)',
-                        '반시계 방향으로도 돌리기 (5회)'
-                    ]
-                },
-                {
-                    step: 3,
-                    duration: 60,
-                    title: '원거리 응시',
-                    time: '1분',
-                    description: '20-20-20 규칙으로 눈의 초점 근육을 이완시킵니다.',
-                    tips: [
-                        '창밖이나 먼 곳(6m 이상)을 바라보기',
-                        '20초 이상 먼 곳에 초점 맞추기',
-                        '눈을 깜빡여 눈물로 눈 촉촉하게 유지'
-                    ]
-                }
-            ]
-        },
-        'rest-hand': {
-            label: '손 휴식 가이드',
-            icon: '✋',
-            steps: [
-                {
-                    step: 1,
-                    duration: 60,
-                    title: '손목 풀기',
-                    time: '1분',
-                    description: '키보드와 마우스 사용으로 긴장된 손목을 풀어줍니다.',
-                    tips: [
-                        '손목을 시계/반시계 방향으로 돌리기 (각 10회)',
-                        '손목을 위아래로 꺾어 스트레칭',
-                        '손을 털어 긴장 풀기'
-                    ]
-                },
-                {
-                    step: 2,
-                    duration: 90,
-                    title: '손가락 스트레칭',
-                    time: '1분 30초',
-                    description: '손가락 관절과 힘줄을 늘려주는 스트레칭입니다.',
-                    tips: [
-                        '손가락을 쫙 펴고 5초 유지',
-                        '주먹을 꽉 쥐고 5초 유지 (5회 반복)',
-                        '각 손가락을 하나씩 뒤로 젖혀 스트레칭',
-                        '손가락 끝을 잡고 부드럽게 당기기'
-                    ]
-                },
-                {
-                    step: 3,
-                    duration: 60,
-                    title: '손바닥 마사지',
-                    time: '1분',
-                    description: '손바닥의 피로를 풀고 혈액순환을 촉진합니다.',
-                    tips: [
-                        '엄지로 손바닥 중앙을 원을 그리며 마사지',
-                        '손가락 사이사이를 눌러주기',
-                        '손등을 부드럽게 문지르며 마무리'
-                    ]
-                }
-            ]
-        },
-        'rest-waist': {
-            label: '허리 휴식 가이드',
-            icon: '🧍',
-            steps: [
-                {
-                    step: 1,
-                    duration: 60,
-                    title: '허리 풀기',
-                    time: '1분',
-                    description: '오래 앉아있어 굳은 허리 근육을 부드럽게 풀어줍니다.',
-                    tips: [
-                        '의자에서 일어나 허리에 손을 대고 뒤로 젖히기',
-                        '상체를 좌우로 천천히 비틀기 (각 5회)',
-                        '골반을 좌우로 돌려 허리 풀기'
-                    ]
-                },
-                {
-                    step: 2,
-                    duration: 90,
-                    title: '코어 스트레칭',
-                    time: '1분 30초',
-                    description: '허리를 지지하는 코어 근육을 활성화하고 스트레칭합니다.',
-                    tips: [
-                        '서서 양팔을 위로 뻗어 옆으로 기울이기 (좌우 각 15초)',
-                        '상체를 앞으로 숙여 손끝이 바닥에 닿게 하기',
-                        '무릎을 살짝 구부린 채 허리 스트레칭',
-                        '고양이-소 자세로 척추 움직이기 (가능한 경우)'
-                    ]
-                },
-                {
-                    step: 3,
-                    duration: 60,
-                    title: '자세 리셋',
-                    time: '1분',
-                    description: '올바른 자세를 확인하고 허리에 부담을 줄이는 자세로 돌아갑니다.',
-                    tips: [
-                        '발을 어깨 너비로 벌리고 바르게 서기',
-                        '어깨를 뒤로 당기고 가슴 펴기',
-                        '앉을 때 엉덩이를 의자 깊숙이 넣고 등받이 활용'
-                    ]
-                }
-            ]
-        }
+    // 언어 독립적 데이터 (duration, step number, icon)
+    const guideDurations = {
+        'rest-all': { icon: '🎬', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 120 }, { step: 3, duration: 120 }] },
+        'rest-neck': { icon: '🦴', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
+        'rest-face': { icon: '😌', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
+        'rest-eye': { icon: '👁️', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
+        'rest-hand': { icon: '✋', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
+        'rest-waist': { icon: '🧍', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] }
     };
+
+    // 번역된 가이드 데이터 가져오기
+    function getGuideData(guideType) {
+        const lang = localStorage.getItem('lang') || 'KR';
+        const translatedData = window.translations?.[lang]?.restGuideData?.[guideType];
+        const durations = guideDurations[guideType];
+
+        if (!translatedData || !durations) {
+            console.error('가이드 데이터를 찾을 수 없습니다:', guideType);
+            return null;
+        }
+
+        return {
+            label: translatedData.label,
+            icon: durations.icon,
+            steps: durations.steps.map((stepData, index) => ({
+                step: stepData.step,
+                duration: stepData.duration,
+                title: translatedData.steps[index]?.title || '',
+                time: translatedData.steps[index]?.time || '',
+                description: translatedData.steps[index]?.description || '',
+                tips: translatedData.steps[index]?.tips || []
+            }))
+        };
+    }
     
     const timerState = {
         mode: null,
@@ -1622,9 +1432,9 @@ function initTimer() {
     
     function updateStickyCard(stepNum) {
         // 현재 가이드의 단계 데이터 가져오기
-        if (!timerState.guideType || !guideData[timerState.guideType]) return;
-        
-        const currentGuide = guideData[timerState.guideType];
+        const currentGuide = timerState.guideType ? getGuideData(timerState.guideType) : null;
+        if (!currentGuide) return;
+
         const data = currentGuide.steps.find(s => s.step === stepNum);
         if (!data) return;
         
@@ -1739,7 +1549,7 @@ function initTimer() {
     }
 
     function startGlobalTimer(guideType = 'rest-all') {
-        const guide = guideData[guideType];
+        const guide = getGuideData(guideType);
         if (!guide) {
             console.error('알 수 없는 가이드 타입:', guideType);
             return;
@@ -1785,7 +1595,9 @@ function initTimer() {
     function updateGuideLabel(guide) {
         const labelEl = document.getElementById('sticky-timer-label');
         if (labelEl) {
-            labelEl.textContent = `${guide.label} 진행 중`;
+            const lang = localStorage.getItem('lang') || 'KR';
+            const suffix = window.translations?.[lang]?.timer?.inProgressSuffix || '진행 중';
+            labelEl.textContent = `${guide.label} ${suffix}`;
         }
         
         // 아이콘도 업데이트

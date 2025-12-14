@@ -249,7 +249,16 @@ const translations = {
                 dryeye: { name: "안구건조증", desc: "눈물 부족으로 눈이 뻑뻑한 증상" },
                 tunnel: { name: "손목터널증후군", desc: "신경 압박으로 인한 손저림 및 통증" }
             },
-            recommendTitle: '🎯 맞춤 휴식 가이드'
+            recommendTitle: '🎯 맞춤 휴식 가이드',
+            recommendSubtitle: '체크하신 항목에 따라 추천하는 휴식 가이드입니다',
+            guideRecommend: {
+                'rest-neck': { desc: '목 근육을 풀어주는 집중 스트레칭' },
+                'rest-waist': { desc: '허리 부담을 줄이고 코어를 활성화' },
+                'rest-hand': { desc: '손목과 손가락의 피로를 풀어주세요' },
+                'rest-eye': { desc: '화면 응시로 피로한 눈을 쉬게 해주세요' },
+                'rest-face': { desc: '표정근과 턱 긴장을 풀어 두통 완화' },
+                'rest-all': { desc: '5분간 전신 스트레칭과 휴식' }
+            }
         },
         // --- 휴식 가이드 ---
         restGuide: {
@@ -335,6 +344,7 @@ const translations = {
         timer: {
             completeMessage: '🎉 휴식 완료! 수고하셨습니다! 🎉',
             inProgress: '전체 휴식 가이드 진행 중',
+            inProgressSuffix: '진행 중',
             step1: '1. 일어나기',
             step2: '2. 목/어깨',
             step3: '3. 깊은호흡',
@@ -385,6 +395,14 @@ const translations = {
                     { title: '손목 풀기', time: '1분', description: '키보드와 마우스 사용으로 긴장된 손목을 풀어줍니다.', tips: ['손목을 시계/반시계 방향으로 돌리기 (각 10회)', '손목을 위아래로 꺾어 스트레칭', '손을 털어 긴장 풀기'] },
                     { title: '손가락 스트레칭', time: '1분 30초', description: '손가락 관절과 힘줄을 늘려주는 스트레칭입니다.', tips: ['손가락을 쫙 펴고 5초 유지', '주먹을 꽉 쥐고 5초 유지 (5회 반복)', '각 손가락을 하나씩 뒤로 젖혀 스트레칭', '손바닥을 마주보고 손목 꺾기'] },
                     { title: '손 마사지', time: '1분', description: '손 전체의 피로를 풀어주는 마사지입니다.', tips: ['엄지로 손바닥 가운데를 누르며 마사지', '손등을 부드럽게 문지르기', '손가락 사이사이를 가볍게 눌러주기'] }
+                ]
+            },
+            'rest-waist': {
+                label: '허리 휴식 가이드',
+                steps: [
+                    { title: '허리 풀기', time: '1분', description: '오래 앉아있어 굳은 허리 근육을 부드럽게 풀어줍니다.', tips: ['의자에서 일어나 허리에 손을 대고 뒤로 젖히기', '상체를 좌우로 천천히 비틀기 (각 5회)', '골반을 좌우로 돌려 허리 풀기'] },
+                    { title: '코어 스트레칭', time: '1분 30초', description: '허리를 지지하는 코어 근육을 활성화하고 스트레칭합니다.', tips: ['서서 양팔을 위로 뻗어 옆으로 기울이기 (좌우 각 15초)', '상체를 앞으로 숙여 손끝이 바닥에 닿게 하기', '무릎을 살짝 구부린 채 허리 스트레칭', '고양이-소 자세로 척추 움직이기 (가능한 경우)'] },
+                    { title: '자세 리셋', time: '1분', description: '올바른 자세를 확인하고 허리에 부담을 줄이는 자세로 돌아갑니다.', tips: ['발을 어깨 너비로 벌리고 바르게 서기', '어깨를 뒤로 당기고 가슴 펴기', '앉을 때 엉덩이를 의자 깊숙이 넣고 등받이 활용'] }
                 ]
             }
         },
@@ -561,7 +579,16 @@ const translations = {
                 dryeye: { name: "Dry Eye Syndrome", desc: "Gritty eyes from lack of tears" },
                 tunnel: { name: "Carpal Tunnel Syndrome", desc: "Hand numbness and pain from nerve compression" }
             },
-            recommendTitle: '🎯 Recommended Rest Guides'
+            recommendTitle: '🎯 Recommended Rest Guides',
+            recommendSubtitle: 'Based on your checked items, we recommend these rest guides',
+            guideRecommend: {
+                'rest-neck': { desc: 'Focused stretching to relax neck muscles' },
+                'rest-waist': { desc: 'Reduce back strain and activate your core' },
+                'rest-hand': { desc: 'Relieve fatigue in wrists and fingers' },
+                'rest-eye': { desc: 'Rest your eyes tired from screen gazing' },
+                'rest-face': { desc: 'Relieve facial tension to ease headaches' },
+                'rest-all': { desc: '5-minute full body stretching and rest' }
+            }
         },
         restGuide: {
             pageTitle: 'Rest Guide', pageSubtitle: 'Simple stretching and relaxation for body and mind',
@@ -618,6 +645,7 @@ const translations = {
         timer: {
             completeMessage: '🎉 Rest complete! Great job! 🎉',
             inProgress: 'Full Rest Guide in progress',
+            inProgressSuffix: 'in progress',
             step1: '1. Stand Up',
             step2: '2. Neck/Shoulders',
             step3: '3. Deep Breathing',
@@ -667,6 +695,14 @@ const translations = {
                     { title: 'Wrist Loosening', time: '1 min', description: 'Release wrist tension from keyboard and mouse use.', tips: ['Rotate wrists clockwise/counterclockwise (10 times each)', 'Bend wrists up and down to stretch', 'Shake hands to release tension'] },
                     { title: 'Finger Stretching', time: '1 min 30 sec', description: 'Stretch finger joints and tendons.', tips: ['Spread fingers wide and hold 5 sec', 'Make tight fist and hold 5 sec (repeat 5 times)', 'Bend each finger back one at a time', 'Press palms together and bend wrists'] },
                     { title: 'Hand Massage', time: '1 min', description: 'Massage to relieve overall hand fatigue.', tips: ['Press center of palm with thumb while massaging', 'Gently rub back of hands', 'Lightly press between fingers'] }
+                ]
+            },
+            'rest-waist': {
+                label: 'Back Rest Guide',
+                steps: [
+                    { title: 'Back Loosening', time: '1 min', description: 'Gently loosen back muscles stiff from prolonged sitting.', tips: ['Stand up and place hands on lower back, lean backward', 'Slowly twist upper body left and right (5 times each)', 'Rotate hips to loosen lower back'] },
+                    { title: 'Core Stretching', time: '1 min 30 sec', description: 'Activate and stretch core muscles that support the back.', tips: ['Stand with arms up, lean to each side (15 sec each)', 'Bend forward to touch toes', 'Stretch back with slightly bent knees', 'Cat-cow pose to move spine (if possible)'] },
+                    { title: 'Posture Reset', time: '1 min', description: 'Check proper posture and return to a position that reduces back strain.', tips: ['Stand with feet shoulder-width apart', 'Pull shoulders back and open chest', 'When sitting, push hips deep into chair and use backrest'] }
                 ]
             }
         },
@@ -841,7 +877,16 @@ const translations = {
                 dryeye: { name: "ドライアイ", desc: "涙不足で目がゴロゴロする症状" },
                 tunnel: { name: "手根管症候群", desc: "神経圧迫による手のしびれと痛み" }
             },
-            recommendTitle: '🎯 おすすめ休憩ガイド'
+            recommendTitle: '🎯 おすすめ休憩ガイド',
+            recommendSubtitle: 'チェックした項目に基づいておすすめの休憩ガイドです',
+            guideRecommend: {
+                'rest-neck': { desc: '首の筋肉をほぐす集中ストレッチ' },
+                'rest-waist': { desc: '腰の負担を軽減しコアを活性化' },
+                'rest-hand': { desc: '手首と指の疲れを癒します' },
+                'rest-eye': { desc: '画面を見て疲れた目を休ませましょう' },
+                'rest-face': { desc: '表情筋の緊張をほぐして頭痛緩和' },
+                'rest-all': { desc: '5分間の全身ストレッチと休憩' }
+            }
         },
         restGuide: {
             pageTitle: '休憩ガイド', pageSubtitle: '心と体のためのシンプルなストレッチとリラクゼーション',
@@ -898,6 +943,7 @@ const translations = {
         timer: {
             completeMessage: '🎉 休憩完了！お疲れ様でした！🎉',
             inProgress: '全身休憩ガイド進行中',
+            inProgressSuffix: '進行中',
             step1: '1. 立つ',
             step2: '2. 首/肩',
             step3: '3. 深呼吸',
@@ -947,6 +993,14 @@ const translations = {
                     { title: '手首をほぐす', time: '1分', description: 'キーボードとマウスの使用で緊張した手首をほぐします。', tips: ['手首を時計/反時計回りに回す(各10回)', '手首を上下に曲げてストレッチ', '手を振って緊張を解く'] },
                     { title: '指のストレッチ', time: '1分30秒', description: '指の関節と腱を伸ばすストレッチです。', tips: ['指を大きく開いて5秒維持', 'ギュッと握って5秒維持(5回繰り返す)', '各指を一本ずつ後ろに反らせてストレッチ', '手のひらを合わせて手首を曲げる'] },
                     { title: '手のマッサージ', time: '1分', description: '手全体の疲れを取るマッサージです。', tips: ['親指で手のひらの中央を押しながらマッサージ', '手の甲を優しくさする', '指の間を軽く押す'] }
+                ]
+            },
+            'rest-waist': {
+                label: '腰の休憩ガイド',
+                steps: [
+                    { title: '腰をほぐす', time: '1分', description: '長時間座って固くなった腰の筋肉を優しくほぐします。', tips: ['椅子から立って腰に手を当てて後ろに反る', '上体を左右にゆっくりひねる(各5回)', '骨盤を左右に回して腰をほぐす'] },
+                    { title: 'コアストレッチ', time: '1分30秒', description: '腰を支えるコア筋肉を活性化してストレッチします。', tips: ['立って両腕を上に伸ばして横に傾ける(左右各15秒)', '上体を前に倒して指先を床につける', '膝を軽く曲げた状態で腰をストレッチ', 'キャット・カウのポーズで背骨を動かす(可能な場合)'] },
+                    { title: '姿勢リセット', time: '1分', description: '正しい姿勢を確認し、腰への負担を減らす姿勢に戻ります。', tips: ['足を肩幅に開いて正しく立つ', '肩を後ろに引いて胸を開く', '座る時はお尻を椅子の奥深くに入れて背もたれを活用'] }
                 ]
             }
         },
