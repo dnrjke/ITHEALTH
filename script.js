@@ -932,36 +932,45 @@ function initChecklist() {
                 return tooltipElement;
             }
             
-            // 툴팁 위치 계산 및 표시
+            // 툴팁 위치 계산 및 표시 (GPU 가속 최적화)
             function showTooltip(tag, isPinned = false) {
                 const diseaseName = tag.dataset.disease;
                 const info = diseaseInfo[diseaseName];
-                
+
                 if (!info) return;
-                
+
                 const tooltip = createTooltip();
                 tooltip.textContent = info;
                 tooltip.classList.add('visible');
-                
+
                 if (isPinned) {
                     tooltip.classList.add('pinned');
                 } else {
                     tooltip.classList.remove('pinned');
                 }
-                
-                // 위치 계산
+
+                // GPU 가속을 위한 will-change 힌트
+                tooltip.style.willChange = 'transform';
+
+                // 위치 계산 (최적화: 한 번만 getBoundingClientRect 호출)
                 const tagRect = tag.getBoundingClientRect();
+
+                // 툴팁을 먼저 보이게 해서 크기 계산
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.display = 'block';
                 const tooltipRect = tooltip.getBoundingClientRect();
-                
+                tooltip.style.visibility = '';
+                tooltip.style.display = '';
+
                 let left = tagRect.left + (tagRect.width / 2) - (tooltipRect.width / 2);
                 let top = tagRect.top - tooltipRect.height - 10;
-                
+
                 // 화면 밖으로 나가는지 체크
                 if (left < 10) left = 10;
                 if (left + tooltipRect.width > window.innerWidth - 10) {
                     left = window.innerWidth - tooltipRect.width - 10;
                 }
-                
+
                 // 위쪽 공간이 부족하면 아래쪽에 표시
                 if (top < 10) {
                     top = tagRect.bottom + 10;
@@ -969,9 +978,11 @@ function initChecklist() {
                 } else {
                     tooltip.classList.remove('bottom');
                 }
-                
-                tooltip.style.left = left + 'px';
-                tooltip.style.top = top + 'px';
+
+                // GPU 가속: left/top 대신 transform 사용
+                tooltip.style.left = '0';
+                tooltip.style.top = '0';
+                tooltip.style.transform = `translate(${left}px, ${top}px)`;
             }
             
             // 툴팁 숨기기
@@ -1031,28 +1042,38 @@ function initChecklist() {
                 }
             });
             
-            // 스크롤 시 툴팁 위치 업데이트
+            // 스크롤 시 툴팁 위치 업데이트 (최적화: 디바운싱 + RAF)
             let scrollRAF = null;
             let scrollEndTimeout = null;
-            
+            let isScrolling = false;
+
             window.addEventListener('scroll', () => {
                 if (activeTag && tooltipElement && tooltipElement.classList.contains('pinned')) {
-                    // 스크롤 중 클래스 추가 (transition 비활성화)
-                    tooltipElement.classList.add('scrolling');
-                    
-                    // requestAnimationFrame으로 부드럽게 업데이트
+                    // 스크롤 시작 시 한 번만 클래스 추가
+                    if (!isScrolling) {
+                        isScrolling = true;
+                        tooltipElement.classList.add('scrolling');
+                    }
+
+                    // RAF 중복 방지: 이미 예약된 RAF가 있으면 캔슬
                     if (scrollRAF) {
                         cancelAnimationFrame(scrollRAF);
                     }
+
+                    // requestAnimationFrame으로 부드럽게 업데이트
                     scrollRAF = requestAnimationFrame(() => {
-                        showTooltip(activeTag, true);
+                        if (activeTag) {
+                            showTooltip(activeTag, true);
+                        }
+                        scrollRAF = null;
                     });
-                    
-                    // 스크롤 종료 시 scrolling 클래스 제거
+
+                    // 스크롤 종료 시 scrolling 클래스 제거 (디바운싱)
                     clearTimeout(scrollEndTimeout);
                     scrollEndTimeout = setTimeout(() => {
                         if (tooltipElement) {
                             tooltipElement.classList.remove('scrolling');
+                            isScrolling = false;
                         }
                     }, 150);
                 }
@@ -1880,20 +1901,48 @@ function initTimer() {
     }
 
     function setupProgressBarSeek() {
-        // 진행바 드래그/슬라이드 공통 함수
+        // 진행바 드래그/슬라이드 공통 함수 (최적화 버전)
         function setupProgressBarDrag(container, mode, onSeek) {
             let isDragging = false;
+            let rafId = null;
+            let cachedRect = null;
+            let pendingClientX = null;
 
-            function handleSeek(clientX) {
-                if (!timerState.isRunning && !timerState.isPaused) return;
+            // 렉트 캐싱 (리사이즈 시 갱신)
+            function updateCachedRect() {
+                cachedRect = container.getBoundingClientRect();
+            }
 
-                const rect = container.getBoundingClientRect();
-                const seekX = Math.max(0, Math.min(clientX - rect.left, rect.width));
-                const percentage = seekX / rect.width;
+            updateCachedRect();
+            window.addEventListener('resize', updateCachedRect);
+
+            // RAF로 프레임 단위 업데이트 (GPU 가속)
+            function handleSeekRAF() {
+                if (pendingClientX === null) return;
+
+                if (!timerState.isRunning && !timerState.isPaused) {
+                    pendingClientX = null;
+                    return;
+                }
+
+                const seekX = Math.max(0, Math.min(pendingClientX - cachedRect.left, cachedRect.width));
+                const percentage = seekX / cachedRect.width;
                 const newTime = Math.floor(percentage * timerState.totalTime);
 
                 timerState.currentTime = Math.max(0, Math.min(newTime, timerState.totalTime));
                 onSeek();
+
+                pendingClientX = null;
+                rafId = null;
+            }
+
+            function handleSeek(clientX) {
+                pendingClientX = clientX;
+
+                // 이미 RAF가 예약되어 있으면 스킵 (중복 방지)
+                if (rafId !== null) return;
+
+                rafId = requestAnimationFrame(handleSeekRAF);
             }
 
             // 마우스 이벤트 (데스크톱)
@@ -1901,6 +1950,7 @@ function initTimer() {
                 if (mode === 'global' && timerState.mode !== 'global') return;
                 e.preventDefault();
                 isDragging = true;
+                updateCachedRect(); // 드래그 시작 시 rect 갱신
                 handleSeek(e.clientX);
             });
 
@@ -1912,12 +1962,17 @@ function initTimer() {
 
             document.addEventListener('mouseup', () => {
                 isDragging = false;
+                if (rafId !== null) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
             });
 
             // 터치 이벤트 (모바일)
             container.addEventListener('touchstart', (e) => {
                 if (mode === 'global' && timerState.mode !== 'global') return;
                 isDragging = true;
+                updateCachedRect(); // 드래그 시작 시 rect 갱신
                 handleSeek(e.touches[0].clientX);
             }, { passive: true });
 
@@ -1930,12 +1985,17 @@ function initTimer() {
 
             container.addEventListener('touchend', () => {
                 isDragging = false;
+                if (rafId !== null) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
             });
 
             // 클릭 이벤트도 유지
             container.addEventListener('click', (e) => {
                 if (mode === 'global' && timerState.mode !== 'global') return;
                 if (!timerState.isRunning && !timerState.isPaused) return;
+                updateCachedRect();
                 handleSeek(e.clientX);
             });
 

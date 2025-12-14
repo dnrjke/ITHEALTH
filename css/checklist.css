@@ -252,6 +252,8 @@
 /* 스크롤 중 툴팁 부드럽게 이동 */
 .disease-tooltip.scrolling {
     transition: opacity 0.3s ease;
+    /* GPU 레이어 유지 및 하드웨어 가속 강제 */
+    transform: translate3d(0, 0, 0);
 }
 
 /* 툴팁 화살표 (기본: 툴팁이 위쪽에 표시될 때 화살표는 아래에) */
