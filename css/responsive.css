@@ -343,7 +343,10 @@
     .mobile-recommended-guides {
         display: block !important;
         margin-top: 2em;
+        margin-bottom: 0.8em;
         padding: 0 1em;
+        position: relative;
+        z-index: 10; /* 다른 요소 위에 표시 */
     }
 
     .posture-guide {
