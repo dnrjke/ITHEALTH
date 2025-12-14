@@ -429,16 +429,16 @@ const translations = {
         },
         // --- 건강 팁 ---
         healthTips: {
-            water: { title: '수분 보충이 필요해요', tips: ['지금 당장 물 한 컵을 마셔보세요', '1시간마다 알람을 설정해 물을 마시는 습관을 만들어보세요', '카페인 음료보다는 물이나 허브차를 선택하세요'] },
-            meal: { title: '규칙적인 식사가 필요해요', tips: ['바쁘더라도 식사를 거르지 마세요', '간단한 간식이라도 챙겨 드세요', '아침 식사는 뇌 활동과 집중력에 중요합니다', '과식보다는 소량씩 자주 먹는 것이 좋습니다'] },
-            'neck-forward': { title: '목 자세 교정이 필요해요', tips: ['턱을 살짝 당기고 목을 길게 늘려보세요', '모니터 높이를 눈높이와 맞춰주세요', '30분마다 목을 좌우로 천천히 돌려주세요'] },
-            'shoulder-tension': { title: '어깨 긴장 완화가 필요해요', tips: ['어깨를 위로 올렸다가 뒤로 돌리며 내려주세요', '깊게 숨을 들이마시며 어깨 힘을 빼보세요', '목과 어깨 마사지를 5분간 해보세요'] },
-            'back-curved': { title: '허리 자세 개선이 필요해요', tips: ['등받이에 허리를 밀착시켜 앉아보세요', '발을 바닥에 평평하게 놓고 앉으세요', '허리 뒤에 쿠션을 놓아 곡선을 유지해보세요'] },
-            'sitting-long': { title: '움직임이 필요한 시간이에요', tips: ['지금 당장 자리에서 일어나 2-3분 걸어보세요', '제자리에서 스트레칭을 5분간 해보세요', '50분 일하고 10분 휴식하는 패턴을 만들어보세요'] },
-            'hand-pain': { title: '손목 케어가 필요해요', tips: ['손목을 원을 그리며 천천히 돌려주세요', '손가락을 쫙 펼쳤다가 주먹을 쥐는 운동을 반복하세요', '손목 받침대를 사용해 타이핑하세요'] },
-            'wrist-angle': { title: '손목 각도 조정이 필요해요', tips: ['키보드와 손목이 일직선이 되도록 조정하세요', '마우스 패드에 손목 받침대를 사용하세요', '팔꿈치가 90도가 되도록 의자 높이를 조절하세요'] },
-            'eye-strain': { title: '눈 휴식이 필요해요', tips: ['20-20-20 법칙: 20분마다 20피트(6m) 거리를 20초간 바라보세요', '눈을 감고 10초간 휴식을 취하세요', '인공눈물을 사용해 눈을 촉촉하게 해주세요'] },
-            headache: { title: '두통 완화가 필요해요', tips: ['깊은 호흡을 5분간 해보세요', '목과 어깨 마사지를 부드럽게 해주세요', '충분한 수분 섭취와 잠깐의 휴식을 취하세요'] }
+            water: { title: '수분 보충이 필요해요', tips: ['지금 당장 물 한 컵을 마셔보세요', '1시간마다 알람을 설정해 물을 마시는 습관을 만들어보세요', '카페인 음료보다는 물이나 허브차를 선택하세요'], diseases: ['만성피로증후군', '집중력저하'] },
+            meal: { title: '규칙적인 식사가 필요해요', tips: ['바쁘더라도 식사를 거르지 마세요', '간단한 간식이라도 챙겨 드세요', '아침 식사는 뇌 활동과 집중력에 중요합니다', '과식보다는 소량씩 자주 먹는 것이 좋습니다'], diseases: ['저혈당증', '집중력저하', '만성피로증후군'] },
+            'neck-forward': { title: '목 자세 교정이 필요해요', tips: ['턱을 살짝 당기고 목을 길게 늘려보세요', '모니터 높이를 눈높이와 맞춰주세요', '30분마다 목을 좌우로 천천히 돌려주세요'], diseases: ['거북목증후군', '경추디스크'] },
+            'shoulder-tension': { title: '어깨 긴장 완화가 필요해요', tips: ['어깨를 위로 올렸다가 뒤로 돌리며 내려주세요', '깊게 숨을 들이마시며 어깨 힘을 빼보세요', '목과 어깨 마사지를 5분간 해보세요'], diseases: ['근막통증증후군', '어깨충돌증후군'] },
+            'back-curved': { title: '허리 자세 개선이 필요해요', tips: ['등받이에 허리를 밀착시켜 앉아보세요', '발을 바닥에 평평하게 놓고 앉으세요', '허리 뒤에 쿠션을 놓아 곡선을 유지해보세요'], diseases: ['척추측만증', '요추디스크'] },
+            'sitting-long': { title: '움직임이 필요한 시간이에요', tips: ['지금 당장 자리에서 일어나 2-3분 걸어보세요', '제자리에서 스트레칭을 5분간 해보세요', '50분 일하고 10분 휴식하는 패턴을 만들어보세요'], diseases: ['심부정맥혈전증', '하지정맥류'] },
+            'hand-pain': { title: '손목 케어가 필요해요', tips: ['손목을 원을 그리며 천천히 돌려주세요', '손가락을 쫙 펼쳤다가 주먹을 쥐는 운동을 반복하세요', '손목 받침대를 사용해 타이핑하세요'], diseases: ['손목터널증후군', '건초염'] },
+            'wrist-angle': { title: '손목 각도 조정이 필요해요', tips: ['키보드와 손목이 일직선이 되도록 조정하세요', '마우스 패드에 손목 받침대를 사용하세요', '팔꿈치가 90도가 되도록 의자 높이를 조절하세요'], diseases: ['손목터널증후군', '드퀘르뱅병'] },
+            'eye-strain': { title: '눈 휴식이 필요해요', tips: ['20-20-20 법칙: 20분마다 20피트(6m) 거리를 20초간 바라보세요', '눈을 감고 10초간 휴식을 취하세요', '인공눈물을 사용해 눈을 촉촉하게 해주세요'], diseases: ['VDT증후군', '안구건조증'] },
+            headache: { title: '두통 완화가 필요해요', tips: ['깊은 호흡을 5분간 해보세요', '목과 어깨 마사지를 부드럽게 해주세요', '충분한 수분 섭취와 잠깐의 휴식을 취하세요'], diseases: ['긴장성두통', '편두통'] }
         }
     },
     // ========== ENGLISH ==========
@@ -727,16 +727,16 @@ const translations = {
             'Hypoglycemia': 'Blood sugar drops below normal levels.'
         },
         healthTips: {
-            water: { title: 'You need hydration', tips: ['Drink a glass of water right now', 'Set hourly reminders to drink water', 'Choose water or herbal tea over caffeinated drinks'] },
-            meal: { title: 'You need regular meals', tips: ['Don\'t skip meals even when busy', 'Have at least a small snack', 'Breakfast is important for brain activity and concentration', 'Small frequent meals are better than overeating'] },
-            'neck-forward': { title: 'You need neck posture correction', tips: ['Tuck chin slightly and lengthen neck', 'Adjust monitor to eye level', 'Slowly rotate neck every 30 minutes'] },
-            'shoulder-tension': { title: 'You need shoulder tension relief', tips: ['Raise shoulders then roll back and down', 'Take deep breath and relax shoulders', 'Massage neck and shoulders for 5 minutes'] },
-            'back-curved': { title: 'You need back posture improvement', tips: ['Sit with back against backrest', 'Keep feet flat on floor while sitting', 'Place cushion behind lower back to maintain curve'] },
-            'sitting-long': { title: 'Time to move', tips: ['Stand up and walk 2-3 minutes right now', 'Do stretching for 5 minutes at your seat', 'Work 50 minutes, rest 10 minutes pattern'] },
-            'hand-pain': { title: 'You need wrist care', tips: ['Slowly rotate wrists in circles', 'Repeat spreading fingers then making fists', 'Use wrist rest when typing'] },
-            'wrist-angle': { title: 'You need wrist angle adjustment', tips: ['Adjust keyboard so wrist is straight', 'Use wrist rest on mouse pad', 'Adjust chair height so elbows are at 90 degrees'] },
-            'eye-strain': { title: 'You need eye rest', tips: ['20-20-20 rule: Every 20 min, look 20 feet away for 20 sec', 'Close eyes and rest for 10 seconds', 'Use artificial tears to keep eyes moist'] },
-            headache: { title: 'You need headache relief', tips: ['Do deep breathing for 5 minutes', 'Gently massage neck and shoulders', 'Get adequate hydration and brief rest'] }
+            water: { title: 'You need hydration', tips: ['Drink a glass of water right now', 'Set hourly reminders to drink water', 'Choose water or herbal tea over caffeinated drinks'], diseases: ['Chronic Fatigue Syndrome', 'Poor Concentration'] },
+            meal: { title: 'You need regular meals', tips: ['Don\'t skip meals even when busy', 'Have at least a small snack', 'Breakfast is important for brain activity and concentration', 'Small frequent meals are better than overeating'], diseases: ['Hypoglycemia', 'Poor Concentration', 'Chronic Fatigue Syndrome'] },
+            'neck-forward': { title: 'You need neck posture correction', tips: ['Tuck chin slightly and lengthen neck', 'Adjust monitor to eye level', 'Slowly rotate neck every 30 minutes'], diseases: ['Tech Neck Syndrome', 'Cervical Disc'] },
+            'shoulder-tension': { title: 'You need shoulder tension relief', tips: ['Raise shoulders then roll back and down', 'Take deep breath and relax shoulders', 'Massage neck and shoulders for 5 minutes'], diseases: ['Myofascial Pain Syndrome', 'Shoulder Impingement'] },
+            'back-curved': { title: 'You need back posture improvement', tips: ['Sit with back against backrest', 'Keep feet flat on floor while sitting', 'Place cushion behind lower back to maintain curve'], diseases: ['Scoliosis', 'Lumbar Disc'] },
+            'sitting-long': { title: 'Time to move', tips: ['Stand up and walk 2-3 minutes right now', 'Do stretching for 5 minutes at your seat', 'Work 50 minutes, rest 10 minutes pattern'], diseases: ['Deep Vein Thrombosis', 'Varicose Veins'] },
+            'hand-pain': { title: 'You need wrist care', tips: ['Slowly rotate wrists in circles', 'Repeat spreading fingers then making fists', 'Use wrist rest when typing'], diseases: ['Carpal Tunnel Syndrome', 'Tendinitis'] },
+            'wrist-angle': { title: 'You need wrist angle adjustment', tips: ['Adjust keyboard so wrist is straight', 'Use wrist rest on mouse pad', 'Adjust chair height so elbows are at 90 degrees'], diseases: ['Carpal Tunnel Syndrome', 'De Quervain Disease'] },
+            'eye-strain': { title: 'You need eye rest', tips: ['20-20-20 rule: Every 20 min, look 20 feet away for 20 sec', 'Close eyes and rest for 10 seconds', 'Use artificial tears to keep eyes moist'], diseases: ['VDT Syndrome', 'Dry Eye'] },
+            headache: { title: 'You need headache relief', tips: ['Do deep breathing for 5 minutes', 'Gently massage neck and shoulders', 'Get adequate hydration and brief rest'], diseases: ['Tension Headache', 'Migraine'] }
         }
     },
     // ========== JAPANESE ==========
@@ -1025,16 +1025,16 @@ const translations = {
             '低血糖症': '血糖値が正常以下に下がる状態です。'
         },
         healthTips: {
-            water: { title: '水分補給が必要です', tips: ['今すぐコップ一杯の水を飲んでください', '1時間ごとにアラームを設定して水を飲む習慣を作りましょう', 'カフェイン飲料より水やハーブティーを選びましょう'] },
-            meal: { title: '規則的な食事が必要です', tips: ['忙しくても食事を抜かないでください', '簡単なおやつでも食べてください', '朝食は脳の活動と集中力に重要です', '過食より少量ずつ頻繁に食べる方が良いです'] },
-            'neck-forward': { title: '首の姿勢矯正が必要です', tips: ['顎を軽く引いて首を長く伸ばしてください', 'モニターの高さを目の高さに合わせてください', '30分ごとに首をゆっくり左右に回してください'] },
-            'shoulder-tension': { title: '肩の緊張緩和が必要です', tips: ['肩を上げて後ろに回しながら下ろしてください', '深く息を吸いながら肩の力を抜いてください', '首と肩を5分間マッサージしてください'] },
-            'back-curved': { title: '腰の姿勢改善が必要です', tips: ['背もたれに腰を密着させて座ってください', '足を床に平らに置いて座ってください', '腰の後ろにクッションを置いてカーブを維持してください'] },
-            'sitting-long': { title: '動く時間です', tips: ['今すぐ席を立って2〜3分歩いてください', 'その場でストレッチを5分間してください', '50分仕事して10分休むパターンを作りましょう'] },
-            'hand-pain': { title: '手首のケアが必要です', tips: ['手首を円を描くようにゆっくり回してください', '指を広げて握る運動を繰り返してください', '手首レストを使ってタイピングしてください'] },
-            'wrist-angle': { title: '手首の角度調整が必要です', tips: ['キーボードと手首が一直線になるように調整してください', 'マウスパッドに手首レストを使用してください', '肘が90度になるように椅子の高さを調節してください'] },
-            'eye-strain': { title: '目の休憩が必要です', tips: ['20-20-20ルール：20分ごとに20フィート(6m)先を20秒見てください', '目を閉じて10秒休憩してください', '人工涙液を使って目を潤してください'] },
-            headache: { title: '頭痛緩和が必要です', tips: ['深呼吸を5分間してください', '首と肩を優しくマッサージしてください', '十分な水分摂取と短い休憩を取ってください'] }
+            water: { title: '水分補給が必要です', tips: ['今すぐコップ一杯の水を飲んでください', '1時間ごとにアラームを設定して水を飲む習慣を作りましょう', 'カフェイン飲料より水やハーブティーを選びましょう'], diseases: ['慢性疲労症候群', '集中力低下'] },
+            meal: { title: '規則的な食事が必要です', tips: ['忙しくても食事を抜かないでください', '簡単なおやつでも食べてください', '朝食は脳の活動と集中力に重要です', '過食より少量ずつ頻繁に食べる方が良いです'], diseases: ['低血糖症', '集中力低下', '慢性疲労症候群'] },
+            'neck-forward': { title: '首の姿勢矯正が必要です', tips: ['顎を軽く引いて首を長く伸ばしてください', 'モニターの高さを目の高さに合わせてください', '30分ごとに首をゆっくり左右に回してください'], diseases: ['ストレートネック', '頸椎椎間板'] },
+            'shoulder-tension': { title: '肩の緊張緩和が必要です', tips: ['肩を上げて後ろに回しながら下ろしてください', '深く息を吸いながら肩の力を抜いてください', '首と肩を5分間マッサージしてください'], diseases: ['筋膜性疼痛症候群', '肩峰下インピンジメント'] },
+            'back-curved': { title: '腰の姿勢改善が必要です', tips: ['背もたれに腰を密着させて座ってください', '足を床に平らに置いて座ってください', '腰の後ろにクッションを置いてカーブを維持してください'], diseases: ['脊柱側弯症', '腰椎椎間板'] },
+            'sitting-long': { title: '動く時間です', tips: ['今すぐ席を立って2〜3分歩いてください', 'その場でストレッチを5分間してください', '50分仕事して10分休むパターンを作りましょう'], diseases: ['深部静脈血栓症', '下肢静脈瘤'] },
+            'hand-pain': { title: '手首のケアが必要です', tips: ['手首を円を描くようにゆっくり回してください', '指を広げて握る運動を繰り返してください', '手首レストを使ってタイピングしてください'], diseases: ['手根管症候群', '腱鞘炎'] },
+            'wrist-angle': { title: '手首の角度調整が必要です', tips: ['キーボードと手首が一直線になるように調整してください', 'マウスパッドに手首レストを使用してください', '肘が90度になるように椅子の高さを調節してください'], diseases: ['手根管症候群', 'ドケルバン病'] },
+            'eye-strain': { title: '目の休憩が必要です', tips: ['20-20-20ルール：20分ごとに20フィート(6m)先を20秒見てください', '目を閉じて10秒休憩してください', '人工涙液を使って目を潤してください'], diseases: ['VDT症候群', 'ドライアイ'] },
+            headache: { title: '頭痛緩和が必要です', tips: ['深呼吸を5分間してください', '首と肩を優しくマッサージしてください', '十分な水分摂取と短い休憩を取ってください'], diseases: ['緊張型頭痛', '偏頭痛'] }
         }
     }
 };
