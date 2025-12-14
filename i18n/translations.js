@@ -1039,6 +1039,12 @@ const translations = {
     }
 };
 
+// 브라우저 환경에서 전역으로 노출
+if (typeof window !== 'undefined') {
+    window.translations = translations;
+}
+
+// Node.js 환경에서 export
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = { translations };
 }
