@@ -21,15 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. 맨 위로 버튼 초기화
     initScrollToTop();
     console.log('✅ 맨 위로 버튼 초기화 완료');
-    
-    // 5. 체크리스트 초기화
+
+    // 5. 타이머 초기화 (버튼 이벤트보다 먼저 초기화 필요)
+    initTimer();
+    console.log('✅ 타이머 초기화 완료');
+
+    // 6. 체크리스트 초기화
     setTimeout(() => {
         initChecklist();
         console.log('✅ 체크리스트 초기화 완료');
-        
-        // 6. 타이머 초기화 (체크리스트 직후)
-        initTimer();
-        console.log('✅ 타이머 초기화 완료');
     }, 200);
     
     console.log('🎉 모든 초기화 완료!');
