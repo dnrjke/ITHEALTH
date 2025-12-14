@@ -932,7 +932,7 @@ function initChecklist() {
                 return tooltipElement;
             }
             
-            // 툴팁 위치 계산 및 표시 (GPU 가속 최적화)
+            // 툴팁 위치 계산 및 표시 (단순 위치 지정 - 스크롤과 함께 자연스럽게 이동)
             function showTooltip(tag, isPinned = false) {
                 const diseaseName = tag.dataset.disease;
                 const info = diseaseInfo[diseaseName];
@@ -949,40 +949,41 @@ function initChecklist() {
                     tooltip.classList.remove('pinned');
                 }
 
-                // GPU 가속을 위한 will-change 힌트
-                tooltip.style.willChange = 'transform';
-
-                // 위치 계산 (최적화: 한 번만 getBoundingClientRect 호출)
+                // 위치 계산 (터치/클릭 시점에만)
                 const tagRect = tag.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
-                // 툴팁을 먼저 보이게 해서 크기 계산
+                // absolute 위치 계산을 위해 페이지 기준 좌표 사용
+                const tagTop = tagRect.top + scrollTop;
+                const tagLeft = tagRect.left + scrollLeft;
+
+                // 툴팁 크기 계산
                 tooltip.style.visibility = 'hidden';
                 tooltip.style.display = 'block';
                 const tooltipRect = tooltip.getBoundingClientRect();
                 tooltip.style.visibility = '';
-                tooltip.style.display = '';
 
-                let left = tagRect.left + (tagRect.width / 2) - (tooltipRect.width / 2);
-                let top = tagRect.top - tooltipRect.height - 10;
+                let left = tagLeft + (tagRect.width / 2) - (tooltipRect.width / 2);
+                let top = tagTop - tooltipRect.height - 10;
 
                 // 화면 밖으로 나가는지 체크
-                if (left < 10) left = 10;
-                if (left + tooltipRect.width > window.innerWidth - 10) {
-                    left = window.innerWidth - tooltipRect.width - 10;
+                if (left < scrollLeft + 10) left = scrollLeft + 10;
+                if (left + tooltipRect.width > scrollLeft + window.innerWidth - 10) {
+                    left = scrollLeft + window.innerWidth - tooltipRect.width - 10;
                 }
 
                 // 위쪽 공간이 부족하면 아래쪽에 표시
-                if (top < 10) {
-                    top = tagRect.bottom + 10;
+                if (tagRect.top < tooltipRect.height + 10) {
+                    top = tagTop + tagRect.height + 10;
                     tooltip.classList.add('bottom');
                 } else {
                     tooltip.classList.remove('bottom');
                 }
 
-                // GPU 가속: left/top 대신 transform 사용
-                tooltip.style.left = '0';
-                tooltip.style.top = '0';
-                tooltip.style.transform = `translate(${left}px, ${top}px)`;
+                // absolute 위치 설정 (스크롤과 함께 자연스럽게 이동)
+                tooltip.style.left = left + 'px';
+                tooltip.style.top = top + 'px';
             }
             
             // 툴팁 숨기기
@@ -1041,43 +1042,6 @@ function initChecklist() {
                     }
                 }
             });
-            
-            // 스크롤 시 툴팁 위치 업데이트 (최적화: 디바운싱 + RAF)
-            let scrollRAF = null;
-            let scrollEndTimeout = null;
-            let isScrolling = false;
-
-            window.addEventListener('scroll', () => {
-                if (activeTag && tooltipElement && tooltipElement.classList.contains('pinned')) {
-                    // 스크롤 시작 시 한 번만 클래스 추가
-                    if (!isScrolling) {
-                        isScrolling = true;
-                        tooltipElement.classList.add('scrolling');
-                    }
-
-                    // RAF 중복 방지: 이미 예약된 RAF가 있으면 캔슬
-                    if (scrollRAF) {
-                        cancelAnimationFrame(scrollRAF);
-                    }
-
-                    // requestAnimationFrame으로 부드럽게 업데이트
-                    scrollRAF = requestAnimationFrame(() => {
-                        if (activeTag) {
-                            showTooltip(activeTag, true);
-                        }
-                        scrollRAF = null;
-                    });
-
-                    // 스크롤 종료 시 scrolling 클래스 제거 (디바운싱)
-                    clearTimeout(scrollEndTimeout);
-                    scrollEndTimeout = setTimeout(() => {
-                        if (tooltipElement) {
-                            tooltipElement.classList.remove('scrolling');
-                            isScrolling = false;
-                        }
-                    }, 150);
-                }
-            }, { passive: true });
         }
         
         // 추천 가이드 매핑 데이터 (tipKey -> guideType)
@@ -1901,103 +1865,117 @@ function initTimer() {
     }
 
     function setupProgressBarSeek() {
-        // 진행바 드래그/슬라이드 공통 함수 (최적화 버전)
+        // 유튜브 스타일 드래그: 시각적 피드백은 즉시, 실제 업데이트는 지연
         function setupProgressBarDrag(container, mode, onSeek) {
-            let isDragging = false;
-            let rafId = null;
-            let cachedRect = null;
-            let pendingClientX = null;
+            const progressBar = container.querySelector('.progress-bar');
+            if (!progressBar) return;
 
-            // 렉트 캐싱 (리사이즈 시 갱신)
-            function updateCachedRect() {
-                cachedRect = container.getBoundingClientRect();
+            // Thumb 요소 생성
+            let thumb = container.querySelector('.progress-thumb');
+            if (!thumb) {
+                thumb = document.createElement('div');
+                thumb.className = 'progress-thumb';
+                container.appendChild(thumb);
             }
 
-            updateCachedRect();
-            window.addEventListener('resize', updateCachedRect);
+            let isDragging = false;
+            let visualPercentage = 0;
+            let updateTimer = null;
 
-            // RAF로 프레임 단위 업데이트 (GPU 가속)
-            function handleSeekRAF() {
-                if (pendingClientX === null) return;
+            // 즉시 시각적 피드백 업데이트
+            function updateVisual(percentage) {
+                visualPercentage = Math.max(0, Math.min(percentage, 1));
+                progressBar.style.width = (visualPercentage * 100) + '%';
+                thumb.style.left = (visualPercentage * 100) + '%';
+            }
 
-                if (!timerState.isRunning && !timerState.isPaused) {
-                    pendingClientX = null;
-                    return;
-                }
+            // 실제 타이머 상태 업데이트 (디바운스)
+            function updateActual(percentage) {
+                if (!timerState.isRunning && !timerState.isPaused) return;
 
-                const seekX = Math.max(0, Math.min(pendingClientX - cachedRect.left, cachedRect.width));
-                const percentage = seekX / cachedRect.width;
                 const newTime = Math.floor(percentage * timerState.totalTime);
-
                 timerState.currentTime = Math.max(0, Math.min(newTime, timerState.totalTime));
                 onSeek();
-
-                pendingClientX = null;
-                rafId = null;
             }
 
-            function handleSeek(clientX) {
-                pendingClientX = clientX;
+            // 지연된 업데이트 스케줄
+            function scheduleUpdate(percentage) {
+                clearTimeout(updateTimer);
+                updateTimer = setTimeout(() => {
+                    updateActual(percentage);
+                }, 100); // 100ms 디바운스
+            }
 
-                // 이미 RAF가 예약되어 있으면 스킵 (중복 방지)
-                if (rafId !== null) return;
+            // 위치 계산
+            function getPercentage(clientX) {
+                const rect = container.getBoundingClientRect();
+                const seekX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+                return seekX / rect.width;
+            }
 
-                rafId = requestAnimationFrame(handleSeekRAF);
+            // 드래그 시작
+            function startDrag(clientX) {
+                if (mode === 'global' && timerState.mode !== 'global') return;
+                if (!timerState.isRunning && !timerState.isPaused) return;
+
+                isDragging = true;
+                thumb.classList.add('active');
+
+                const percentage = getPercentage(clientX);
+                updateVisual(percentage);
+                updateActual(percentage); // 시작 시 즉시 업데이트
+            }
+
+            // 드래그 중
+            function duringDrag(clientX) {
+                if (!isDragging) return;
+
+                const percentage = getPercentage(clientX);
+                updateVisual(percentage); // 즉시 시각 업데이트
+                scheduleUpdate(percentage); // 실제 업데이트는 지연
+            }
+
+            // 드래그 종료
+            function endDrag() {
+                if (!isDragging) return;
+
+                isDragging = false;
+                thumb.classList.remove('active');
+                clearTimeout(updateTimer);
+
+                // 마지막 위치로 최종 업데이트
+                updateActual(visualPercentage);
             }
 
             // 마우스 이벤트 (데스크톱)
             container.addEventListener('mousedown', (e) => {
-                if (mode === 'global' && timerState.mode !== 'global') return;
                 e.preventDefault();
-                isDragging = true;
-                updateCachedRect(); // 드래그 시작 시 rect 갱신
-                handleSeek(e.clientX);
+                startDrag(e.clientX);
             });
 
             document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                handleSeek(e.clientX);
+                duringDrag(e.clientX);
             });
 
             document.addEventListener('mouseup', () => {
-                isDragging = false;
-                if (rafId !== null) {
-                    cancelAnimationFrame(rafId);
-                    rafId = null;
-                }
+                endDrag();
             });
 
-            // 터치 이벤트 (모바일)
+            // 터치 이벤트 (모바일) - passive: false로 즉시 반응
             container.addEventListener('touchstart', (e) => {
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                isDragging = true;
-                updateCachedRect(); // 드래그 시작 시 rect 갱신
-                handleSeek(e.touches[0].clientX);
-            }, { passive: true });
+                startDrag(e.touches[0].clientX);
+            }, { passive: false });
 
             container.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                e.preventDefault();
-                handleSeek(e.touches[0].clientX);
+                if (isDragging) {
+                    e.preventDefault(); // 스크롤 방지
+                    duringDrag(e.touches[0].clientX);
+                }
             }, { passive: false });
 
             container.addEventListener('touchend', () => {
-                isDragging = false;
-                if (rafId !== null) {
-                    cancelAnimationFrame(rafId);
-                    rafId = null;
-                }
-            });
-
-            // 클릭 이벤트도 유지
-            container.addEventListener('click', (e) => {
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                if (!timerState.isRunning && !timerState.isPaused) return;
-                updateCachedRect();
-                handleSeek(e.clientX);
-            });
+                endDrag();
+            }, { passive: true });
 
             // 커서 스타일
             container.style.cursor = 'pointer';
