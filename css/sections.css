@@ -35,7 +35,14 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+    filter: brightness(0.4) blur(8px) saturate(1.1);
+    transform: scale(1.02);
+    transition: filter 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.tab-bg-image.loaded {
     filter: brightness(0.4) blur(1px) saturate(1.1);
+    transform: scale(1);
 }
 
 .tab-bg-overlay {
@@ -220,11 +227,14 @@
 
 /* 래퍼 내부 content-hero-image */
 .tab-content-wrapper .content-hero-image {
-    width: 100%;
+    width: auto;
     max-width: 100%;
     height: auto;
     min-height: 250px;
+    max-height: 400px;
     object-fit: contain;
+    margin: 0 auto;
+    display: block;
 }
 
 /* 래퍼 내부 problem-keyword */
@@ -259,11 +269,18 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('../image/main_floral_calm.webp');
+    background-image: url('../image/main_floral_calm_lowres.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     z-index: -1;
+    filter: blur(8px);
+    transition: filter 0.6s ease-out, background-image 0s;
+}
+
+#main-content.loaded::before {
+    background-image: url('../image/main_floral_calm.webp');
+    filter: blur(0);
 }
 
 .hero {
@@ -340,7 +357,7 @@
     white-space: nowrap;
 }
 
-/* Japanese: Use consistent font to avoid kanji emphasis issue */
+/* Japanese: Use consistent font and apply italic like other languages */
 html[lang="ja"] .hero-subtitle {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS PMincho', 'Noto Serif JP', serif;
     font-style: italic;
@@ -821,12 +838,15 @@ html[lang="ja"] .hero-subtitle {
 
 /* ==================== 이미지 레이아웃 ==================== */
 .content-hero-image {
-    width: 100%;
+    width: auto;
+    max-width: 100%;
     height: auto;
     max-height: 400px;
     object-fit: contain;
     border-radius: 20px;
     box-shadow: 0 12px 40px var(--shadow-medium);
+    margin: 0 auto;
+    display: block;
 }
 
 .info-grid {
@@ -1118,14 +1138,23 @@ html[lang="ja"] .hero-subtitle {
         grid-template-columns: 1fr;
     }
 
-    .tab-content-wrapper .hero-left,
+    .tab-content-wrapper .hero-left {
+        padding: 0 0.5em;
+    }
+
     .tab-content-wrapper .hero-right {
         padding: 0;
     }
 
     .tab-content-wrapper .content-hero-image {
-        height: 180px;
+        width: auto;
+        max-width: 100%;
+        height: auto;
         min-height: 180px;
+        max-height: 250px;
+        object-fit: contain;
+        margin: 0 auto;
+        display: block;
     }
 
     .tab-content-wrapper .section-block {

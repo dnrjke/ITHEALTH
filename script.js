@@ -31,7 +31,15 @@ document.addEventListener('DOMContentLoaded', () => {
         initChecklist();
         console.log('✅ 체크리스트 초기화 완료');
     }, 200);
-    
+
+    // 7. 섹션별 추천 가이드 초기화 (모바일 전용)
+    initSectionGuides();
+    console.log('✅ 섹션별 추천 가이드 초기화 완료');
+
+    // 8. 배경 이미지 blur-up 효과 초기화
+    initBackgroundBlurUp();
+    console.log('✅ 배경 이미지 blur-up 초기화 완료');
+
     console.log('🎉 모든 초기화 완료!');
 });
 
@@ -107,7 +115,7 @@ function initNavigation() {
         
         if (targetItem && navCarouselContainer && window.innerWidth <= 768) {
             let scrollLeft;
-            
+
             // 첫 번째 항목: 왼쪽 끝 정렬
             if (tabIndex === 0) {
                 scrollLeft = 0;
@@ -120,11 +128,18 @@ function initNavigation() {
             else {
                 scrollLeft = targetItem.offsetLeft - (navCarouselContainer.offsetWidth / 2) + (targetItem.offsetWidth / 2);
             }
-            
+
+            // 탭 클릭 시에만 smooth scroll 적용
+            navCarouselContainer.classList.add('snapping');
             navCarouselContainer.scrollTo({
                 left: scrollLeft,
                 behavior: 'smooth'
             });
+
+            // 스크롤 완료 후 snapping 클래스 제거
+            setTimeout(() => {
+                navCarouselContainer.classList.remove('snapping');
+            }, 500);
         }
         
         currentTabIndex = tabIndex;
@@ -211,11 +226,6 @@ function initNavigation() {
         if (targetContent) {
             targetContent.classList.add('active');
             document.body.classList.remove('main-view');
-
-            // 휴식 가이드 탭으로 이동 시 타이머 상태 초기화
-            if (tabId === 'rest-guide-content') {
-                document.dispatchEvent(new CustomEvent('resetRestGuide'));
-            }
 
             // 건강 가이드 탭일 때만 섹션 네비게이션 표시
             if (isGuideTab) {
@@ -307,10 +317,11 @@ function initNavigation() {
 
     /**
      * 메인 화면 버튼 초기화
+     * 타이머 함수들을 전역 스코프에 노출하여 직접 호출 가능하도록 함
      */
     function initMainScreenButtons() {
         // feature badges 제거됨 - 더 이상 필요 없음
-        
+
         // 시작하기 버튼 (메인 → 가이드 소개)
         const startGuideBtn = document.getElementById('start-guide-btn');
         if (startGuideBtn) {
@@ -319,7 +330,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         const checklistBtn = document.getElementById('health-checklist-btn');
         if (checklistBtn) {
             checklistBtn.addEventListener('click', () => {
@@ -327,7 +338,7 @@ function initNavigation() {
                 updateHeaderNav('checklist');
             });
         }
-        
+
         // 가이드 소개 CTA 버튼
         const introCta = document.getElementById('intro-cta');
         if (introCta) {
@@ -337,7 +348,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         // 가이드 소개 페이지 빠른 접근 버튼들
         const quickAccessBtns = document.querySelectorAll('.quick-access-btn');
         quickAccessBtns.forEach(btn => {
@@ -356,17 +367,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
-        
-        const quickBreakStartBtn = document.getElementById('quick-break-start-btn');
-        if (quickBreakStartBtn) {
-            quickBreakStartBtn.addEventListener('click', () => {
-                // 커스텀 이벤트로 전체 휴식 가이드 시작
-                document.dispatchEvent(new CustomEvent('startRestGuide', { 
-                    detail: { guideType: 'rest-all' } 
-                }));
-            });
-        }
-        
+
         // 다음 스텝 버튼들
         const nextButtonHeadache = document.getElementById('next-button');
         if (nextButtonHeadache) {
@@ -375,7 +376,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         const nextButtonTurtle = document.getElementById('next-button-tn');
         if (nextButtonTurtle) {
             nextButtonTurtle.addEventListener('click', () => {
@@ -383,7 +384,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         const nextButtonHand = document.getElementById('next-button-hp');
         if (nextButtonHand) {
             nextButtonHand.addEventListener('click', () => {
@@ -391,7 +392,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         // 눈 건강 → 허리 건강
         const nextButtonEye = document.getElementById('next-button-eye');
         if (nextButtonEye) {
@@ -400,7 +401,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         // 허리 건강 → 얼굴 긴장
         const nextButtonBack = document.getElementById('next-button-back');
         if (nextButtonBack) {
@@ -409,7 +410,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         // 얼굴 긴장 → 마무리
         const nextButtonFace = document.getElementById('next-button-face');
         if (nextButtonFace) {
@@ -418,7 +419,7 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
+
         // 마무리 페이지 버튼들
         const goChecklistBtn = document.getElementById('go-checklist-btn');
         if (goChecklistBtn) {
@@ -428,28 +429,6 @@ function initNavigation() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         }
-        
-        const goBreakBtn = document.getElementById('go-break-btn');
-        if (goBreakBtn) {
-            goBreakBtn.addEventListener('click', () => {
-                // 커스텀 이벤트로 전체 휴식 가이드 시작
-                document.dispatchEvent(new CustomEvent('startRestGuide', { 
-                    detail: { guideType: 'rest-all' } 
-                }));
-            });
-        }
-        
-        // 휴식 가이드 카드 버튼들 - 모든 가이드 타입 지원
-        const guideCardBtns = document.querySelectorAll('.guide-card-btn');
-        guideCardBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const guideType = btn.dataset.guide;
-                
-                // 커스텀 이벤트로 가이드 시작 요청
-                const event = new CustomEvent('startRestGuide', { detail: { guideType } });
-                document.dispatchEvent(event);
-            });
-        });
     }
 
     // 초기 화면 설정
@@ -528,14 +507,16 @@ function initI18n() {
         document.querySelectorAll('[data-i18n]').forEach(el => {
             const key = el.getAttribute('data-i18n');
             const value = getNestedValue(t, key);
-            if (value) el.textContent = value;
+            // 빈 문자열도 허용 (영어의 countUnit 같은 경우)
+            if (value !== undefined && value !== null) el.textContent = value;
         });
 
         // data-i18n-html 속성 처리 (innerHTML)
         document.querySelectorAll('[data-i18n-html]').forEach(el => {
             const key = el.getAttribute('data-i18n-html');
             const value = getNestedValue(t, key);
-            if (value) el.innerHTML = value;
+            // 빈 문자열도 허용
+            if (value !== undefined && value !== null) el.innerHTML = value;
         });
 
         // 네비게이션
@@ -721,6 +702,16 @@ function initI18n() {
         }
 
         try { localStorage.setItem('lang', lang); } catch (_) {}
+
+        // 체크리스트가 있으면 업데이트 (언어 변경 시)
+        if (typeof window.ITHealth?.updateChecklist === 'function') {
+            window.ITHealth.updateChecklist();
+        }
+
+        // 섹션 가이드가 있으면 업데이트 (언어 변경 시)
+        if (typeof window.ITHealth?.updateSectionGuides === 'function') {
+            window.ITHealth.updateSectionGuides();
+        }
     }
 
     const langButtons = document.querySelectorAll('.lang-option');
@@ -870,93 +861,27 @@ if (header) {
    ================================================ */
 
 function initChecklist() {
-        // 병명 세부 정보 데이터
-        const diseaseInfo = {
-            "거북목증후군": "목이 앞으로 쭉 빠진 자세로 인해 경추의 정상적인 C자 곡선이 일자로 변형되는 증상입니다. 두통, 어깨 결림, 목 통증을 유발합니다.",
-            "경추디스크": "목뼈 사이의 디스크가 튀어나와 신경을 압박하여 팔 저림, 어깨 통증, 손 저림 등의 증상을 일으킵니다.",
-            "근막통증증후군": "근육과 근막에 압통점이 생겨 통증을 일으키는 질환입니다. 장시간 같은 자세 유지 시 발생하기 쉽습니다.",
-            "어깨충돌증후군": "어깨를 들 때 어깨뼈와 힘줄이 부딪혀 염증과 통증을 유발하는 질환입니다. 팔을 들거나 뒤로 젖힐 때 통증이 심합니다.",
-            "척추측만증": "척추가 좌우로 휘어지는 질환으로, 자세 불균형이 주요 원인입니다. 허리 통증과 체형 변형을 초래합니다.",
-            "요추디스크": "허리뼈 사이의 디스크가 튀어나와 신경을 압박하는 질환입니다. 다리 저림, 허리 통증이 주요 증상입니다.",
-            "심부정맥혈전증": "다리 깊숙한 정맥에 혈전(피떡)이 생기는 질환입니다. 장시간 앉아있을 때 발생 위험이 높아집니다.",
-            "하지정맥류": "다리 정맥의 판막 기능 이상으로 혈액이 역류해 정맥이 부풀어 오르는 질환입니다. 오래 서있거나 앉아있을 때 악화됩니다.",
-            "손목터널증후군": "손목의 정중신경이 압박되어 손저림, 손목 통증, 감각 이상을 일으키는 질환입니다. 반복적인 손목 사용이 주요 원인입니다.",
-            "건초염": "힘줄을 감싸는 건초에 염증이 생기는 질환입니다. 손목이나 손가락의 반복적인 움직임으로 발생합니다.",
-            "드퀘르뱅병": "엄지손가락 쪽 힘줄과 건초에 생기는 염증성 질환입니다. 엄지를 사용할 때 손목 통증이 심합니다.",
-            "VDT증후군": "컴퓨터 등 영상표시단말기를 장시간 사용하여 발생하는 눈의 피로, 시력 저하, 안구 건조 등의 증상입니다.",
-            "안구건조증": "눈물 분비가 부족하거나 눈물이 빨리 증발하여 눈이 건조해지는 질환입니다. 화면을 오래 볼 때 악화됩니다.",
-            "긴장성두통": "머리 주변 근육의 긴장으로 인해 발생하는 두통입니다. 스트레스와 잘못된 자세가 주요 원인입니다.",
-            "편두통": "머리 한쪽이 욱신거리는 박동성 두통으로, 구토나 빛·소리에 대한 민감성을 동반할 수 있습니다.",
-            "만성피로증후군": "충분한 휴식에도 개선되지 않는 지속적인 피로 상태입니다. 수면 부족, 스트레스, 영양 불균형이 원인입니다.",
-            "집중력저하": "주의력과 집중력이 떨어지는 상태로, 산소 부족, 피로, 스트레스가 주요 원인입니다.",
-            "저혈당증": "혈당이 정상 이하로 떨어지는 상태입니다. 식사를 거르거나 불규칙한 식사 패턴이 주요 원인이며, 어지러움, 피로, 집중력 저하를 유발합니다."
-        };
-
-        const healthTipsData = {
-            water: {
-                title: "수분 보충이 필요해요",
-                tips: ["지금 당장 물 한 컵을 마셔보세요", "1시간마다 알람을 설정해 물을 마시는 습관을 만들어보세요", "카페인 음료보다는 물이나 허브차를 선택하세요"],
-                diseases: ["만성피로증후군", "집중력저하"]
-            },
-            meal: {
-                title: "규칙적인 식사가 필요해요",
-                tips: ["바쁘더라도 식사를 거르지 마세요", "간단한 간식이라도 챙겨 드세요", "아침 식사는 뇌 활동과 집중력에 중요합니다", "과식보다는 소량씩 자주 먹는 것이 좋습니다"],
-                diseases: ["저혈당증", "집중력저하", "만성피로증후군"]
-            },
-            'neck-forward': {
-                title: "목 자세 교정이 필요해요",
-                tips: ["턱을 살짝 당기고 목을 길게 늘려보세요", "모니터 높이를 눈높이와 맞춰주세요", "30분마다 목을 좌우로 천천히 돌려주세요"],
-                diseases: ["거북목증후군", "경추디스크"]
-            },
-            'shoulder-tension': {
-                title: "어깨 긴장 완화가 필요해요",
-                tips: ["어깨를 위로 올렸다가 뒤로 돌리며 내려주세요", "깊게 숨을 들이마시며 어깨 힘을 빼보세요", "목과 어깨 마사지를 5분간 해보세요"],
-                diseases: ["근막통증증후군", "어깨충돌증후군"]
-            },
-            'back-curved': {
-                title: "허리 자세 개선이 필요해요",
-                tips: ["등받이에 허리를 밀착시켜 앉아보세요", "발을 바닥에 평평하게 놓고 앉으세요", "허리 뒤에 쿠션을 놓아 곡선을 유지해보세요"],
-                diseases: ["척추측만증", "요추디스크"]
-            },
-            'sitting-long': {
-                title: "움직임이 필요한 시간이에요",
-                tips: ["지금 당장 자리에서 일어나 2-3분 걸어보세요", "제자리에서 스트레칭을 5분간 해보세요", "50분 일하고 10분 휴식하는 패턴을 만들어보세요"],
-                diseases: ["심부정맥혈전증", "하지정맥류"]
-            },
-            'hand-pain': {
-                title: "손목 케어가 필요해요",
-                tips: ["손목을 원을 그리며 천천히 돌려주세요", "손가락을 쫙 펼쳤다가 주먹을 쥐는 운동을 반복하세요", "손목 받침대를 사용해 타이핑하세요"],
-                diseases: ["손목터널증후군", "건초염"]
-            },
-            'wrist-angle': {
-                title: "손목 각도 조정이 필요해요",
-                tips: ["키보드와 손목이 일직선이 되도록 조정하세요", "마우스 패드에 손목 받침대를 사용하세요", "팔꿈치가 90도가 되도록 의자 높이를 조절하세요"],
-                diseases: ["손목터널증후군", "드퀘르뱅병"]
-            },
-            'eye-strain': {
-                title: "눈 휴식이 필요해요",
-                tips: ["20-20-20 법칙: 20분마다 20피트(6m) 거리를 20초간 바라보세요", "눈을 감고 10초간 휴식을 취하세요", "인공눈물을 사용해 눈을 촉촉하게 해주세요"],
-                diseases: ["VDT증후군", "안구건조증"]
-            },
-            headache: {
-                title: "두통 완화가 필요해요",
-                tips: ["깊은 호흡을 5분간 해보세요", "목과 어깨 마사지를 부드럽게 해주세요", "충분한 수분 섭취와 잠깐의 휴식을 취하세요"],
-                diseases: ["긴장성두통", "편두통"]
-            }
-        };
+        // 하드코딩된 데이터 제거 - translations.js에서 동적으로 가져옴
         
         function updateCheckCount() {
+            // 번역 데이터 가져오기
+            const lang = localStorage.getItem('lang') || 'KR';
+            const t = window.translations?.[lang] || window.translations?.KR;
+            const healthTipsData = t?.healthTips || {};
+            const diseaseInfo = t?.diseases || {};
+
             const checkedInputs = document.querySelectorAll('.check-input:checked');
-        const checkedCountSpan = document.getElementById('checked-count');
-        const healthTips = document.getElementById('health-tips');
+            const checkedCountSpan = document.getElementById('checked-count');
+            const healthTips = document.getElementById('health-tips');
             const count = checkedInputs.length;
-            
-        if (checkedCountSpan) checkedCountSpan.textContent = count;
-        
-        if (!healthTips) return;
-        
+
+            if (checkedCountSpan) checkedCountSpan.textContent = count;
+
+            if (!healthTips) return;
+
             if (count === 0) {
-                healthTips.innerHTML = '<p>항목을 체크하면 맞춤 건강 팁을 제공합니다!</p>';
+                const defaultMsg = t?.checklist?.defaultMsg || '항목을 체크하면 맞춤 건강 팁을 제공합니다!';
+                healthTips.innerHTML = `<p>${defaultMsg}</p>`;
             } else {
                 const checkedTips = [];
                 checkedInputs.forEach(input => {
@@ -965,7 +890,7 @@ function initChecklist() {
                         checkedTips.push(healthTipsData[tipKey]);
                     }
                 });
-                
+
                 if (checkedTips.length > 0) {
                     let tipsHtml = '<div class="active-tips">';
                     checkedTips.forEach(tip => {
@@ -984,8 +909,8 @@ function initChecklist() {
                     });
                     tipsHtml += '</div>';
                     healthTips.innerHTML = tipsHtml;
-                    
-                    // 병명 태그에 툴팁 기능 추가
+
+                    // 병명 태그에 툴팁 기능 추가 (번역된 diseaseInfo 전달)
                     setupDiseaseTagTooltips(diseaseInfo);
                 }
             }
@@ -1007,36 +932,45 @@ function initChecklist() {
                 return tooltipElement;
             }
             
-            // 툴팁 위치 계산 및 표시
+            // 툴팁 위치 계산 및 표시 (GPU 가속 최적화)
             function showTooltip(tag, isPinned = false) {
                 const diseaseName = tag.dataset.disease;
                 const info = diseaseInfo[diseaseName];
-                
+
                 if (!info) return;
-                
+
                 const tooltip = createTooltip();
                 tooltip.textContent = info;
                 tooltip.classList.add('visible');
-                
+
                 if (isPinned) {
                     tooltip.classList.add('pinned');
                 } else {
                     tooltip.classList.remove('pinned');
                 }
-                
-                // 위치 계산
+
+                // GPU 가속을 위한 will-change 힌트
+                tooltip.style.willChange = 'transform';
+
+                // 위치 계산 (최적화: 한 번만 getBoundingClientRect 호출)
                 const tagRect = tag.getBoundingClientRect();
+
+                // 툴팁을 먼저 보이게 해서 크기 계산
+                tooltip.style.visibility = 'hidden';
+                tooltip.style.display = 'block';
                 const tooltipRect = tooltip.getBoundingClientRect();
-                
+                tooltip.style.visibility = '';
+                tooltip.style.display = '';
+
                 let left = tagRect.left + (tagRect.width / 2) - (tooltipRect.width / 2);
                 let top = tagRect.top - tooltipRect.height - 10;
-                
+
                 // 화면 밖으로 나가는지 체크
                 if (left < 10) left = 10;
                 if (left + tooltipRect.width > window.innerWidth - 10) {
                     left = window.innerWidth - tooltipRect.width - 10;
                 }
-                
+
                 // 위쪽 공간이 부족하면 아래쪽에 표시
                 if (top < 10) {
                     top = tagRect.bottom + 10;
@@ -1044,9 +978,11 @@ function initChecklist() {
                 } else {
                     tooltip.classList.remove('bottom');
                 }
-                
-                tooltip.style.left = left + 'px';
-                tooltip.style.top = top + 'px';
+
+                // GPU 가속: left/top 대신 transform 사용
+                tooltip.style.left = '0';
+                tooltip.style.top = '0';
+                tooltip.style.transform = `translate(${left}px, ${top}px)`;
             }
             
             // 툴팁 숨기기
@@ -1105,29 +1041,39 @@ function initChecklist() {
                     }
                 }
             });
-            
-            // 스크롤 시 툴팁 위치 업데이트
+
+            // 스크롤 시 툴팁 위치 업데이트 (최적화: 디바운싱 + RAF)
             let scrollRAF = null;
             let scrollEndTimeout = null;
-            
+            let isScrolling = false;
+
             window.addEventListener('scroll', () => {
                 if (activeTag && tooltipElement && tooltipElement.classList.contains('pinned')) {
-                    // 스크롤 중 클래스 추가 (transition 비활성화)
-                    tooltipElement.classList.add('scrolling');
-                    
-                    // requestAnimationFrame으로 부드럽게 업데이트
+                    // 스크롤 시작 시 한 번만 클래스 추가
+                    if (!isScrolling) {
+                        isScrolling = true;
+                        tooltipElement.classList.add('scrolling');
+                    }
+
+                    // RAF 중복 방지: 이미 예약된 RAF가 있으면 캔슬
                     if (scrollRAF) {
                         cancelAnimationFrame(scrollRAF);
                     }
+
+                    // requestAnimationFrame으로 부드럽게 업데이트
                     scrollRAF = requestAnimationFrame(() => {
-                        showTooltip(activeTag, true);
+                        if (activeTag) {
+                            showTooltip(activeTag, true);
+                        }
+                        scrollRAF = null;
                     });
-                    
-                    // 스크롤 종료 시 scrolling 클래스 제거
+
+                    // 스크롤 종료 시 scrolling 클래스 제거 (디바운싱)
                     clearTimeout(scrollEndTimeout);
                     scrollEndTimeout = setTimeout(() => {
                         if (tooltipElement) {
                             tooltipElement.classList.remove('scrolling');
+                            isScrolling = false;
                         }
                     }, 150);
                 }
@@ -1238,28 +1184,21 @@ function initChecklist() {
             guidesHtml += '</div>';
             recommendedGuidesContainer.innerHTML = guidesHtml;
             recommendedGuidesContainer.classList.add('has-guides');
-            
-            // 카드 클릭으로 가이드 시작
-            recommendedGuidesContainer.querySelectorAll('.recommended-guide-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const guideType = card.dataset.guide;
-                    document.dispatchEvent(new CustomEvent('startRestGuide', { 
-                        detail: { guideType } 
-                    }));
-                });
-            });
+
+            // 카드 클릭으로 가이드 시작 - 직접 함수 호출 방식
+            // MutationObserver가 자동으로 리스너를 연결하므로 여기서는 제거
         }
 
     const checkInputs = document.querySelectorAll('.check-input');
     const resetBtn = document.querySelector('.reset-checklist-btn');
-    
+
         checkInputs.forEach(input => {
             input.addEventListener('change', () => {
                 updateCheckCount();
                 updateRecommendedGuides();
             });
         });
-        
+
         if (resetBtn) {
             resetBtn.addEventListener('click', () => {
                 checkInputs.forEach(input => {
@@ -1269,6 +1208,91 @@ function initChecklist() {
                 updateRecommendedGuides();
             });
         }
+
+    // updateCheckCount와 updateRecommendedGuides를 전역으로 노출 (언어 변경 시 호출용)
+    window.ITHealth = window.ITHealth || {};
+    window.ITHealth.updateChecklist = function() {
+        updateCheckCount();
+        updateRecommendedGuides();
+    };
+
+    // 초기 업데이트
+    updateCheckCount();
+}
+
+/* ================================================
+   SECTION GUIDES - 건강 가이드 섹션별 추천 가이드 (모바일 전용)
+   ================================================ */
+
+function initSectionGuides() {
+    // 섹션별 추천 가이드 매핑 (섹션 ID → 추천 가이드 타입들)
+    const sectionGuideMap = {
+        'turtle-neck-recommended-guides': ['rest-neck', 'rest-face'],
+        'hand-pain-recommended-guides': ['rest-hand'],
+        'eye-health-recommended-guides': ['rest-eye'],
+        'back-health-recommended-guides': ['rest-waist'],
+        'face-tension-recommended-guides': ['rest-face']
+    };
+
+    // 가이드 아이콘 매핑
+    const guideIcons = {
+        'rest-all': '🎬',
+        'rest-neck': '🦴',
+        'rest-face': '😌',
+        'rest-eye': '👁️',
+        'rest-hand': '✋',
+        'rest-waist': '🧍'
+    };
+
+    // 각 섹션에 추천 가이드 생성
+    Object.entries(sectionGuideMap).forEach(([containerId, guideTypes]) => {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        // 현재 언어 가져오기
+        const lang = localStorage.getItem('lang') || 'KR';
+        const translations = window.translations?.[lang];
+
+        // 추천 가이드 HTML 생성
+        let guidesHtml = '<div class="recommended-guides-grid">';
+
+        guideTypes.forEach(guideType => {
+            const restGuideData = translations?.restGuideData?.[guideType];
+            const recommendData = translations?.checklist?.guideRecommend?.[guideType];
+
+            const icon = guideIcons[guideType] || '🎬';
+            const title = restGuideData?.label || guideType;
+            const desc = recommendData?.desc || '';
+
+            guidesHtml += `
+                <div class="recommended-guide-card" data-guide="${guideType}">
+                    <div class="guide-card-icon">${icon}</div>
+                    <div class="guide-card-content">
+                        <h4 class="guide-card-title">${title}</h4>
+                        <p class="guide-card-desc">${desc}</p>
+                    </div>
+                    <div class="guide-play-icon">›</div>
+                </div>
+            `;
+        });
+
+        guidesHtml += '</div>';
+        container.innerHTML = guidesHtml;
+
+        // 각 카드에 클릭 이벤트 추가
+        container.querySelectorAll('.recommended-guide-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const guideType = card.dataset.guide;
+                if (guideType && window.ITHealth?.startGuide) {
+                    window.ITHealth.startGuide(guideType);
+                }
+            });
+        });
+    });
+
+    // 언어 변경 시 섹션 가이드 업데이트를 위해 전역에 노출
+    window.ITHealth = window.ITHealth || {};
+    window.ITHealth.updateSectionGuides = initSectionGuides;
 }
 
 /* ================================================
@@ -1554,7 +1578,34 @@ function initTimer() {
             console.error('알 수 없는 가이드 타입:', guideType);
             return;
         }
-        
+
+        // ==================== UI 완전 초기화 (이전 가이드 흔적 제거) ====================
+        // 1. 프로그레스 바 초기화
+        const progressBar = document.getElementById('sticky-progress-bar');
+        if (progressBar) progressBar.style.width = '0%';
+
+        // 2. 시간 표시 초기화
+        const currentTimeEl = document.getElementById('sticky-current-time');
+        if (currentTimeEl) currentTimeEl.textContent = '0:00';
+
+        // 3. 일시정지 버튼 텍스트 초기화 (번역 적용)
+        const pauseBtn = document.getElementById('sticky-timer-pause');
+        if (pauseBtn) {
+            const lang = localStorage.getItem('lang') || 'KR';
+            const pauseText = window.translations?.[lang]?.common?.pause || '일시정지';
+            const btnText = pauseBtn.querySelector('span:last-child');
+            if (btnText) btnText.textContent = pauseText;
+        }
+
+        // 4. 모든 step-box 상태 초기화
+        document.querySelectorAll('.step-box').forEach(box => {
+            box.classList.remove('active', 'completed');
+        });
+
+        // 5. 이전 단계 추적 변수 초기화
+        previousStepNum = null;
+
+        // ==================== 타이머 상태 초기화 ====================
         // 가이드 데이터로 상태 초기화
         timerState.mode = 'global';
         timerState.guideType = guideType;
@@ -1564,29 +1615,29 @@ function initTimer() {
         timerState.currentTime = 0;
         timerState.steps = guide.steps;
         timerState.totalTime = guide.steps.reduce((sum, step) => sum + step.duration, 0);
-        
+
         // 스크롤 잠금 (모달 모드)
         lockScroll();
-        
+
         // UI 표시
         const globalStartBtn = document.getElementById('global-timer-start');
         if (globalStartBtn) globalStartBtn.classList.add('hidden');
         document.getElementById('timer-sticky-progress').classList.remove('hidden');
         document.getElementById('sticky-card-display').classList.remove('hidden');
         document.getElementById('timer-complete-message').classList.add('hidden');
-        
+
         // 가이드 라벨 업데이트
         updateGuideLabel(guide);
-        
+
         // 프로그레스 바 단계 동적 생성
         generateStepsBar(guide.steps);
-        
+
         // 전체 시간 업데이트
         document.getElementById('sticky-total-time').textContent = formatTime(timerState.totalTime);
-        
+
         // body에 전체 타이머 모드 클래스 추가
         document.body.classList.add('global-timer-active');
-        
+
         updateCardStates(1);
         runTimer();
     }
@@ -1718,16 +1769,19 @@ function initTimer() {
 
     function pauseTimer() {
         timerState.isPaused = true;
-        
+
         if (timerState.mode === 'global') {
             const pauseBtn = document.getElementById('sticky-timer-pause');
-            pauseBtn.querySelector('span:last-child').textContent = '계속하기';
+            // 번역 적용
+            const lang = localStorage.getItem('lang') || 'KR';
+            const resumeText = window.translations?.[lang]?.common?.resume || '계속하기';
+            pauseBtn.querySelector('span:last-child').textContent = resumeText;
             // 전체 타이머 모드에서는 카드 상태 유지
         } else if (timerState.mode === 'individual') {
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
             playBtn.querySelector('span').textContent = '▶️';
             playBtn.classList.remove('playing');
-            
+
             document.querySelectorAll('.break-step').forEach(card => {
                 card.classList.remove('collapsed');
             });
@@ -1736,10 +1790,13 @@ function initTimer() {
 
     function resumeTimer() {
         timerState.isPaused = false;
-        
+
         if (timerState.mode === 'global') {
             const pauseBtn = document.getElementById('sticky-timer-pause');
-            pauseBtn.querySelector('span:last-child').textContent = '일시정지';
+            // 번역 적용
+            const lang = localStorage.getItem('lang') || 'KR';
+            const pauseText = window.translations?.[lang]?.common?.pause || '일시정지';
+            pauseBtn.querySelector('span:last-child').textContent = pauseText;
         } else if (timerState.mode === 'individual') {
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
             playBtn.querySelector('span').textContent = '⏸️';
@@ -1844,64 +1901,150 @@ function initTimer() {
     }
 
     function setupProgressBarSeek() {
-        // 진행바 드래그/슬라이드 공통 함수
+        // 🎬 RAF 기반 유튜브식 드래그: UI 레이어(즉각 반응) + 상태 레이어(지연 반영)
         function setupProgressBarDrag(container, mode, onSeek) {
-            let isDragging = false;
+            const progressBar = container.querySelector('.progress-bar');
+            if (!progressBar) return;
 
-            function handleSeek(clientX) {
+            // Thumb 요소 생성
+            let thumb = container.querySelector('.progress-thumb');
+            if (!thumb) {
+                thumb = document.createElement('div');
+                thumb.className = 'progress-thumb';
+                container.appendChild(thumb);
+            }
+
+            // 상태 변수
+            let isDragging = false;
+            let currentPos = 0; // 픽셀 단위 위치
+            let containerWidth = 0;
+            let containerLeft = 0;
+            let rafId = null;
+            let updateDebounceTimer = null;
+
+            // 컨테이너 rect 캐싱
+            function updateContainerRect() {
+                const rect = container.getBoundingClientRect();
+                containerWidth = rect.width;
+                containerLeft = rect.left;
+            }
+
+            // RAF 렌더링 루프 - 썸과 진행바를 같은 프레임에서 갱신
+            function render() {
+                if (!isDragging) return;
+
+                const percentage = Math.max(0, Math.min(currentPos / containerWidth, 1));
+
+                // 썸과 진행바 동시 갱신 (같은 프레임)
+                progressBar.style.width = (percentage * 100) + '%';
+                thumb.style.left = (percentage * 100) + '%';
+
+                // 다음 프레임 예약
+                rafId = requestAnimationFrame(render);
+            }
+
+            // 실제 타이머 상태 업데이트 (지연 반영)
+            function updateTimerState() {
                 if (!timerState.isRunning && !timerState.isPaused) return;
 
-                const rect = container.getBoundingClientRect();
-                const seekX = Math.max(0, Math.min(clientX - rect.left, rect.width));
-                const percentage = seekX / rect.width;
+                const percentage = Math.max(0, Math.min(currentPos / containerWidth, 1));
                 const newTime = Math.floor(percentage * timerState.totalTime);
-
                 timerState.currentTime = Math.max(0, Math.min(newTime, timerState.totalTime));
                 onSeek();
             }
 
+            // 디바운스된 상태 업데이트 스케줄
+            function scheduleStateUpdate() {
+                clearTimeout(updateDebounceTimer);
+                updateDebounceTimer = setTimeout(() => {
+                    updateTimerState();
+                }, 100);
+            }
+
+            // 드래그 시작
+            function startDrag(clientX) {
+                if (mode === 'global' && timerState.mode !== 'global') return;
+                if (!timerState.isRunning && !timerState.isPaused) return;
+
+                isDragging = true;
+                thumb.classList.add('active');
+                container.classList.add('dragging'); // transition 제거
+
+                // Rect 업데이트
+                updateContainerRect();
+
+                // 초기 위치 설정
+                currentPos = Math.max(0, Math.min(clientX - containerLeft, containerWidth));
+
+                // RAF 루프 시작
+                render();
+
+                // 드래그 시작 시 즉시 타이머 상태 업데이트
+                updateTimerState();
+            }
+
+            // 드래그 중 (이벤트에서는 내부 상태만 업데이트)
+            function duringDrag(clientX) {
+                if (!isDragging) return;
+
+                // 내부 상태만 업데이트 (DOM 갱신은 RAF에서)
+                currentPos = Math.max(0, Math.min(clientX - containerLeft, containerWidth));
+
+                // 상태 업데이트는 지연
+                scheduleStateUpdate();
+            }
+
+            // 드래그 종료
+            function endDrag() {
+                if (!isDragging) return;
+
+                isDragging = false;
+                thumb.classList.remove('active');
+                container.classList.remove('dragging'); // transition 복구
+
+                // RAF 루프 정지
+                if (rafId) {
+                    cancelAnimationFrame(rafId);
+                    rafId = null;
+                }
+
+                // 디바운스 타이머 클리어
+                clearTimeout(updateDebounceTimer);
+
+                // 최종 위치로 즉시 업데이트
+                updateTimerState();
+            }
+
             // 마우스 이벤트 (데스크톱)
             container.addEventListener('mousedown', (e) => {
-                if (mode === 'global' && timerState.mode !== 'global') return;
                 e.preventDefault();
-                isDragging = true;
-                handleSeek(e.clientX);
+                startDrag(e.clientX);
             });
 
             document.addEventListener('mousemove', (e) => {
-                if (!isDragging) return;
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                handleSeek(e.clientX);
+                duringDrag(e.clientX);
             });
 
             document.addEventListener('mouseup', () => {
-                isDragging = false;
+                endDrag();
             });
 
-            // 터치 이벤트 (모바일)
+            // 터치 이벤트 (모바일) - passive: false로 즉시 반응
             container.addEventListener('touchstart', (e) => {
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                isDragging = true;
-                handleSeek(e.touches[0].clientX);
-            }, { passive: true });
+                e.preventDefault();
+                startDrag(e.touches[0].clientX);
+            }, { passive: false });
 
             container.addEventListener('touchmove', (e) => {
-                if (!isDragging) return;
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                e.preventDefault();
-                handleSeek(e.touches[0].clientX);
+                if (isDragging) {
+                    e.preventDefault(); // 스크롤 방지
+                    duringDrag(e.touches[0].clientX);
+                }
             }, { passive: false });
 
             container.addEventListener('touchend', () => {
-                isDragging = false;
-            });
-
-            // 클릭 이벤트도 유지
-            container.addEventListener('click', (e) => {
-                if (mode === 'global' && timerState.mode !== 'global') return;
-                if (!timerState.isRunning && !timerState.isPaused) return;
-                handleSeek(e.clientX);
-            });
+                endDrag();
+            }, { passive: true });
 
             // 커서 스타일
             container.style.cursor = 'pointer';
@@ -1958,17 +2101,9 @@ function initTimer() {
         });
     }
     
-    // 커스텀 이벤트로 모든 가이드 시작 지원
-    document.addEventListener('startRestGuide', (e) => {
-        const guideType = e.detail?.guideType || 'rest-all';
-        
-        if (timerState.isRunning) {
-            resetTimer();
-        }
-        
-        startGlobalTimer(guideType);
-    });
-    
+    // 커스텀 이벤트 제거됨 - 직접 함수 호출 방식으로 변경
+    // window.ITHealth.startGuide(guideType) 사용
+
     // Sticky 타이머 버튼들
     const stickyPauseBtn = document.getElementById('sticky-timer-pause');
     const stickyResetBtn = document.getElementById('sticky-timer-reset');
@@ -1985,7 +2120,46 @@ function initTimer() {
     
     if (stickyResetBtn) {
         stickyResetBtn.addEventListener('click', () => {
-            resetTimer();
+            console.log('🔄 닫기 버튼 클릭 - 타이머 직접 초기화');
+
+            // 타이머 중지
+            clearInterval(timerState.intervalId);
+
+            // 스크롤 잠금 해제
+            if (timerState.mode === 'global') {
+                unlockScroll();
+            }
+
+            // UI 요소 숨기기
+            document.getElementById('timer-sticky-progress').classList.add('hidden');
+            document.getElementById('sticky-card-display').classList.add('hidden');
+            const globalStartBtn = document.getElementById('global-timer-start');
+            if (globalStartBtn) globalStartBtn.classList.remove('hidden');
+            document.getElementById('timer-complete-message').classList.add('hidden');
+            document.body.classList.remove('global-timer-active');
+
+            // 타이머 상태 초기화
+            timerState.isRunning = false;
+            timerState.isPaused = false;
+            timerState.currentTime = 0;
+            timerState.mode = null;
+            timerState.guideType = null;
+            timerState.currentStep = null;
+            timerState.steps = [];
+            previousStepNum = null;
+
+            // 카드 상태 초기화
+            document.querySelectorAll('.break-step').forEach(card => {
+                card.classList.remove('completed', 'active', 'waiting', 'collapsed', 'individual-mode');
+            });
+
+            // 일시정지 버튼 텍스트 리셋
+            const pauseBtn = document.getElementById('sticky-timer-pause');
+            if (pauseBtn) {
+                pauseBtn.querySelector('span:last-child').textContent = '일시정지';
+            }
+
+            console.log('✅ 타이머 초기화 완료');
         });
     }
     
@@ -2034,79 +2208,141 @@ function initTimer() {
     setupCardToggle();
     setupStepsBarClickHandlers();
 
-    // 휴식 가이드 탭으로 이동 시 전체 UI 초기화
-    document.addEventListener('resetRestGuide', () => {
-        // 타이머가 실행 중이면 중지
-        if (timerState.isRunning || timerState.isPaused) {
-            clearInterval(timerState.intervalId);
+    // ==================== 전역 함수 노출 및 버튼 직접 연결 ====================
+    // startGlobalTimer와 resetTimer를 전역으로 노출하여 어디서든 호출 가능하도록 함
+    window.ITHealth = window.ITHealth || {};
+    window.ITHealth.startGuide = function(guideType) {
+        console.log('🎬 가이드 시작:', guideType);
+        if (timerState.isRunning) {
+            console.log('⚠️ 기존 타이머 리셋');
+            resetTimer();
+        }
+        startGlobalTimer(guideType);
+    };
+    window.ITHealth.resetGuide = function() {
+        console.log('🔄 가이드 리셋');
+        resetTimer();
+    };
+
+    // 모든 가이드 버튼들에 직접 이벤트 리스너 연결
+    function attachGuideButtonListeners() {
+        console.log('🔌 가이드 버튼 리스너 연결 중...');
+
+        // 1. 5분 휴식하기 버튼 (메인 페이지)
+        const quickBreakStartBtn = document.getElementById('quick-break-start-btn');
+        if (quickBreakStartBtn) {
+            quickBreakStartBtn.addEventListener('click', () => {
+                console.log('클릭: 5분 휴식하기 버튼');
+                window.ITHealth.startGuide('rest-all');
+            });
+            console.log('✅ 5분 휴식하기 버튼 연결됨');
+        } else {
+            console.log('❌ 5분 휴식하기 버튼 없음');
         }
 
-        // 타이머 상태 초기화
-        timerState.isRunning = false;
-        timerState.isPaused = false;
-        timerState.currentTime = 0;
-        timerState.mode = null;
-        timerState.guideType = null;
-        timerState.currentStep = null;
-        timerState.steps = [];
-        previousStepNum = null;
-
-        // UI 요소 초기화
-        const stickyProgress = document.getElementById('timer-sticky-progress');
-        const stickyCardDisplay = document.getElementById('sticky-card-display');
-        const globalStartBtn = document.getElementById('global-timer-start');
-        const completeMessage = document.getElementById('timer-complete-message');
-
-        if (stickyProgress) stickyProgress.classList.add('hidden');
-        if (stickyCardDisplay) stickyCardDisplay.classList.add('hidden');
-        if (globalStartBtn) globalStartBtn.classList.remove('hidden');
-        if (completeMessage) completeMessage.classList.add('hidden');
-
-        // 진행률 바 초기화
-        const progressBar = document.getElementById('sticky-progress-bar');
-        if (progressBar) progressBar.style.width = '0%';
-
-        // 시간 표시 초기화
-        const currentTimeEl = document.getElementById('sticky-current-time');
-        if (currentTimeEl) currentTimeEl.textContent = '0:00';
-
-        // 일시정지 버튼 텍스트 리셋
-        const pauseBtn = document.getElementById('sticky-timer-pause');
-        if (pauseBtn) {
-            const btnText = pauseBtn.querySelector('span:last-child');
-            if (btnText) btnText.textContent = '일시정지';
+        // 2. 마무리 페이지 버튼
+        const goBreakBtn = document.getElementById('go-break-btn');
+        if (goBreakBtn) {
+            goBreakBtn.addEventListener('click', () => {
+                console.log('클릭: 마무리 페이지 휴식 버튼');
+                window.ITHealth.startGuide('rest-all');
+            });
+            console.log('✅ 마무리 페이지 휴식 버튼 연결됨');
         }
 
-        // 스텝 카드 상태 초기화
-        document.querySelectorAll('.break-step').forEach(card => {
-            card.classList.remove('completed', 'active', 'waiting', 'collapsed', 'individual-mode');
+        // 3. 모든 .guide-card-btn 버튼들 (건강 가이드 & 휴식 가이드 탭)
+        const guideCardBtns = document.querySelectorAll('.guide-card-btn');
+        console.log(`📋 .guide-card-btn 버튼 ${guideCardBtns.length}개 발견`);
+        guideCardBtns.forEach((btn, index) => {
+            const guideType = btn.dataset.guide;
+            if (guideType) {
+                btn.addEventListener('click', () => {
+                    console.log(`클릭: .guide-card-btn[${index}] - ${guideType}`);
+                    window.ITHealth.startGuide(guideType);
+                });
+                console.log(`✅ .guide-card-btn[${index}] - ${guideType} 연결됨`);
+            } else {
+                console.log(`⚠️ .guide-card-btn[${index}] - data-guide 속성 없음`);
+            }
         });
 
-        // 개별 타이머 UI 초기화
-        document.querySelectorAll('[data-step-timer]').forEach(timer => {
-            timer.classList.add('hidden');
-        });
+        // 4. 체크리스트의 동적 가이드 카드들 (MutationObserver로 감지)
+        const recommendedGuidesContainer = document.getElementById('recommended-guides');
+        if (recommendedGuidesContainer) {
+            // 초기 연결
+            attachRecommendedGuideListeners();
 
-        // 개별 재생 버튼 초기화
-        document.querySelectorAll('.step-play-btn').forEach(btn => {
-            btn.classList.remove('playing');
-            const icon = btn.querySelector('span');
-            if (icon) icon.textContent = '▶️';
-        });
-
-        // body 클래스 정리
-        document.body.classList.remove('global-timer-active');
-
-        // 스크롤 잠금 해제
-        if (typeof unlockScroll === 'function') {
-            unlockScroll();
+            // MutationObserver로 동적 변경 감지
+            const observer = new MutationObserver(() => {
+                attachRecommendedGuideListeners();
+            });
+            observer.observe(recommendedGuidesContainer, { childList: true, subtree: true });
+            console.log('✅ 체크리스트 동적 가이드 감시 활성화');
         }
+    }
 
-        // 스텝바 상태 초기화
-        document.querySelectorAll('.step-box').forEach(box => {
-            box.classList.remove('active', 'completed');
+    function attachRecommendedGuideListeners() {
+        const recommendedCards = document.querySelectorAll('.recommended-guide-card');
+        console.log(`📋 추천 가이드 카드 ${recommendedCards.length}개 발견`);
+        recommendedCards.forEach((card, index) => {
+            const guideType = card.dataset.guide;
+            if (guideType && !card.dataset.listenerAttached) {
+                card.addEventListener('click', () => {
+                    console.log(`클릭: 추천 가이드 카드[${index}] - ${guideType}`);
+                    window.ITHealth.startGuide(guideType);
+                });
+                card.dataset.listenerAttached = 'true';
+                console.log(`✅ 추천 가이드 카드[${index}] - ${guideType} 연결됨`);
+            }
         });
+    }
+
+    // 버튼 리스너 연결 실행
+    attachGuideButtonListeners();
+
+    console.log('✅ initTimer 초기화 완료');
+    console.log('🌐 전역 함수 사용 가능: window.ITHealth.startGuide(guideType), window.ITHealth.resetGuide()');
+}
+
+/* ================================================
+   BACKGROUND BLUR-UP - 배경 이미지 블러 업 효과
+   ================================================ */
+
+function initBackgroundBlurUp() {
+    // 1. 탭 배경 이미지에 blur-up 효과 적용
+    const bgImages = document.querySelectorAll('.tab-bg-image');
+
+    bgImages.forEach((img) => {
+        // 이미 로드된 경우 즉시 loaded 클래스 추가
+        if (img.complete && img.naturalHeight !== 0) {
+            img.classList.add('loaded');
+        } else {
+            // 로드 완료 시 loaded 클래스 추가
+            img.addEventListener('load', () => {
+                img.classList.add('loaded');
+            });
+
+            // 에러 발생 시에도 blur 제거 (흐릿한 상태로 남지 않도록)
+            img.addEventListener('error', () => {
+                img.classList.add('loaded');
+            });
+        }
     });
+
+    // 2. 메인 hero 배경 이미지 프리로드 및 blur-up
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) {
+        const highResImage = new Image();
+        highResImage.src = 'image/main_floral_calm.webp';
+
+        highResImage.onload = () => {
+            mainContent.classList.add('loaded');
+        };
+
+        highResImage.onerror = () => {
+            mainContent.classList.add('loaded');
+        };
+    }
 }
 
 

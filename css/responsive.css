@@ -2,7 +2,30 @@
    RESPONSIVE - 모바일 대응 스타일
    ================================================ */
 
+/* ==================== 데스크탑: 모바일 전용 가이드 숨김 ==================== */
+.mobile-only-guides {
+    display: none;
+}
+
+/* ==================== 섹션별 추천 가이드 (체크리스트 스타일 재사용) ==================== */
+.section-recommended-guides {
+    margin-top: 1.5em;
+    padding: 1.5em;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.08) 0%, rgba(129, 199, 132, 0.08) 100%);
+    border-radius: 16px;
+    border: 1px solid rgba(76, 175, 80, 0.15);
+}
+
 @media (max-width: 1200px) {
+    /* ==================== 데스크탑/모바일 가이드 카드 전환 ==================== */
+    .desktop-only-guide {
+        display: none !important;
+    }
+
+    .mobile-only-guides {
+        display: block !important;
+    }
+
     /* ==================== 네비게이션 캐러셀 (모바일) ==================== */
     .section-nav {
         flex-direction: column;
@@ -51,10 +74,13 @@
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
+        scroll-behavior: auto;
         padding: 0;
         box-sizing: border-box;
+    }
+
+    .nav-carousel-container.snapping {
+        scroll-behavior: smooth;
     }
     
     .nav-carousel-container::-webkit-scrollbar {
@@ -78,8 +104,6 @@
         max-width: calc(100vw / 3);
         flex: 0 0 calc(100vw / 3);
         padding: 0.6em 0.3em;
-        scroll-snap-align: start;
-        scroll-snap-stop: always;
         box-sizing: border-box;
         margin: 0;
     }
@@ -232,10 +256,6 @@
         min-height: auto;
         padding: 0.8em 0;
     }
-    
-    .hero-left {
-        padding: 0 1em;
-    }
 
     .hero-right {
         padding: 0 1em;
@@ -248,9 +268,14 @@
     }
 
     .content-hero-image {
-        height: 180px;
-        object-fit: cover;
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 250px;
+        object-fit: contain;
         border-radius: 12px;
+        margin: 0 auto;
+        display: block;
     }
 
     .info-grid {
