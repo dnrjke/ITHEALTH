@@ -224,7 +224,7 @@
     max-width: 100%;
     height: auto;
     min-height: 250px;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 /* 래퍼 내부 problem-keyword */
@@ -343,7 +343,7 @@
 /* Japanese: Use consistent font to avoid kanji emphasis issue */
 html[lang="ja"] .hero-subtitle {
     font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS PMincho', 'Noto Serif JP', serif;
-    font-style: normal;
+    font-style: italic;
     font-weight: 400;
 }
 
@@ -646,6 +646,11 @@ html[lang="ja"] .hero-subtitle {
     gap: 0;
 }
 
+/* Hide mobile-recommended-guides by default (desktop) */
+.mobile-recommended-guides {
+    display: none;
+}
+
 .tips-background {
     position: absolute;
     top: 0;
@@ -817,8 +822,9 @@ html[lang="ja"] .hero-subtitle {
 /* ==================== 이미지 레이아웃 ==================== */
 .content-hero-image {
     width: 100%;
-    height: 400px;
-    object-fit: cover;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
     border-radius: 20px;
     box-shadow: 0 12px 40px var(--shadow-medium);
 }
