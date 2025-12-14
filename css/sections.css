@@ -333,11 +333,18 @@
     opacity: 1;
     line-height: 1.4;
     color: #ffffff;
-    text-shadow: 
+    text-shadow:
         2px 2px 8px rgba(0, 0, 0, 0.95),
         0 0 15px rgba(0, 0, 0, 0.7),
         -1px -1px 0 rgba(0, 0, 0, 0.4);
     white-space: nowrap;
+}
+
+/* Japanese: Use consistent font to avoid kanji emphasis issue */
+html[lang="ja"] .hero-subtitle {
+    font-family: 'Hiragino Mincho ProN', 'Yu Mincho', 'MS PMincho', 'Noto Serif JP', serif;
+    font-style: normal;
+    font-weight: 400;
 }
 
 .hero-tagline {
