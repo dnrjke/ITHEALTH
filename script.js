@@ -915,17 +915,24 @@ function initChecklist() {
         };
         
         function updateCheckCount() {
+            // 번역 데이터 가져오기
+            const lang = localStorage.getItem('lang') || 'KR';
+            const t = window.translations?.[lang] || window.translations?.KR;
+            const healthTipsData = t?.healthTips || {};
+            const diseaseInfo = t?.diseases || {};
+
             const checkedInputs = document.querySelectorAll('.check-input:checked');
-        const checkedCountSpan = document.getElementById('checked-count');
-        const healthTips = document.getElementById('health-tips');
+            const checkedCountSpan = document.getElementById('checked-count');
+            const healthTips = document.getElementById('health-tips');
             const count = checkedInputs.length;
-            
-        if (checkedCountSpan) checkedCountSpan.textContent = count;
-        
-        if (!healthTips) return;
-        
+
+            if (checkedCountSpan) checkedCountSpan.textContent = count;
+
+            if (!healthTips) return;
+
             if (count === 0) {
-                healthTips.innerHTML = '<p>항목을 체크하면 맞춤 건강 팁을 제공합니다!</p>';
+                const defaultMsg = t?.checklist?.defaultMsg || '항목을 체크하면 맞춤 건강 팁을 제공합니다!';
+                healthTips.innerHTML = `<p>${defaultMsg}</p>`;
             } else {
                 const checkedTips = [];
                 checkedInputs.forEach(input => {
@@ -934,7 +941,7 @@ function initChecklist() {
                         checkedTips.push(healthTipsData[tipKey]);
                     }
                 });
-                
+
                 if (checkedTips.length > 0) {
                     let tipsHtml = '<div class="active-tips">';
                     checkedTips.forEach(tip => {
@@ -953,8 +960,8 @@ function initChecklist() {
                     });
                     tipsHtml += '</div>';
                     healthTips.innerHTML = tipsHtml;
-                    
-                    // 병명 태그에 툴팁 기능 추가
+
+                    // 병명 태그에 툴팁 기능 추가 (번역된 diseaseInfo 전달)
                     setupDiseaseTagTooltips(diseaseInfo);
                 }
             }
@@ -1516,7 +1523,34 @@ function initTimer() {
             console.error('알 수 없는 가이드 타입:', guideType);
             return;
         }
-        
+
+        // ==================== UI 완전 초기화 (이전 가이드 흔적 제거) ====================
+        // 1. 프로그레스 바 초기화
+        const progressBar = document.getElementById('sticky-progress-bar');
+        if (progressBar) progressBar.style.width = '0%';
+
+        // 2. 시간 표시 초기화
+        const currentTimeEl = document.getElementById('sticky-current-time');
+        if (currentTimeEl) currentTimeEl.textContent = '0:00';
+
+        // 3. 일시정지 버튼 텍스트 초기화 (번역 적용)
+        const pauseBtn = document.getElementById('sticky-timer-pause');
+        if (pauseBtn) {
+            const lang = localStorage.getItem('lang') || 'KR';
+            const pauseText = window.translations?.[lang]?.common?.pause || '일시정지';
+            const btnText = pauseBtn.querySelector('span:last-child');
+            if (btnText) btnText.textContent = pauseText;
+        }
+
+        // 4. 모든 step-box 상태 초기화
+        document.querySelectorAll('.step-box').forEach(box => {
+            box.classList.remove('active', 'completed');
+        });
+
+        // 5. 이전 단계 추적 변수 초기화
+        previousStepNum = null;
+
+        // ==================== 타이머 상태 초기화 ====================
         // 가이드 데이터로 상태 초기화
         timerState.mode = 'global';
         timerState.guideType = guideType;
@@ -1526,29 +1560,29 @@ function initTimer() {
         timerState.currentTime = 0;
         timerState.steps = guide.steps;
         timerState.totalTime = guide.steps.reduce((sum, step) => sum + step.duration, 0);
-        
+
         // 스크롤 잠금 (모달 모드)
         lockScroll();
-        
+
         // UI 표시
         const globalStartBtn = document.getElementById('global-timer-start');
         if (globalStartBtn) globalStartBtn.classList.add('hidden');
         document.getElementById('timer-sticky-progress').classList.remove('hidden');
         document.getElementById('sticky-card-display').classList.remove('hidden');
         document.getElementById('timer-complete-message').classList.add('hidden');
-        
+
         // 가이드 라벨 업데이트
         updateGuideLabel(guide);
-        
+
         // 프로그레스 바 단계 동적 생성
         generateStepsBar(guide.steps);
-        
+
         // 전체 시간 업데이트
         document.getElementById('sticky-total-time').textContent = formatTime(timerState.totalTime);
-        
+
         // body에 전체 타이머 모드 클래스 추가
         document.body.classList.add('global-timer-active');
-        
+
         updateCardStates(1);
         runTimer();
     }
@@ -1680,16 +1714,19 @@ function initTimer() {
 
     function pauseTimer() {
         timerState.isPaused = true;
-        
+
         if (timerState.mode === 'global') {
             const pauseBtn = document.getElementById('sticky-timer-pause');
-            pauseBtn.querySelector('span:last-child').textContent = '계속하기';
+            // 번역 적용
+            const lang = localStorage.getItem('lang') || 'KR';
+            const resumeText = window.translations?.[lang]?.common?.resume || '계속하기';
+            pauseBtn.querySelector('span:last-child').textContent = resumeText;
             // 전체 타이머 모드에서는 카드 상태 유지
         } else if (timerState.mode === 'individual') {
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
             playBtn.querySelector('span').textContent = '▶️';
             playBtn.classList.remove('playing');
-            
+
             document.querySelectorAll('.break-step').forEach(card => {
                 card.classList.remove('collapsed');
             });
@@ -1698,10 +1735,13 @@ function initTimer() {
 
     function resumeTimer() {
         timerState.isPaused = false;
-        
+
         if (timerState.mode === 'global') {
             const pauseBtn = document.getElementById('sticky-timer-pause');
-            pauseBtn.querySelector('span:last-child').textContent = '일시정지';
+            // 번역 적용
+            const lang = localStorage.getItem('lang') || 'KR';
+            const pauseText = window.translations?.[lang]?.common?.pause || '일시정지';
+            pauseBtn.querySelector('span:last-child').textContent = pauseText;
         } else if (timerState.mode === 'individual') {
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
             playBtn.querySelector('span').textContent = '⏸️';
