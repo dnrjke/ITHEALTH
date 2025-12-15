@@ -932,7 +932,7 @@ function initChecklist() {
                 return tooltipElement;
             }
             
-            // 툴팁 위치 계산 및 표시 (GPU 가속 최적화)
+            // 툴팁 위치 계산 및 표시
             function showTooltip(tag, isPinned = false) {
                 const diseaseName = tag.dataset.disease;
                 const info = diseaseInfo[diseaseName];
@@ -949,18 +949,9 @@ function initChecklist() {
                     tooltip.classList.remove('pinned');
                 }
 
-                // GPU 가속을 위한 will-change 힌트
-                tooltip.style.willChange = 'transform';
-
-                // 위치 계산 (최적화: 한 번만 getBoundingClientRect 호출)
+                // 위치 계산
                 const tagRect = tag.getBoundingClientRect();
-
-                // 툴팁을 먼저 보이게 해서 크기 계산
-                tooltip.style.visibility = 'hidden';
-                tooltip.style.display = 'block';
                 const tooltipRect = tooltip.getBoundingClientRect();
-                tooltip.style.visibility = '';
-                tooltip.style.display = '';
 
                 let left = tagRect.left + (tagRect.width / 2) - (tooltipRect.width / 2);
                 let top = tagRect.top - tooltipRect.height - 10;
@@ -979,10 +970,8 @@ function initChecklist() {
                     tooltip.classList.remove('bottom');
                 }
 
-                // GPU 가속: left/top 대신 transform 사용
-                tooltip.style.left = '0';
-                tooltip.style.top = '0';
-                tooltip.style.transform = `translate(${left}px, ${top}px)`;
+                tooltip.style.left = left + 'px';
+                tooltip.style.top = top + 'px';
             }
             
             // 툴팁 숨기기
@@ -1042,38 +1031,28 @@ function initChecklist() {
                 }
             });
 
-            // 스크롤 시 툴팁 위치 업데이트 (최적화: 디바운싱 + RAF)
+            // 스크롤 시 툴팁 위치 업데이트
             let scrollRAF = null;
             let scrollEndTimeout = null;
-            let isScrolling = false;
 
             window.addEventListener('scroll', () => {
                 if (activeTag && tooltipElement && tooltipElement.classList.contains('pinned')) {
-                    // 스크롤 시작 시 한 번만 클래스 추가
-                    if (!isScrolling) {
-                        isScrolling = true;
-                        tooltipElement.classList.add('scrolling');
-                    }
+                    // 스크롤 중 클래스 추가 (transition 비활성화)
+                    tooltipElement.classList.add('scrolling');
 
-                    // RAF 중복 방지: 이미 예약된 RAF가 있으면 캔슬
+                    // requestAnimationFrame으로 부드럽게 업데이트
                     if (scrollRAF) {
                         cancelAnimationFrame(scrollRAF);
                     }
-
-                    // requestAnimationFrame으로 부드럽게 업데이트
                     scrollRAF = requestAnimationFrame(() => {
-                        if (activeTag) {
-                            showTooltip(activeTag, true);
-                        }
-                        scrollRAF = null;
+                        showTooltip(activeTag, true);
                     });
 
-                    // 스크롤 종료 시 scrolling 클래스 제거 (디바운싱)
+                    // 스크롤 종료 시 scrolling 클래스 제거
                     clearTimeout(scrollEndTimeout);
                     scrollEndTimeout = setTimeout(() => {
                         if (tooltipElement) {
                             tooltipElement.classList.remove('scrolling');
-                            isScrolling = false;
                         }
                     }, 150);
                 }
