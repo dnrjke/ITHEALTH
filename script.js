@@ -1844,49 +1844,46 @@ function initTimer() {
     function completeTimer() {
         clearInterval(timerState.intervalId);
         timerState.isRunning = false;
-        
+
         // 이전 단계 추적 변수 초기화
         previousStepNum = null;
-        
+
         document.getElementById('timer-complete-message').classList.remove('hidden');
-        
+
         if (timerState.mode === 'global') {
-            // 스크롤 잠금 해제 (모달 닫기)
-            unlockScroll();
-            
-            document.getElementById('timer-sticky-progress').classList.add('hidden');
-            document.getElementById('sticky-card-display').classList.add('hidden');
-            const globalStartBtn = document.getElementById('global-timer-start');
-            if (globalStartBtn) globalStartBtn.classList.remove('hidden');
-            document.body.classList.remove('global-timer-active');
-            
+            // 타이머 완료 후에도 모달을 유지 (자동 종료 비활성화)
+            // 사용자가 직접 닫기 버튼을 눌러야 종료됨
+
+            // 모든 단계를 완료 상태로 표시
             document.querySelectorAll('.break-step').forEach(card => {
                 card.classList.add('completed', 'collapsed');
                 card.classList.remove('active', 'waiting');
             });
+
+            // 일시정지 버튼을 "완료" 상태로 변경
+            const pauseBtn = document.getElementById('sticky-timer-pause');
+            if (pauseBtn) {
+                pauseBtn.querySelector('span:first-child').textContent = '✓';
+                pauseBtn.querySelector('span:last-child').textContent = '완료';
+                pauseBtn.disabled = true;
+            }
         } else if (timerState.mode === 'individual') {
             const stepTimer = document.querySelector(`[data-step-timer="${timerState.currentStep}"]`);
             stepTimer.classList.add('hidden');
-            
+
             const card = document.querySelector(`.break-step[data-step="${timerState.currentStep}"]`);
             card.classList.add('completed');
             card.classList.remove('active', 'individual-mode');
-            
+
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
             playBtn.classList.remove('playing');
             playBtn.querySelector('span').textContent = '▶️';
         }
-        
+
+        // 5초 후 완료 메시지만 숨김 (모달은 유지)
         setTimeout(() => {
             document.getElementById('timer-complete-message').classList.add('hidden');
-            if (timerState.mode === 'global') {
-                // 일시정지 버튼 텍스트 리셋
-                const pauseBtn = document.getElementById('sticky-timer-pause');
-                if (pauseBtn) {
-                    pauseBtn.querySelector('span:last-child').textContent = '일시정지';
-                }
-            }
-        }, 3000);
+        }, 5000);
     }
 
     function setupProgressBarSeek() {
