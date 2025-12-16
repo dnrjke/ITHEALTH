@@ -1062,13 +1062,13 @@ function initChecklist() {
         // 추천 가이드 매핑 데이터 (tipKey -> guideType)
         const guideRecommendationsMap = {
             'neck-forward': 'rest-neck',
-            'shoulder-tension': 'rest-neck',
+            'shoulder-tension': 'rest-shoulder',
             'back-curved': 'rest-waist',
             'sitting-long': 'rest-waist',
             'hand-pain': 'rest-hand',
             'wrist-angle': 'rest-hand',
             'eye-strain': 'rest-eye',
-            'headache': 'rest-face',
+            'headache': 'rest-breathing',
             'water': 'rest-all',
             'meal': 'rest-all'
         };
@@ -1080,7 +1080,10 @@ function initChecklist() {
             'rest-face': '😌',
             'rest-eye': '👁️',
             'rest-hand': '✋',
-            'rest-waist': '🧍'
+            'rest-waist': '🧍',
+            'rest-breathing': '🌬️',
+            'rest-meditation': '🧘',
+            'rest-shoulder': '💪'
         };
 
         // 추천 가이드 데이터 가져오기 (번역 적용)
@@ -1206,11 +1209,12 @@ function initChecklist() {
 function initSectionGuides() {
     // 섹션별 추천 가이드 매핑 (섹션 ID → 추천 가이드 타입들)
     const sectionGuideMap = {
-        'turtle-neck-recommended-guides': ['rest-neck', 'rest-face'],
+        'turtle-neck-recommended-guides': ['rest-neck', 'rest-shoulder'],
         'hand-pain-recommended-guides': ['rest-hand'],
         'eye-health-recommended-guides': ['rest-eye'],
         'back-health-recommended-guides': ['rest-waist'],
-        'face-tension-recommended-guides': ['rest-face']
+        'face-tension-recommended-guides': ['rest-face', 'rest-meditation'],
+        'headache-recommended-guides': ['rest-breathing', 'rest-meditation']
     };
 
     // 가이드 아이콘 매핑
@@ -1220,7 +1224,10 @@ function initSectionGuides() {
         'rest-face': '😌',
         'rest-eye': '👁️',
         'rest-hand': '✋',
-        'rest-waist': '🧍'
+        'rest-waist': '🧍',
+        'rest-breathing': '🌬️',
+        'rest-meditation': '🧘',
+        'rest-shoulder': '💪'
     };
 
     // 각 섹션에 추천 가이드 생성
@@ -1290,7 +1297,10 @@ function initTimer() {
         'rest-face': { icon: '😌', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
         'rest-eye': { icon: '👁️', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
         'rest-hand': { icon: '✋', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
-        'rest-waist': { icon: '🧍', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] }
+        'rest-waist': { icon: '🧍', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
+        'rest-breathing': { icon: '🌬️', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
+        'rest-meditation': { icon: '🧘', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] },
+        'rest-shoulder': { icon: '💪', steps: [{ step: 1, duration: 60 }, { step: 2, duration: 90 }, { step: 3, duration: 60 }] }
     };
 
     // 번역된 가이드 데이터 가져오기

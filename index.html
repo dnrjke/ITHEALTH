@@ -327,8 +327,30 @@
                         </div>
                     </div>
                     <div class="tips-guide">
-                        <div class="guide-image">
-                            <!-- 자세 가이드 이미지 제거됨 -->
+                        <div class="rest-guide-card headache-guide-card desktop-only-guide">
+                            <div class="card-icon">🌬️</div>
+                            <h4 data-i18n="restGuide.cards.breathing.title">호흡 휴식 가이드</h4>
+                            <button class="guide-card-btn" data-guide="rest-breathing" data-i18n="common.start">시작하기</button>
+                        </div>
+                        <div class="section-recommended-guides mobile-only-guides" id="headache-recommended-guides"></div>
+                    </div>
+                    <!-- Mobile-only recommended guide card -->
+                    <div class="mobile-recommended-guides">
+                        <div class="recommended-guide-card" data-guide="rest-breathing">
+                            <div class="guide-card-icon">🌬️</div>
+                            <div class="guide-card-content">
+                                <h4 class="guide-card-title" data-i18n="restGuide.cards.breathing.title">호흡 휴식 가이드</h4>
+                                <p class="guide-card-desc" data-i18n="restGuide.cards.breathing.desc">깊은 호흡법으로 산소 공급을 늘리고 스트레스를 해소하는 호흡 운동입니다.</p>
+                            </div>
+                            <span class="guide-play-icon">▶</span>
+                        </div>
+                        <div class="recommended-guide-card" data-guide="rest-meditation">
+                            <div class="guide-card-icon">🧘</div>
+                            <div class="guide-card-content">
+                                <h4 class="guide-card-title" data-i18n="restGuide.cards.meditation.title">명상 휴식 가이드</h4>
+                                <p class="guide-card-desc" data-i18n="restGuide.cards.meditation.desc">짧은 시간 마음을 가라앉히고 집중력을 회복하는 마음챙김 명상입니다.</p>
+                            </div>
+                            <span class="guide-play-icon">▶</span>
                         </div>
                     </div>
                 </div>
@@ -336,7 +358,7 @@
                 <button id="next-button" class="next-step-button" data-i18n="common.next">다음 스텝</button>
             </div>
         </div>
-        
+
         <!-- 거북목 섹션 -->
         <div id="turtle-neck-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
             <div class="tab-background">
@@ -418,13 +440,21 @@
                             </div>
                             <span class="guide-play-icon">▶</span>
                         </div>
+                        <div class="recommended-guide-card" data-guide="rest-shoulder">
+                            <div class="guide-card-icon">💪</div>
+                            <div class="guide-card-content">
+                                <h4 class="guide-card-title" data-i18n="restGuide.cards.shoulder.title">어깨 휴식 가이드</h4>
+                                <p class="guide-card-desc" data-i18n="restGuide.cards.shoulder.desc">승모근과 어깨 근육의 긴장을 풀어 어깨 결림과 통증을 완화합니다.</p>
+                            </div>
+                            <span class="guide-play-icon">▶</span>
+                        </div>
                     </div>
                 </div>
 
                 <button id="next-button-tn" class="next-step-button" data-i18n="common.next">다음 스텝</button>
             </div>
         </div>
-        
+
         <!-- 손의 통증 섹션 -->
         <div id="hand-pain-content" class="tab-content" data-theme-bg="gua-sha-leaves-resize.jpg">
             <div class="tab-background">
@@ -770,6 +800,14 @@
                             </div>
                             <span class="guide-play-icon">▶</span>
                         </div>
+                        <div class="recommended-guide-card" data-guide="rest-meditation">
+                            <div class="guide-card-icon">🧘</div>
+                            <div class="guide-card-content">
+                                <h4 class="guide-card-title" data-i18n="restGuide.cards.meditation.title">명상 휴식 가이드</h4>
+                                <p class="guide-card-desc" data-i18n="restGuide.cards.meditation.desc">짧은 시간 마음을 가라앉히고 집중력을 회복하는 마음챙김 명상입니다.</p>
+                            </div>
+                            <span class="guide-play-icon">▶</span>
+                        </div>
                     </div>
                 </div>
 
@@ -910,6 +948,27 @@
                             <h4 data-i18n="restGuide.cards.waist.title">허리 휴식 가이드</h4>
                             <p data-i18n="restGuide.cards.waist.desc">앉아서 일하는 자세로 인한 허리 부담을 줄이고 코어 근육을 활성화합니다.</p>
                             <button class="guide-card-btn" data-guide="rest-waist" data-i18n="common.start">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🌬️</div>
+                            <h4 data-i18n="restGuide.cards.breathing.title">호흡 휴식 가이드</h4>
+                            <p data-i18n="restGuide.cards.breathing.desc">깊은 호흡법으로 산소 공급을 늘리고 스트레스를 해소하는 호흡 운동입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-breathing" data-i18n="common.start">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">🧘</div>
+                            <h4 data-i18n="restGuide.cards.meditation.title">명상 휴식 가이드</h4>
+                            <p data-i18n="restGuide.cards.meditation.desc">짧은 시간 마음을 가라앉히고 집중력을 회복하는 마음챙김 명상입니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-meditation" data-i18n="common.start">시작하기</button>
+                        </div>
+
+                        <div class="rest-guide-card">
+                            <div class="card-icon">💪</div>
+                            <h4 data-i18n="restGuide.cards.shoulder.title">어깨 휴식 가이드</h4>
+                            <p data-i18n="restGuide.cards.shoulder.desc">승모근과 어깨 근육의 긴장을 풀어 어깨 결림과 통증을 완화합니다.</p>
+                            <button class="guide-card-btn" data-guide="rest-shoulder" data-i18n="common.start">시작하기</button>
                         </div>
                     </div>
 

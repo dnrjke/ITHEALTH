@@ -257,7 +257,10 @@ const translations = {
                 'rest-hand': { desc: '손목과 손가락의 피로를 풀어주세요' },
                 'rest-eye': { desc: '화면 응시로 피로한 눈을 쉬게 해주세요' },
                 'rest-face': { desc: '표정근과 턱 긴장을 풀어 두통 완화' },
-                'rest-all': { desc: '5분간 전신 스트레칭과 휴식' }
+                'rest-all': { desc: '5분간 전신 스트레칭과 휴식' },
+                'rest-breathing': { desc: '깊은 호흡으로 산소 공급과 스트레스 해소' },
+                'rest-meditation': { desc: '마음을 가라앉히는 짧은 명상 가이드' },
+                'rest-shoulder': { desc: '승모근과 어깨 긴장을 풀어주는 스트레칭' }
             }
         },
         // --- 휴식 가이드 ---
@@ -280,7 +283,10 @@ const translations = {
                 face: { title: '얼굴 휴식 가이드', desc: '표정근과 턱 근육의 긴장을 풀어 두통 예방과 얼굴 피로 해소에 도움을 줍니다.' },
                 eye: { title: '눈 휴식 가이드', desc: '화면 응시로 인한 눈의 피로와 건조함을 완화하는 눈 운동과 이완법입니다.' },
                 hand: { title: '손 휴식 가이드', desc: '키보드와 마우스 사용으로 지친 손목과 손가락을 위한 스트레칭입니다.' },
-                waist: { title: '허리 휴식 가이드', desc: '앉아서 일하는 자세로 인한 허리 부담을 줄이고 코어 근육을 활성화합니다.' }
+                waist: { title: '허리 휴식 가이드', desc: '앉아서 일하는 자세로 인한 허리 부담을 줄이고 코어 근육을 활성화합니다.' },
+                breathing: { title: '호흡 휴식 가이드', desc: '깊은 호흡법으로 산소 공급을 늘리고 스트레스를 해소하는 호흡 운동입니다.' },
+                meditation: { title: '명상 휴식 가이드', desc: '짧은 시간 마음을 가라앉히고 집중력을 회복하는 마음챙김 명상입니다.' },
+                shoulder: { title: '어깨 휴식 가이드', desc: '승모근과 어깨 근육의 긴장을 풀어 어깨 결림과 통증을 완화합니다.' }
             },
             steps: {
                 all: [
@@ -312,6 +318,21 @@ const translations = {
                     { title: '허리 젖히기', desc: '서서 허리를 뒤로 젖히세요.' },
                     { title: '비틀기', desc: '상체를 좌우로 비틀어주세요.' },
                     { title: '바른 자세', desc: '허리를 펴고 바르게 앉으세요.' }
+                ],
+                breathing: [
+                    { title: '준비', desc: '편안한 자세로 눈을 감으세요.' },
+                    { title: '복식호흡', desc: '배를 부풀리며 깊게 호흡합니다.' },
+                    { title: '마무리', desc: '천천히 일상 호흡으로 돌아옵니다.' }
+                ],
+                meditation: [
+                    { title: '자세 잡기', desc: '허리를 펴고 편안하게 앉으세요.' },
+                    { title: '집중', desc: '호흡에만 주의를 기울입니다.' },
+                    { title: '마음챙김', desc: '현재 순간을 느끼며 마무리합니다.' }
+                ],
+                shoulder: [
+                    { title: '어깨 으쓱', desc: '어깨를 귀 쪽으로 올렸다 내립니다.' },
+                    { title: '승모근 스트레칭', desc: '고개를 기울여 승모근을 늘립니다.' },
+                    { title: '어깨 돌리기', desc: '어깨를 크게 원을 그리며 돌립니다.' }
                 ]
             }
         },
@@ -403,6 +424,30 @@ const translations = {
                     { title: '허리 풀기', time: '1분', description: '오래 앉아있어 굳은 허리 근육을 부드럽게 풀어줍니다.', tips: ['의자에서 일어나 허리에 손을 대고 뒤로 젖히기', '상체를 좌우로 천천히 비틀기 (각 5회)', '골반을 좌우로 돌려 허리 풀기'] },
                     { title: '코어 스트레칭', time: '1분 30초', description: '허리를 지지하는 코어 근육을 활성화하고 스트레칭합니다.', tips: ['서서 양팔을 위로 뻗어 옆으로 기울이기 (좌우 각 15초)', '상체를 앞으로 숙여 손끝이 바닥에 닿게 하기', '무릎을 살짝 구부린 채 허리 스트레칭', '고양이-소 자세로 척추 움직이기 (가능한 경우)'] },
                     { title: '자세 리셋', time: '1분', description: '올바른 자세를 확인하고 허리에 부담을 줄이는 자세로 돌아갑니다.', tips: ['발을 어깨 너비로 벌리고 바르게 서기', '어깨를 뒤로 당기고 가슴 펴기', '앉을 때 엉덩이를 의자 깊숙이 넣고 등받이 활용'] }
+                ]
+            },
+            'rest-breathing': {
+                label: '호흡 휴식 가이드',
+                steps: [
+                    { title: '호흡 준비', time: '1분', description: '편안한 자세를 잡고 몸의 긴장을 풀어 깊은 호흡을 준비합니다.', tips: ['편안하게 앉거나 서서 어깨 힘 빼기', '눈을 감고 현재 호흡 상태 인식하기', '턱과 어깨에 들어간 힘 풀기'] },
+                    { title: '복식호흡 연습', time: '1분 30초', description: '배를 이용한 깊은 호흡으로 산소 공급을 늘리고 부교감신경을 활성화합니다.', tips: ['코로 4초간 천천히 들이마시기', '배가 부풀어 오르는 것을 느끼기', '입으로 6초간 천천히 내쉬기', '배가 자연스럽게 들어가는 것을 느끼기 (5회 반복)'] },
+                    { title: '호흡 마무리', time: '1분', description: '깊은 호흡의 효과를 느끼며 일상 호흡으로 자연스럽게 돌아갑니다.', tips: ['점차 호흡 깊이를 줄여가기', '몸 전체의 이완된 느낌 인식하기', '눈을 뜨고 천천히 주변을 둘러보기'] }
+                ]
+            },
+            'rest-meditation': {
+                label: '명상 휴식 가이드',
+                steps: [
+                    { title: '명상 자세 잡기', time: '1분', description: '안정적인 자세를 잡고 마음을 가라앉힐 준비를 합니다.', tips: ['허리를 펴고 편안하게 앉기', '손은 무릎 위에 가볍게 올려놓기', '눈을 감거나 시선을 아래로 부드럽게 내리기'] },
+                    { title: '마음챙김 집중', time: '1분 30초', description: '호흡에 주의를 기울이며 현재 순간에 집중합니다.', tips: ['들숨과 날숨에만 주의를 기울이기', '잡념이 떠오르면 부드럽게 호흡으로 돌아오기', '판단 없이 현재 상태를 있는 그대로 받아들이기', '몸의 감각을 부드럽게 느끼기'] },
+                    { title: '명상 마무리', time: '1분', description: '명상의 고요함을 유지하며 일상으로 부드럽게 돌아갑니다.', tips: ['천천히 주변 소리를 인식하기', '손가락과 발가락을 가볍게 움직이기', '눈을 천천히 뜨고 잠시 멈추기', '새로운 에너지와 집중력을 느끼기'] }
+                ]
+            },
+            'rest-shoulder': {
+                label: '어깨 휴식 가이드',
+                steps: [
+                    { title: '어깨 풀기', time: '1분', description: '굳어있는 승모근과 어깨 근육의 긴장을 풀어주는 준비 운동입니다.', tips: ['어깨를 귀 쪽으로 올렸다가 힘을 빼며 떨어뜨리기 (5회)', '어깨를 앞으로 돌렸다 뒤로 돌리기 (각 5회)', '양팔을 흔들어 어깨 긴장 풀기'] },
+                    { title: '승모근 스트레칭', time: '1분 30초', description: '목에서 어깨로 이어지는 승모근을 집중적으로 늘려줍니다.', tips: ['오른손으로 머리 왼쪽을 잡고 오른쪽으로 부드럽게 당기기', '15초 유지 후 반대쪽도 동일하게 (각 2회)', '턱을 가슴 쪽으로 당겨 목 뒤 승모근 스트레칭', '통증이 있으면 강도를 줄이세요'] },
+                    { title: '어깨 이완', time: '1분', description: '스트레칭한 어깨 근육을 이완시키고 마무리합니다.', tips: ['양손을 깍지 끼고 앞으로 쭉 밀어 견갑골 벌리기', '뒤로 깍지 끼고 가슴을 펴며 어깨 모으기', '어깨를 크게 원을 그리며 천천히 돌리기 (5회)', '깊은 호흡과 함께 어깨 힘 완전히 빼기'] }
                 ]
             }
         },
@@ -587,7 +632,10 @@ const translations = {
                 'rest-hand': { desc: 'Relieve fatigue in wrists and fingers' },
                 'rest-eye': { desc: 'Rest your eyes tired from screen gazing' },
                 'rest-face': { desc: 'Relieve facial tension to ease headaches' },
-                'rest-all': { desc: '5-minute full body stretching and rest' }
+                'rest-all': { desc: '5-minute full body stretching and rest' },
+                'rest-breathing': { desc: 'Deep breathing for oxygen supply and stress relief' },
+                'rest-meditation': { desc: 'Short mindfulness meditation to calm your mind' },
+                'rest-shoulder': { desc: 'Stretching to relieve trapezius and shoulder tension' }
             }
         },
         restGuide: {
@@ -608,7 +656,10 @@ const translations = {
                 face: { title: 'Face Rest Guide', desc: 'Helps prevent headaches and relieve facial fatigue by relaxing facial and jaw muscles.' },
                 eye: { title: 'Eye Rest Guide', desc: 'Eye exercises and relaxation techniques to relieve eye fatigue and dryness from screen gazing.' },
                 hand: { title: 'Hand Rest Guide', desc: 'Stretching for wrists and fingers tired from keyboard and mouse use.' },
-                waist: { title: 'Back Rest Guide', desc: 'Reduces back strain from sitting and activates core muscles.' }
+                waist: { title: 'Back Rest Guide', desc: 'Reduces back strain from sitting and activates core muscles.' },
+                breathing: { title: 'Breathing Rest Guide', desc: 'Deep breathing exercises to increase oxygen supply and relieve stress.' },
+                meditation: { title: 'Meditation Rest Guide', desc: 'Short mindfulness meditation to calm your mind and restore focus.' },
+                shoulder: { title: 'Shoulder Rest Guide', desc: 'Stretching to relieve trapezius and shoulder muscle tension and pain.' }
             },
             steps: {
                 all: [{ title: 'Stand Up', desc: 'Stand up and stretch your body.' }, { title: 'Neck/Shoulders', desc: 'Rotate neck and relax shoulders.' }, { title: 'Breathing', desc: 'Close eyes and breathe deeply.' }],
@@ -616,7 +667,10 @@ const translations = {
                 face: [{ title: 'Awareness', desc: 'Check facial tension.' }, { title: 'Exercise', desc: 'Say A-E-I-O-U widely.' }, { title: 'Jaw', desc: 'Move jaw side to side gently.' }],
                 eye: [{ title: 'Close', desc: 'Close eyes and feel darkness.' }, { title: 'Exercise', desc: 'Roll eyes up/down/left/right.' }, { title: 'Far Look', desc: 'Look far away for 20 seconds.' }],
                 hand: [{ title: 'Rotate', desc: 'Gently rotate wrists.' }, { title: 'Fingers', desc: 'Make fist then spread open.' }, { title: 'Massage', desc: 'Press palms firmly.' }],
-                waist: [{ title: 'Lean Back', desc: 'Stand and lean back.' }, { title: 'Twist', desc: 'Twist upper body side to side.' }, { title: 'Posture', desc: 'Straighten back and sit properly.' }]
+                waist: [{ title: 'Lean Back', desc: 'Stand and lean back.' }, { title: 'Twist', desc: 'Twist upper body side to side.' }, { title: 'Posture', desc: 'Straighten back and sit properly.' }],
+                breathing: [{ title: 'Prepare', desc: 'Close eyes in comfortable position.' }, { title: 'Deep Breath', desc: 'Breathe deeply with belly.' }, { title: 'Finish', desc: 'Return to normal breathing.' }],
+                meditation: [{ title: 'Position', desc: 'Sit comfortably with straight back.' }, { title: 'Focus', desc: 'Focus only on your breath.' }, { title: 'Mindfulness', desc: 'Feel the present moment.' }],
+                shoulder: [{ title: 'Shrug', desc: 'Raise shoulders toward ears.' }, { title: 'Stretch', desc: 'Tilt head to stretch trapezius.' }, { title: 'Roll', desc: 'Roll shoulders in circles.' }]
             }
         },
         complete: {
@@ -703,6 +757,30 @@ const translations = {
                     { title: 'Back Loosening', time: '1 min', description: 'Gently loosen back muscles stiff from prolonged sitting.', tips: ['Stand up and place hands on lower back, lean backward', 'Slowly twist upper body left and right (5 times each)', 'Rotate hips to loosen lower back'] },
                     { title: 'Core Stretching', time: '1 min 30 sec', description: 'Activate and stretch core muscles that support the back.', tips: ['Stand with arms up, lean to each side (15 sec each)', 'Bend forward to touch toes', 'Stretch back with slightly bent knees', 'Cat-cow pose to move spine (if possible)'] },
                     { title: 'Posture Reset', time: '1 min', description: 'Check proper posture and return to a position that reduces back strain.', tips: ['Stand with feet shoulder-width apart', 'Pull shoulders back and open chest', 'When sitting, push hips deep into chair and use backrest'] }
+                ]
+            },
+            'rest-breathing': {
+                label: 'Breathing Rest Guide',
+                steps: [
+                    { title: 'Breathing Preparation', time: '1 min', description: 'Get into a comfortable position and release body tension to prepare for deep breathing.', tips: ['Sit or stand comfortably and relax shoulders', 'Close eyes and notice your current breathing', 'Release tension in jaw and shoulders'] },
+                    { title: 'Diaphragmatic Breathing', time: '1 min 30 sec', description: 'Deep belly breathing to increase oxygen supply and activate parasympathetic nervous system.', tips: ['Inhale slowly through nose for 4 seconds', 'Feel your belly expand', 'Exhale slowly through mouth for 6 seconds', 'Feel belly naturally contract (repeat 5 times)'] },
+                    { title: 'Breathing Finish', time: '1 min', description: 'Feel the effects of deep breathing and naturally return to normal breathing.', tips: ['Gradually reduce breathing depth', 'Notice the relaxed feeling throughout body', 'Open eyes and slowly look around'] }
+                ]
+            },
+            'rest-meditation': {
+                label: 'Meditation Rest Guide',
+                steps: [
+                    { title: 'Meditation Position', time: '1 min', description: 'Get into a stable position and prepare to calm your mind.', tips: ['Sit comfortably with straight back', 'Place hands gently on knees', 'Close eyes or softly lower gaze'] },
+                    { title: 'Mindfulness Focus', time: '1 min 30 sec', description: 'Focus on your breath and be present in the moment.', tips: ['Pay attention only to inhale and exhale', 'When thoughts arise, gently return to breath', 'Accept current state without judgment', 'Gently notice body sensations'] },
+                    { title: 'Meditation Finish', time: '1 min', description: 'Maintain meditation calmness and gently return to daily life.', tips: ['Slowly notice surrounding sounds', 'Gently move fingers and toes', 'Open eyes slowly and pause briefly', 'Feel renewed energy and focus'] }
+                ]
+            },
+            'rest-shoulder': {
+                label: 'Shoulder Rest Guide',
+                steps: [
+                    { title: 'Shoulder Loosening', time: '1 min', description: 'Warm-up exercises to release tension in stiff trapezius and shoulder muscles.', tips: ['Raise shoulders toward ears then drop them (5 times)', 'Roll shoulders forward then backward (5 times each)', 'Shake both arms to release shoulder tension'] },
+                    { title: 'Trapezius Stretching', time: '1 min 30 sec', description: 'Focused stretching for the trapezius muscle from neck to shoulder.', tips: ['Use right hand on left side of head, gently pull to right', 'Hold 15 sec then do the same on other side (2 times each)', 'Tuck chin to chest to stretch back of neck trapezius', 'Reduce intensity if there is pain'] },
+                    { title: 'Shoulder Relaxation', time: '1 min', description: 'Relax stretched shoulder muscles and finish.', tips: ['Clasp hands in front and push forward to spread shoulder blades', 'Clasp hands behind and open chest while pulling shoulders back', 'Slowly roll shoulders in large circles (5 times)', 'Completely release shoulder tension with deep breathing'] }
                 ]
             }
         },
@@ -885,7 +963,10 @@ const translations = {
                 'rest-hand': { desc: '手首と指の疲れを癒します' },
                 'rest-eye': { desc: '画面を見て疲れた目を休ませましょう' },
                 'rest-face': { desc: '表情筋の緊張をほぐして頭痛緩和' },
-                'rest-all': { desc: '5分間の全身ストレッチと休憩' }
+                'rest-all': { desc: '5分間の全身ストレッチと休憩' },
+                'rest-breathing': { desc: '深い呼吸で酸素供給とストレス解消' },
+                'rest-meditation': { desc: '心を落ち着かせる短い瞑想ガイド' },
+                'rest-shoulder': { desc: '僧帽筋と肩の緊張をほぐすストレッチ' }
             }
         },
         restGuide: {
@@ -906,7 +987,10 @@ const translations = {
                 face: { title: '顔休憩ガイド', desc: '表情筋と顎の筋肉の緊張をほぐし、頭痛予防と顔の疲労解消に役立ちます。' },
                 eye: { title: '目休憩ガイド', desc: '画面注視による目の疲れと乾燥を緩和する目の運動とリラクゼーション法です。' },
                 hand: { title: '手休憩ガイド', desc: 'キーボードとマウス使用で疲れた手首と指のためのストレッチです。' },
-                waist: { title: '腰休憩ガイド', desc: '座って作業する姿勢による腰の負担を減らし、コア筋を活性化します。' }
+                waist: { title: '腰休憩ガイド', desc: '座って作業する姿勢による腰の負担を減らし、コア筋を活性化します。' },
+                breathing: { title: '呼吸休憩ガイド', desc: '深い呼吸法で酸素供給を増やしストレスを解消する呼吸運動です。' },
+                meditation: { title: '瞑想休憩ガイド', desc: '短時間で心を落ち着かせ集中力を回復するマインドフルネス瞑想です。' },
+                shoulder: { title: '肩休憩ガイド', desc: '僧帽筋と肩の筋肉の緊張をほぐして肩こりと痛みを緩和します。' }
             },
             steps: {
                 all: [{ title: '立つ', desc: '席を立って体を伸ばしてください。' }, { title: '首/肩', desc: '首を回して肩をほぐします。' }, { title: '呼吸', desc: '目を閉じて深く呼吸してください。' }],
@@ -914,7 +998,10 @@ const translations = {
                 face: [{ title: '意識', desc: '顔の緊張を確認してください。' }, { title: '運動', desc: 'ア・エ・イ・オ・ウを大きく。' }, { title: '顎', desc: '顎を左右に軽く動かしてください。' }],
                 eye: [{ title: '閉じる', desc: '目を閉じて暗さを感じてください。' }, { title: '運動', desc: '目を上下左右に回してください。' }, { title: '遠く', desc: '遠くを20秒間見てください。' }],
                 hand: [{ title: '回す', desc: '手首を優しく回してください。' }, { title: '指', desc: 'グーパーを繰り返してください。' }, { title: 'マッサージ', desc: '手のひらをしっかり押してください。' }],
-                waist: [{ title: '反らす', desc: '立って腰を後ろに反らしてください。' }, { title: 'ひねる', desc: '上体を左右にひねってください。' }, { title: '姿勢', desc: '腰を伸ばして正しく座ってください。' }]
+                waist: [{ title: '反らす', desc: '立って腰を後ろに反らしてください。' }, { title: 'ひねる', desc: '上体を左右にひねってください。' }, { title: '姿勢', desc: '腰を伸ばして正しく座ってください。' }],
+                breathing: [{ title: '準備', desc: '楽な姿勢で目を閉じてください。' }, { title: '腹式呼吸', desc: 'お腹を膨らませて深く呼吸します。' }, { title: '仕上げ', desc: 'ゆっくり通常の呼吸に戻ります。' }],
+                meditation: [{ title: '姿勢', desc: '背筋を伸ばして楽に座ってください。' }, { title: '集中', desc: '呼吸だけに注意を向けます。' }, { title: 'マインドフルネス', desc: '今の瞬間を感じて終わります。' }],
+                shoulder: [{ title: '肩上げ', desc: '肩を耳に向けて上げて下ろします。' }, { title: 'ストレッチ', desc: '頭を傾けて僧帽筋を伸ばします。' }, { title: '回す', desc: '肩を大きく円を描いて回します。' }]
             }
         },
         complete: {
@@ -1001,6 +1088,30 @@ const translations = {
                     { title: '腰をほぐす', time: '1分', description: '長時間座って固くなった腰の筋肉を優しくほぐします。', tips: ['椅子から立って腰に手を当てて後ろに反る', '上体を左右にゆっくりひねる(各5回)', '骨盤を左右に回して腰をほぐす'] },
                     { title: 'コアストレッチ', time: '1分30秒', description: '腰を支えるコア筋肉を活性化してストレッチします。', tips: ['立って両腕を上に伸ばして横に傾ける(左右各15秒)', '上体を前に倒して指先を床につける', '膝を軽く曲げた状態で腰をストレッチ', 'キャット・カウのポーズで背骨を動かす(可能な場合)'] },
                     { title: '姿勢リセット', time: '1分', description: '正しい姿勢を確認し、腰への負担を減らす姿勢に戻ります。', tips: ['足を肩幅に開いて正しく立つ', '肩を後ろに引いて胸を開く', '座る時はお尻を椅子の奥深くに入れて背もたれを活用'] }
+                ]
+            },
+            'rest-breathing': {
+                label: '呼吸休憩ガイド',
+                steps: [
+                    { title: '呼吸の準備', time: '1分', description: '楽な姿勢をとり、体の緊張をほぐして深い呼吸の準備をします。', tips: ['楽に座るか立って肩の力を抜く', '目を閉じて現在の呼吸状態を認識する', '顎と肩に入った力を抜く'] },
+                    { title: '腹式呼吸の練習', time: '1分30秒', description: 'お腹を使った深い呼吸で酸素供給を増やし副交感神経を活性化します。', tips: ['鼻から4秒かけてゆっくり吸う', 'お腹が膨らむのを感じる', '口から6秒かけてゆっくり吐く', 'お腹が自然に凹むのを感じる(5回繰り返す)'] },
+                    { title: '呼吸の仕上げ', time: '1分', description: '深呼吸の効果を感じながら自然に通常の呼吸に戻ります。', tips: ['徐々に呼吸の深さを減らしていく', '体全体のリラックスした感覚を認識する', '目を開けてゆっくり周りを見回す'] }
+                ]
+            },
+            'rest-meditation': {
+                label: '瞑想休憩ガイド',
+                steps: [
+                    { title: '瞑想の姿勢', time: '1分', description: '安定した姿勢をとり、心を落ち着ける準備をします。', tips: ['背筋を伸ばして楽に座る', '手は膝の上に軽く置く', '目を閉じるか視線を下に向ける'] },
+                    { title: 'マインドフルネス集中', time: '1分30秒', description: '呼吸に注意を向けて今の瞬間に集中します。', tips: ['吸う息と吐く息だけに注意を向ける', '雑念が浮かんだら優しく呼吸に戻る', '判断せずに今の状態をそのまま受け入れる', '体の感覚を優しく感じる'] },
+                    { title: '瞑想の仕上げ', time: '1分', description: '瞑想の静けさを維持しながら日常に優しく戻ります。', tips: ['ゆっくり周りの音を認識する', '指と足の指を軽く動かす', 'ゆっくり目を開けて少し止まる', '新しいエネルギーと集中力を感じる'] }
+                ]
+            },
+            'rest-shoulder': {
+                label: '肩休憩ガイド',
+                steps: [
+                    { title: '肩をほぐす', time: '1分', description: '固くなった僧帽筋と肩の筋肉の緊張をほぐす準備運動です。', tips: ['肩を耳に向けて上げて力を抜いて落とす(5回)', '肩を前に回して後ろに回す(各5回)', '両腕を振って肩の緊張をほぐす'] },
+                    { title: '僧帽筋ストレッチ', time: '1分30秒', description: '首から肩につながる僧帽筋を集中的に伸ばします。', tips: ['右手で頭の左側を持って右に優しく引く', '15秒維持後、反対側も同様に(各2回)', '顎を胸に向けて引いて首の後ろの僧帽筋をストレッチ', '痛みがあれば強度を下げてください'] },
+                    { title: '肩のリラックス', time: '1分', description: 'ストレッチした肩の筋肉をリラックスさせて仕上げます。', tips: ['両手を前で組んで前に押し出して肩甲骨を広げる', '後ろで手を組んで胸を開きながら肩を寄せる', '肩を大きく円を描くようにゆっくり回す(5回)', '深呼吸と共に肩の力を完全に抜く'] }
                 ]
             }
         },
