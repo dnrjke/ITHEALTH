@@ -1333,6 +1333,7 @@ function initTimer() {
         guideType: null, // 현재 실행 중인 가이드 타입
         isRunning: false,
         isPaused: false,
+        isCompleted: false, // 타이머 완료 상태 (완료 후에도 트랙 바 조작 가능)
         currentStep: null,
         currentTime: 0,
         totalTime: 0,
@@ -1515,12 +1516,12 @@ function initTimer() {
         
         stepBoxes.forEach(box => {
             box.style.cursor = 'pointer';
-            
+
             box.addEventListener('click', () => {
                 const stepNum = parseInt(box.dataset.step);
-                
-                if (timerState.mode === 'global' && timerState.isRunning) {
-                    // 전체 타이머 모드: 해당 단계로 시간 이동
+
+                // 전체 타이머 모드 (실행 중, 일시정지, 또는 완료 상태): 해당 단계로 시간 이동
+                if (timerState.mode === 'global' && (timerState.isRunning || timerState.isPaused || timerState.isCompleted)) {
                     jumpToStep(stepNum);
                 } else {
                     // 타이머 비활성 상태: 카드로 스크롤
@@ -1529,9 +1530,9 @@ function initTimer() {
                         if (targetCard.classList.contains('collapsed')) {
                             targetCard.classList.remove('collapsed');
                         }
-                        targetCard.scrollIntoView({ 
-                            behavior: 'smooth', 
-                            block: 'center' 
+                        targetCard.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
                         });
                     }
                 }
@@ -1541,7 +1542,9 @@ function initTimer() {
     
     // 특정 단계로 이동 (전체 타이머 모드)
     function jumpToStep(targetStepNum) {
-        if (timerState.mode !== 'global' || !timerState.isRunning) return;
+        // 전체 타이머 모드이고, 실행 중/일시정지/완료 상태일 때만 동작
+        if (timerState.mode !== 'global') return;
+        if (!timerState.isRunning && !timerState.isPaused && !timerState.isCompleted) return;
         
         // 해당 단계의 시작 시간 계산
         let stepStartTime = 0;
@@ -1600,6 +1603,7 @@ function initTimer() {
         timerState.guideType = guideType;
         timerState.isRunning = true;
         timerState.isPaused = false;
+        timerState.isCompleted = false; // 새 타이머 시작 시 완료 상태 초기화
         timerState.currentStep = 1;
         timerState.currentTime = 0;
         timerState.steps = guide.steps;
@@ -1678,10 +1682,11 @@ function initTimer() {
     function startIndividualTimer(stepNum) {
         const stepData = timerState.steps.find(s => s.step === stepNum);
         if (!stepData) return;
-        
+
         timerState.mode = 'individual';
         timerState.isRunning = true;
         timerState.isPaused = false;
+        timerState.isCompleted = false; // 새 타이머 시작 시 완료 상태 초기화
         timerState.currentStep = stepNum;
         timerState.currentTime = 0;
         timerState.totalTime = stepData.duration;
@@ -1800,6 +1805,7 @@ function initTimer() {
         const wasGlobalMode = timerState.mode === 'global';
         timerState.isRunning = false;
         timerState.isPaused = false;
+        timerState.isCompleted = false; // 완료 상태 초기화
         timerState.currentTime = 0;
         
         // 이전 단계 추적 변수 초기화
@@ -1844,6 +1850,8 @@ function initTimer() {
     function completeTimer() {
         clearInterval(timerState.intervalId);
         timerState.isRunning = false;
+        timerState.isCompleted = true; // 완료 상태로 설정 (트랙 바 조작 계속 가능)
+        timerState.currentTime = timerState.totalTime; // 진행 바 100% 유지
 
         // 이전 단계 추적 변수 초기화
         previousStepNum = null;
@@ -1931,10 +1939,12 @@ function initTimer() {
 
             // 실제 타이머 상태 업데이트 (지연 반영)
             function updateTimerState() {
-                if (!timerState.isRunning && !timerState.isPaused) return;
+                // 실행 중, 일시정지, 또는 완료 상태일 때만 조작 가능
+                if (!timerState.isRunning && !timerState.isPaused && !timerState.isCompleted) return;
 
                 const percentage = Math.max(0, Math.min(currentPos / containerWidth, 1));
                 const newTime = Math.floor(percentage * timerState.totalTime);
+                // 시간이 총 시간을 초과하지 않도록 보장
                 timerState.currentTime = Math.max(0, Math.min(newTime, timerState.totalTime));
                 onSeek();
             }
@@ -1950,7 +1960,8 @@ function initTimer() {
             // 드래그 시작
             function startDrag(clientX) {
                 if (mode === 'global' && timerState.mode !== 'global') return;
-                if (!timerState.isRunning && !timerState.isPaused) return;
+                // 실행 중, 일시정지, 또는 완료 상태일 때만 드래그 가능
+                if (!timerState.isRunning && !timerState.isPaused && !timerState.isCompleted) return;
 
                 isDragging = true;
                 thumb.classList.add('active');
