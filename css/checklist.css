@@ -755,9 +755,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    /* 세피아 질감 배경 이미지 */
-    background: url('../image/sepia_flat.webp') center center / cover no-repeat fixed;
-    background-color: #f5f5dc; /* 폴백 색상 */
+    /* 배경 없음 - 투명 */
     z-index: 999;
     overflow-y: auto;
     /* 부드러운 모달 등장 애니메이션 */
