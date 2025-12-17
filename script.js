@@ -1883,6 +1883,7 @@ function initTimer() {
     function completeTimer() {
         clearInterval(timerState.intervalId);
         timerState.isRunning = false;
+        timerState.isPaused = true; // 일시정지 상태로 설정 (되감기 후 재생 가능)
         timerState.isCompleted = true; // 완료 상태로 설정 (트랙 바 조작 계속 가능)
         timerState.currentTime = timerState.totalTime; // 진행 바 100% 유지
 
@@ -1892,42 +1893,45 @@ function initTimer() {
         document.getElementById('timer-complete-message').classList.remove('hidden');
 
         if (timerState.mode === 'global') {
-            // 타이머 완료 후에도 모달을 유지 (자동 종료 비활성화)
-            // 사용자가 직접 닫기 버튼을 눌러야 종료됨
+            // 타이머 완료 후에도 모달을 유지 - 사용자가 직접 닫기 버튼을 눌러야 종료됨
+            // 일시정지 버튼을 "계속하기" 상태로 (되감기 후 재생 가능하도록)
+            const pauseBtn = document.getElementById('sticky-timer-pause');
+            if (pauseBtn) {
+                const lang = localStorage.getItem('lang') || 'KR';
+                const resumeText = window.translations?.[lang]?.common?.resume || '계속하기';
+                pauseBtn.querySelector('span:first-child').textContent = '▶️';
+                pauseBtn.querySelector('span:last-child').textContent = resumeText;
+                // 비활성화하지 않음 - 되감기 후 사용 가능
+            }
 
             // 모든 단계를 완료 상태로 표시
             document.querySelectorAll('.break-step').forEach(card => {
                 card.classList.add('completed', 'collapsed');
                 card.classList.remove('active', 'waiting');
             });
-
-            // 일시정지 버튼을 "완료" 상태로 변경
-            const pauseBtn = document.getElementById('sticky-timer-pause');
-            if (pauseBtn) {
-                pauseBtn.querySelector('span:first-child').textContent = '✓';
-                pauseBtn.querySelector('span:last-child').textContent = '완료';
-                pauseBtn.disabled = true;
-            }
         } else if (timerState.mode === 'individual') {
-            // 개별 타이머: 되감기를 위해 stepTimer는 숨기지 않고 유지
+            // 개별 타이머: stepTimer 유지 (되감기 가능)
             const stepTimer = document.querySelector(`[data-step-timer="${timerState.currentStep}"]`);
-            // stepTimer.classList.add('hidden'); // 숨기지 않음 - 되감기 가능하도록
 
             const card = document.querySelector(`.break-step[data-step="${timerState.currentStep}"]`);
-            card.classList.add('completed');
-            card.classList.remove('active', 'individual-mode');
+            if (card) {
+                card.classList.add('completed');
+                card.classList.remove('active', 'individual-mode');
+            }
 
             const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
-            playBtn.classList.remove('playing');
-            playBtn.querySelector('span').textContent = '▶️';
+            if (playBtn) {
+                playBtn.classList.remove('playing');
+                playBtn.querySelector('span').textContent = '▶️';
+            }
 
-            // 일시정지 버튼을 '완료' 상태로 변경
+            // 일시정지 버튼을 '계속하기' 상태로 (되감기 후 재생 가능)
             const pauseBtn = stepTimer?.querySelector('.timer-btn-pause');
             if (pauseBtn) {
                 const lang = localStorage.getItem('lang') || 'KR';
-                const completeText = window.translations?.[lang]?.common?.complete || '완료';
-                pauseBtn.querySelector('span:last-child').textContent = completeText;
-                // 버튼을 비활성화하지 않음 - 되감기 후 재개 가능하도록 유지
+                const resumeText = window.translations?.[lang]?.common?.resume || '계속하기';
+                pauseBtn.querySelector('span:last-child').textContent = resumeText;
+                // 비활성화하지 않음
             }
         }
 
@@ -1980,69 +1984,31 @@ function initTimer() {
                 rafId = requestAnimationFrame(render);
             }
 
-            // 완료 상태에서 되감기 시 타이머 재개 처리
+            // 완료 상태에서 되감기 시 처리 (단순화)
             function handleRewindFromCompletion(newTime) {
-                // 완료 상태에서 되감기한 경우
+                // 완료 상태에서 시간이 변경된 경우
                 if (timerState.isCompleted && newTime < timerState.totalTime) {
                     // 완료 메시지 숨기기
                     document.getElementById('timer-complete-message').classList.add('hidden');
-
-                    // 타이머 상태 재설정 (일시정지 상태로 복원)
-                    timerState.isRunning = true;
-                    timerState.isPaused = true;
+                    // 완료 플래그만 해제 (이미 isPaused=true 상태)
                     timerState.isCompleted = false;
 
-                    // 개별 타이머 모드인 경우 UI 복원
+                    // 개별 타이머 모드: 카드 상태 복원
                     if (timerState.mode === 'individual') {
-                        const stepTimer = document.querySelector(`[data-step-timer="${timerState.currentStep}"]`);
-                        if (stepTimer) {
-                            stepTimer.classList.remove('hidden');
-                        }
-
                         const card = document.querySelector(`.break-step[data-step="${timerState.currentStep}"]`);
                         if (card) {
                             card.classList.remove('completed');
                             card.classList.add('active', 'individual-mode');
                         }
-
-                        const playBtn = document.querySelector(`.step-play-btn[data-step="${timerState.currentStep}"]`);
-                        if (playBtn) {
-                            playBtn.querySelector('span').textContent = '▶️';
-                            playBtn.classList.remove('playing');
-                        }
-
-                        // 일시정지 버튼 텍스트 업데이트
-                        const pauseBtn = stepTimer?.querySelector('.timer-btn-pause');
-                        if (pauseBtn) {
-                            const lang = localStorage.getItem('lang') || 'KR';
-                            const resumeText = window.translations?.[lang]?.common?.resume || '계속하기';
-                            pauseBtn.querySelector('span:last-child').textContent = resumeText;
-                            pauseBtn.disabled = false;
-                        }
-                    } else if (timerState.mode === 'global') {
-                        // 전체 타이머 모드인 경우
-                        document.getElementById('timer-sticky-progress').classList.remove('hidden');
-                        document.getElementById('sticky-card-display').classList.remove('hidden');
-                        const globalStartBtn = document.getElementById('global-timer-start');
-                        if (globalStartBtn) globalStartBtn.classList.add('hidden');
-
-                        // 일시정지 버튼 복원
-                        const pauseBtn = document.getElementById('sticky-timer-pause');
-                        if (pauseBtn) {
-                            const lang = localStorage.getItem('lang') || 'KR';
-                            const resumeText = window.translations?.[lang]?.common?.resume || '계속하기';
-                            pauseBtn.querySelector('span:first-child').textContent = '⏸️';
-                            pauseBtn.querySelector('span:last-child').textContent = resumeText;
-                            pauseBtn.disabled = false;
-                        }
                     }
+                    // global 모드는 checkGlobalStepTransition에서 카드 상태 업데이트됨
                 }
             }
 
             // 실제 타이머 상태 업데이트 (지연 반영)
             function updateTimerState() {
-                // 실행 중, 일시정지, 또는 완료 상태일 때만 조작 가능
-                if (!timerState.isRunning && !timerState.isPaused && !timerState.isCompleted) return;
+                // 실행 중 또는 일시정지 상태일 때 조작 가능 (완료 시 isPaused=true)
+                if (!timerState.isRunning && !timerState.isPaused) return;
 
                 const percentage = Math.max(0, Math.min(currentPos / containerWidth, 1));
                 const newTime = Math.floor(percentage * timerState.totalTime);
@@ -2067,8 +2033,8 @@ function initTimer() {
             // 드래그 시작
             function startDrag(clientX) {
                 if (mode === 'global' && timerState.mode !== 'global') return;
-                // 실행 중, 일시정지, 또는 완료 상태일 때만 드래그 가능
-                if (!timerState.isRunning && !timerState.isPaused && !timerState.isCompleted) return;
+                // 실행 중 또는 일시정지 상태일 때 드래그 가능 (완료 시 isPaused=true)
+                if (!timerState.isRunning && !timerState.isPaused) return;
 
                 isDragging = true;
                 thumb.classList.add('active');
