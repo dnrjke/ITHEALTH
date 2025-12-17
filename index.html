@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="css/intro.css">
     <link rel="stylesheet" href="css/checklist.css">
     <link rel="stylesheet" href="css/responsive.css">
+    <!-- 휴식 가이드 모달 배경 이미지 사전로드 (낮은 우선순위) -->
+    <link rel="preload" href="image/sepia_flat.webp" as="image" fetchpriority="low">
 </head>
 <body class="main-view">
     <header>
@@ -340,17 +342,17 @@
                             <div class="guide-card-icon">🌬️</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.breathing.title">호흡 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.breathing.desc">깊은 호흡법으로 산소 공급을 늘리고 스트레스를 해소하는 호흡 운동입니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-breathing.desc">깊은 호흡으로 산소 공급과 스트레스 해소</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                         <div class="recommended-guide-card" data-guide="rest-meditation">
                             <div class="guide-card-icon">🧘</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.meditation.title">명상 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.meditation.desc">짧은 시간 마음을 가라앉히고 집중력을 회복하는 마음챙김 명상입니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-meditation.desc">마음을 가라앉히는 짧은 명상 가이드</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                     </div>
                 </div>
@@ -436,17 +438,17 @@
                             <div class="guide-card-icon">🦴</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.neck.title">뒷목 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.neck.desc">장시간 모니터를 보며 긴장된 목 뒷근육을 풀어주는 집중 스트레칭입니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-neck.desc">목 근육을 풀어주는 집중 스트레칭</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                         <div class="recommended-guide-card" data-guide="rest-shoulder">
                             <div class="guide-card-icon">💪</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.shoulder.title">어깨 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.shoulder.desc">승모근과 어깨 근육의 긴장을 풀어 어깨 결림과 통증을 완화합니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-shoulder.desc">승모근과 어깨 긴장을 풀어주는 스트레칭</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                     </div>
                 </div>
@@ -532,9 +534,9 @@
                             <div class="guide-card-icon">✋</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.hand.title">손 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.hand.desc">키보드와 마우스 사용으로 지친 손목과 손가락을 위한 스트레칭입니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-hand.desc">손목과 손가락의 피로를 풀어주세요</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                     </div>
                 </div>
@@ -620,9 +622,9 @@
                             <div class="guide-card-icon">👁️</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.eye.title">눈 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.eye.desc">화면 응시로 인한 눈의 피로와 건조함을 완화하는 눈 운동과 이완법입니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-eye.desc">화면 응시로 피로한 눈을 쉬게 해주세요</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                     </div>
                 </div>
@@ -708,9 +710,9 @@
                             <div class="guide-card-icon">🧍</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.waist.title">허리 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.waist.desc">앉아서 일하는 자세로 인한 허리 부담을 줄이고 코어 근육을 활성화합니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-waist.desc">허리 부담을 줄이고 코어를 활성화</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                     </div>
                 </div>
@@ -796,17 +798,17 @@
                             <div class="guide-card-icon">😌</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.face.title">얼굴 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.face.desc">표정근과 턱 근육의 긴장을 풀어 두통 예방과 얼굴 피로 해소에 도움을 줍니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-face.desc">표정근과 턱 긴장을 풀어 두통 완화</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                         <div class="recommended-guide-card" data-guide="rest-meditation">
                             <div class="guide-card-icon">🧘</div>
                             <div class="guide-card-content">
                                 <h4 class="guide-card-title" data-i18n="restGuide.cards.meditation.title">명상 휴식 가이드</h4>
-                                <p class="guide-card-desc" data-i18n="restGuide.cards.meditation.desc">짧은 시간 마음을 가라앉히고 집중력을 회복하는 마음챙김 명상입니다.</p>
+                                <p class="guide-card-desc" data-i18n="checklist.guideRecommend.rest-meditation.desc">마음을 가라앉히는 짧은 명상 가이드</p>
                             </div>
-                            <span class="guide-play-icon">▶</span>
+                            <div class="guide-play-icon">›</div>
                         </div>
                     </div>
                 </div>

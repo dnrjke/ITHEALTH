@@ -341,12 +341,14 @@
 
     /* Show mobile-recommended-guides on mobile */
     .mobile-recommended-guides {
-        display: block !important;
+        display: flex !important;
+        flex-direction: column;
+        gap: 1em; /* 체크리스트 탭 카드 간격과 동일 */
         margin-top: 2em;
         margin-bottom: 1.5em;
         padding: 0 1em;
         position: relative;
-        z-index: 10; /* 다른 요소 위에 표시 */
+        z-index: 50; /* 다른 요소 위에 표시 */
     }
 
     .posture-guide {
