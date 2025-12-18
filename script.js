@@ -40,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initBackgroundBlurUp();
     console.log('✅ 배경 이미지 blur-up 초기화 완료');
 
+    // 9. 방문자 카운터 초기화
+    initVisitorCounter();
+    console.log('✅ 방문자 카운터 초기화 완료');
+
     console.log('🎉 모든 초기화 완료!');
 });
 
@@ -2441,4 +2445,62 @@ function initBackgroundBlurUp() {
     }
 }
 
+/* ================================================
+   VISITOR COUNTER - 방문자 카운터
+   ================================================ */
+
+function initVisitorCounter() {
+    const STORAGE_KEY = 'ithealth_visitors';
+    const todayEl = document.getElementById('today-visitors');
+    const totalEl = document.getElementById('total-visitors');
+
+    if (!todayEl || !totalEl) {
+        console.warn('방문자 카운터 요소를 찾을 수 없습니다.');
+        return;
+    }
+
+    // 오늘 날짜 (YYYY-MM-DD 형식)
+    const today = new Date().toISOString().split('T')[0];
+
+    // 저장된 데이터 불러오기
+    let visitorData = { visits: {}, total: 0 };
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+            visitorData = JSON.parse(stored);
+        }
+    } catch (e) {
+        console.warn('방문자 데이터 로드 실패:', e);
+    }
+
+    // 세션 키로 중복 방문 방지
+    const sessionKey = 'ithealth_visited_' + today;
+    const alreadyVisited = sessionStorage.getItem(sessionKey);
+
+    if (!alreadyVisited) {
+        // 오늘 방문 카운트 증가
+        visitorData.visits[today] = (visitorData.visits[today] || 0) + 1;
+        visitorData.total = (visitorData.total || 0) + 1;
+
+        // 저장
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(visitorData));
+            sessionStorage.setItem(sessionKey, 'true');
+        } catch (e) {
+            console.warn('방문자 데이터 저장 실패:', e);
+        }
+    }
+
+    // 화면에 표시
+    const todayCount = visitorData.visits[today] || 0;
+    const totalCount = visitorData.total || 0;
+
+    todayEl.textContent = formatNumber(todayCount);
+    totalEl.textContent = formatNumber(totalCount);
+}
+
+// 숫자 포맷팅 (1000 -> 1,000)
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
 

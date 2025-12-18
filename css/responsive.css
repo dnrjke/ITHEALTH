@@ -139,15 +139,36 @@
 
     .footer-content {
         padding: 12px 0 10px;
-        max-height: 70px;
     }
-    
+
+    .footer-inner {
+        flex-direction: column;
+        gap: 10px;
+        padding: 0 1em;
+    }
+
+    .footer-info {
+        text-align: center;
+    }
+
     .footer-note {
         font-size: 12px;
     }
-    
+
     .footer-attr {
         font-size: 11px;
+    }
+
+    .visitor-counter {
+        gap: 10px;
+    }
+
+    .visitor-label {
+        font-size: 9px;
+    }
+
+    .visitor-count {
+        font-size: 12px;
     }
 
     /* ==================== 메인 히어로 ==================== */

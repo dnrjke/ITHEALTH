@@ -338,7 +338,9 @@ const translations = {
         // --- 푸터 ---
         footer: {
             note: '본 프로젝트는 대학 과제 목적의 비상업적 웹사이트입니다.',
-            imageSource: '스톡 이미지 출처:'
+            imageSource: '스톡 이미지 출처:',
+            today: '오늘',
+            total: '전체'
         },
         // --- 타이머 ---
         timer: {
@@ -640,7 +642,9 @@ const translations = {
         },
         footer: {
             note: 'This project is a non-commercial website for university assignment purposes.',
-            imageSource: 'Stock image source:'
+            imageSource: 'Stock image source:',
+            today: 'Today',
+            total: 'Total'
         },
         timer: {
             completeMessage: '🎉 Rest complete! Great job! 🎉',
@@ -938,7 +942,9 @@ const translations = {
         },
         footer: {
             note: 'このプロジェクトは大学の課題目的の非商用ウェブサイトです。',
-            imageSource: 'ストック画像出典:'
+            imageSource: 'ストック画像出典:',
+            today: '今日',
+            total: '累計'
         },
         timer: {
             completeMessage: '🎉 休憩完了！お疲れ様でした！🎉',
