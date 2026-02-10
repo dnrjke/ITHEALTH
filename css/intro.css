@@ -1,0 +1,878 @@
+/* ================================================
+   가이드 소개 페이지 스타일
+   ================================================ */
+
+.intro-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3em 2em;
+    position: relative;
+    z-index: 1;
+}
+
+/* ================================================
+   INTRO TOP (첫 화면 전용) - 세련되고 현대적인 환영 레이아웃
+   - 좌측 정렬로 가독성 최우선
+   - 다국어(KR/EN/JP) 친화적 디자인
+   - 명확한 시각적 위계와 호흡감 있는 여백
+   ================================================ */
+
+.intro-top {
+    position: relative;
+    padding: 3.5em 0 3em;
+    margin-bottom: 3.5em;
+}
+
+/* 부드러운 그라데이션 배경 - 세련된 레이어 효과 */
+.intro-top::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse 800px 400px at 20% 30%, rgba(46, 125, 50, 0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 600px 300px at 80% 70%, rgba(66, 165, 245, 0.04) 0%, transparent 70%);
+    filter: blur(40px);
+    opacity: 1;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* 데코레이션 라인 */
+.intro-top::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--brand-light) 0%, transparent 100%);
+    border-radius: 2px;
+    opacity: 0.4;
+}
+
+.intro-top-hero,
+.intro-top-mission {
+    position: relative;
+    z-index: 1;
+}
+
+.intro-top-hero {
+    max-width: 85ch;
+}
+
+.intro-top-mission {
+    margin-top: 2.5em;
+    max-width: 85ch;
+    padding-top: 2em;
+    border-top: 1px solid rgba(46, 125, 50, 0.12);
+}
+
+/* 메인 타이틀 - 임팩트 있는 환영 메시지 */
+.intro-title {
+    font-size: clamp(2.2em, 4.5vw, 3em);
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 60%, var(--brand-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0 0 0.8em 0;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+/* 일본어 타이틀 최적화 - 'ようこそ' 줄바꿈 제어 */
+html[lang="jp"] .intro-title,
+html[lang="JP"] .intro-title {
+    font-size: clamp(2em, 4.2vw, 2.85em);
+    line-height: 1.3;
+}
+
+/* 일본어 타이틀 내 .break-after 요소 스타일링 */
+html[lang="jp"] .intro-title .break-after,
+html[lang="JP"] .intro-title .break-after {
+    display: inline-block;
+}
+
+/* Lead 텍스트 컨테이너 */
+.intro-lead {
+    max-width: 75ch;
+    margin: 0;
+}
+
+/* Lead 텍스트 - 부드럽고 가독성 높은 질문 */
+.lead-text {
+    font-size: clamp(1.2em, 2.2vw, 1.4em);
+    color: rgba(47, 59, 47, 0.75);
+    margin: 0.7em 0;
+    line-height: 1.7;
+    font-weight: 400;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+}
+
+/* 미션 본문 컨테이너 */
+.intro-mission-body {
+    display: grid;
+    gap: 0.75em;
+    max-width: 75ch;
+}
+
+/* 미션 라인 - 명확하고 우아한 메시지 */
+.intro-mission-line {
+    margin: 0;
+    font-size: clamp(1.08em, 2vw, 1.2em);
+    line-height: 1.8;
+    color: rgba(47, 59, 47, 0.8);
+    overflow-wrap: anywhere;
+    word-break: keep-all;
+    position: relative;
+    padding-left: 1.8em;
+}
+
+/* 미션 라인 앞 장식 아이콘 */
+.intro-mission-line::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--brand-light);
+    font-weight: 700;
+    font-size: 1.1em;
+    opacity: 0.75;
+}
+
+/* 선호 줄바꿈 제어용: 특정 구절은 한 덩어리로 유지하고, 그 다음 지점에서만 줄바꿈 유도 */
+.keep-phrase {
+    /* 기본은 줄바꿈 허용 (EN 등 긴 문장/단어에서 nowrap이 치명적) */
+    white-space: normal;
+}
+
+/* 한국어, 일본어에서 "앞 구절 고정" 줄바꿈 최적화 적용 */
+html[lang="ko"] .keep-phrase,
+html[lang="jp"] .keep-phrase,
+html[lang="JP"] .keep-phrase {
+    white-space: nowrap;
+}
+
+/*
+  "한 줄에 못 담기면 여기서 끊기"를 안정적으로 유도하기 위한 래퍼.
+  - 문장 뒷부분을 inline-block으로 묶어, 한 줄에 같이 못 올라가면 통째로 다음 줄로 내려가게 함
+  - 내려간 뒤에는 내부 텍스트가 자연스럽게 줄바꿈되도록 max-width만 제한
+*/
+.break-after {
+    display: inline-block;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+/* 혹시 다른 전역 스타일이 줄바꿈을 막는 경우를 대비한 안전장치 */
+#intro-lead-1,
+#intro-purpose-1,
+#intro-purpose-2,
+#intro-purpose-3 {
+    white-space: normal;
+}
+
+/* 영어/일본어에서 하이픈/줄바꿈을 좀 더 적극적으로 허용 */
+html[lang="en"] .intro-container .lead-text,
+html[lang="en"] .intro-container .content-box p {
+    hyphens: auto;
+}
+
+/* 섹션 공통 */
+.intro-section {
+    margin-bottom: 4em;
+}
+
+.section-heading {
+    font-size: 1.8em;
+    color: var(--brand);
+    margin-bottom: 1.5em;
+    padding-bottom: 0.5em;
+    border-bottom: 2px solid var(--brand-light);
+    font-weight: 400;
+}
+
+/* 콘텐츠 박스 */
+.content-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--brand-light);
+}
+
+.content-box p {
+    font-size: 1.15em;
+    line-height: 1.8;
+    color: #444;
+    margin: 1em 0;
+}
+
+/* 정보 카드 그리드 */
+.info-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    margin-top: 2em;
+}
+
+.info-card-intro {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 3px solid var(--brand-light);
+    position: relative;
+    padding-bottom: 3.2em; /* 우하단 CTA 공간 확보 */
+}
+
+.info-card-intro.is-clickable {
+    cursor: pointer;
+}
+
+.info-card-intro.is-clickable:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.25), 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.info-card-intro:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.intro-card-cta {
+    position: absolute;
+    right: 1.2em;
+    bottom: 1.1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    color: var(--brand);
+    font-weight: 700;
+    opacity: 0.75;
+    user-select: none;
+}
+
+.info-card-intro.is-clickable:hover .intro-card-cta {
+    opacity: 1;
+    transform: translateX(3px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.intro-card-cta-text {
+    font-size: 0.95em;
+}
+
+.intro-card-cta-arrow {
+    font-size: 1.4em;
+    line-height: 1;
+}
+
+.card-icon {
+    font-size: 3em;
+    margin-bottom: 0.5em;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.info-card-intro h4 {
+    color: var(--brand-strong);
+    font-size: 1.4em;
+    margin-bottom: 0.8em;
+    font-weight: 500;
+}
+
+.info-card-intro p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.05em;
+}
+
+/* 기능 리스트 */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feature-list li {
+    padding: 1.2em 0;
+    border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #444;
+}
+
+.feature-list li.is-clickable {
+    cursor: pointer;
+}
+
+.feature-list li.is-clickable:hover {
+    background: rgba(232, 245, 233, 0.35);
+}
+
+.feature-list li.is-clickable:focus-visible {
+    outline: none;
+    border-radius: 10px;
+    box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.18);
+    padding-left: 0.8em;
+    padding-right: 0.8em;
+}
+
+.feature-list li:last-child {
+    border-bottom: none;
+}
+
+.feature-icon {
+    font-size: 1.5em;
+    flex-shrink: 0;
+}
+
+.feature-list strong {
+    color: var(--brand);
+    font-weight: 600;
+}
+
+/* "이 가이드 활용하기" 카드형 버튼 레이아웃 */
+.intro-howto-cards {
+    /* 휴식 가이드 탭의 모바일 카드처럼 별도 박스 없이 깔끔하게 */
+    margin-top: 1.2em;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+/* intro 섹션에서는 데스크탑에서도 카드가 보여야 함
+   (sections.css에서 .mobile-recommended-guides 를 기본 hidden 처리하므로 override) */
+.mobile-recommended-guides.intro-howto-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-top: 1.2em;
+    margin-bottom: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+}
+
+
+/* 기후 정보 */
+.climate-info {
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+}
+
+.climate-info p {
+    color: #555;
+    margin-bottom: 2em;
+}
+
+.climate-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5em;
+}
+
+.climate-card {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5em;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    text-align: center;
+}
+
+.climate-icon {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+}
+
+.climate-card h5 {
+    color: var(--brand);
+    font-size: 1.2em;
+    margin-bottom: 0.8em;
+    font-weight: 500;
+}
+
+.climate-card p {
+    color: #666;
+    font-size: 0.95em;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* 푸터 메시지 */
+.intro-footer {
+    margin-top: 5em;
+    text-align: center;
+}
+
+.message-box {
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(102, 187, 106, 0.05) 100%);
+    padding: 2.5em;
+    border-radius: 16px;
+    border: 2px solid var(--brand-light);
+    margin-bottom: 2em;
+}
+
+.message-box h3 {
+    color: var(--brand-strong);
+    font-size: 1.8em;
+    margin-bottom: 1em;
+    font-weight: 400;
+}
+
+.message-box p {
+    color: #555;
+    font-size: 1.1em;
+    line-height: 1.8;
+    margin: 1em 0;
+}
+
+/* 빠른 접근 섹션 */
+.intro-quick-access {
+    margin-bottom: 4em;
+}
+
+.quick-access-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5em;
+    margin-top: 2em;
+}
+
+.quick-access-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+    padding: 1.8em 1.5em;
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid var(--brand-light);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.quick-access-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(46, 125, 50, 0.2);
+    border-color: var(--brand);
+    background: linear-gradient(135deg, rgba(232, 245, 233, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+}
+
+.quick-access-btn .qa-icon {
+    font-size: 2.5em;
+    margin-bottom: 0.2em;
+}
+
+.quick-access-btn .qa-label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--brand-strong);
+}
+
+.quick-access-btn .qa-desc {
+    font-size: 0.9em;
+    color: #666;
+}
+
+/* CTA 버튼 */
+.cta-button {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+    color: white;
+    border: none;
+    padding: 1.2em 3em;
+    border-radius: 50px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(46, 125, 50, 0.3);
+    transition: all 0.3s ease;
+    text-transform: none;
+    letter-spacing: 0.5px;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(46, 125, 50, 0.4);
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
+}
+
+/* 반응형 */
+@media (max-width: 1200px) {
+    .intro-container {
+        padding: 2em 1.5em;
+    }
+
+    .intro-title {
+        font-size: clamp(1.7em, 4.8vw, 2.1em);
+    }
+
+    .lead-text {
+        font-size: 1.2em;
+    }
+
+    .section-heading {
+        font-size: 1.5em;
+    }
+
+    .info-cards-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+    }
+
+    .climate-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-button {
+        padding: 1em 2em;
+        font-size: 1.1em;
+    }
+}
+
+/* 태블릿 최적화 */
+@media (max-width: 1024px) {
+    .intro-top {
+        padding: 2.8em 0 2.5em;
+        margin-bottom: 3em;
+    }
+
+    .intro-top-mission {
+        margin-top: 2em;
+        padding-top: 1.8em;
+    }
+
+    .intro-title {
+        font-size: clamp(2em, 4.2vw, 2.6em);
+    }
+
+    /* 태블릿에서 일본어 타이틀 조정 */
+    html[lang="jp"] .intro-title,
+    html[lang="JP"] .intro-title {
+        font-size: clamp(1.85em, 4vw, 2.45em);
+    }
+
+    .lead-text {
+        font-size: clamp(1.15em, 2.1vw, 1.3em);
+    }
+
+    .intro-mission-line {
+        font-size: clamp(1.05em, 1.9vw, 1.15em);
+        padding-left: 1.6em;
+    }
+}
+
+/* 모바일 최적화 - 가독성과 심미성의 균형 */
+@media (max-width: 768px) {
+    .intro-container {
+        padding: 1.4em 1em 2.2em;
+    }
+
+    .intro-top {
+        padding: 2em 0 2.2em;
+        margin-bottom: 2.5em;
+    }
+
+    .intro-top::before {
+        filter: blur(30px);
+    }
+
+    .intro-top::after {
+        width: 80px;
+        height: 2px;
+    }
+
+    .intro-top-mission {
+        margin-top: 1.8em;
+        padding-top: 1.5em;
+    }
+
+    .intro-title {
+        font-size: clamp(1.8em, 6vw, 2.3em);
+        margin-bottom: 0.7em;
+        letter-spacing: -0.02em;
+    }
+
+    /* 모바일에서 일본어 타이틀 조정 - 마지막 글자 잘림 방지 */
+    html[lang="jp"] .intro-title,
+    html[lang="JP"] .intro-title {
+        font-size: clamp(1.65em, 5.5vw, 2.1em);
+        letter-spacing: -0.01em;
+        line-height: 1.35;
+    }
+
+    .intro-lead {
+        max-width: 100%;
+    }
+
+    .lead-text {
+        font-size: clamp(1.1em, 4vw, 1.25em);
+        line-height: 1.7;
+        margin: 0.6em 0;
+    }
+
+    .intro-mission-body {
+        gap: 0.7em;
+    }
+
+    .intro-mission-line {
+        font-size: clamp(1.05em, 3.8vw, 1.15em);
+        line-height: 1.75;
+        padding-left: 1.5em;
+    }
+
+    .intro-mission-line::before {
+        font-size: 1em;
+    }
+
+    .content-box {
+        padding: 1.25em 1.1em;
+    }
+
+    .content-box p {
+        font-size: 1.03em;
+        line-height: 1.75;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+}
+
+/* 소형 모바일 최적화 */
+@media (max-width: 480px) {
+    .intro-top {
+        padding: 1.6em 0 1.8em;
+        margin-bottom: 2em;
+    }
+
+    .intro-top::after {
+        width: 60px;
+    }
+
+    .intro-title {
+        font-size: clamp(1.6em, 7vw, 2em);
+    }
+
+    /* 소형 모바일에서 일본어 타이틀 조정 */
+    html[lang="jp"] .intro-title,
+    html[lang="JP"] .intro-title {
+        font-size: clamp(1.45em, 6.5vw, 1.85em);
+        line-height: 1.4;
+    }
+
+    .lead-text {
+        font-size: 1.08em;
+        margin: 0.55em 0;
+    }
+
+    .intro-mission-line {
+        font-size: 1.02em;
+        padding-left: 1.4em;
+    }
+}
+
+/* ================================================
+   휴식 가이드 페이지 스타일
+   ================================================ */
+
+.rest-guide-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3em 2em;
+    position: relative;
+    z-index: 1;
+}
+
+.rest-guide-header {
+    text-align: center;
+    margin-bottom: 4em;
+    padding: 2em 0;
+}
+
+.rest-guide-title {
+    font-size: 2.5em;
+    color: var(--brand-strong);
+    margin-bottom: 0.5em;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.rest-guide-subtitle {
+    font-size: 1.3em;
+    color: #666;
+    margin: 0;
+    font-style: italic;
+}
+
+.rest-guide-intro {
+    position: relative;
+    z-index: 1;
+}
+
+.rest-guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+    margin-top: 3em;
+    margin-bottom: 4em;
+}
+
+.rest-guide-card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2em;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-top: 3px solid var(--brand-light);
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.rest-guide-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+}
+
+.rest-guide-card .card-icon {
+    font-size: 3em;
+    margin-bottom: 0;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.rest-guide-card h4 {
+    color: var(--brand-strong);
+    font-size: 1.4em;
+    margin: 0;
+    font-weight: 500;
+}
+
+.rest-guide-card p {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.05em;
+    margin: 0;
+    flex: 1;
+}
+
+.guide-card-btn {
+    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-light) 100%);
+    color: white;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+}
+
+.guide-card-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(46, 125, 50, 0.4);
+    background: linear-gradient(135deg, var(--brand-strong) 0%, var(--brand) 100%);
+}
+
+.rest-guide-tips {
+    margin-top: 3em;
+}
+
+/* ==================== 특별 상황 휴식 가이드 (한국어 전용 섹션) ==================== */
+.rest-guide-special {
+    margin-top: 3em;
+}
+
+.rest-special-guides-grid {
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+}
+
+.special-guide-mobile-cards {
+    margin-top: 1.5em;
+    margin-bottom: 3em;
+}
+
+.special-guide-btn {
+    /* 기존 가이드 버튼 톤과 조화 (준비 중 버튼) */
+    background: linear-gradient(135deg, #78909c 0%, #607d8b 100%);
+    color: white;
+    border: none;
+    padding: 0.8em 1.5em;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: not-allowed;
+    opacity: 0.9;
+    box-shadow: 0 4px 12px rgba(96, 125, 139, 0.25);
+}
+
+.special-guide-btn:disabled {
+    opacity: 0.85;
+}
+
+.rest-guide-tips .tip-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rest-guide-tips .tip-list li {
+    padding: 1.2em 0;
+    padding-left: 2.5em;
+    border-bottom: 1px solid rgba(46, 125, 50, 0.1);
+    position: relative;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #444;
+}
+
+.rest-guide-tips .tip-list li:last-child {
+    border-bottom: none;
+}
+
+.rest-guide-tips .tip-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--brand);
+    font-weight: bold;
+    font-size: 1.3em;
+}
+
+/* 휴식 가이드 반응형 */
+@media (max-width: 1200px) {
+    .rest-guide-container {
+        padding: 2em 1.5em;
+    }
+
+    .rest-guide-title {
+        font-size: 2em;
+    }
+
+    .rest-guide-subtitle {
+        font-size: 1.1em;
+    }
+
+    .rest-guides-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5em;
+    }
+
+    .rest-guide-card {
+        padding: 1.5em;
+    }
+
+    .rest-guide-tips .tip-list li {
+        font-size: 1em;
+        padding-left: 2em;
+    }
+}
+

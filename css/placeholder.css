@@ -1,0 +1,48 @@
+/* ================================================
+   BACKGROUND PLACEHOLDER - Base64 Tiny Image
+   ================================================
+
+   이 파일은 페이지 로드 시 즉시 표시되는 placeholder 배경을 정의합니다.
+   Base64 인코딩된 tiny 이미지를 사용하여 네트워크 요청 없이 즉시 표시됩니다.
+
+   로딩 순서:
+   1. background-color (즉시) - 단색 fallback
+   2. Base64 tiny image (즉시) - 블러 처리된 placeholder
+   3. lowres.jpg (로드 후) - 중간 해상도
+   4. highres.webp + .loaded (최종) - 고해상도
+   ================================================ */
+
+#main-content::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+
+    /* Fallback 단색 (가장 먼저 표시) */
+    background-color: #e5f0f2;
+
+    /* Base64 tiny image placeholder (즉시 표시, 네트워크 요청 없음) */
+    background-image:
+        /* lowres 이미지 (로드 후 위에 표시) */
+        url('../image/main_floral_calm_lowres.jpg'),
+        /* Base64 tiny webp placeholder (즉시 표시) */
+        url(data:image/webp;base64,UklGRmwCAABXRUJQVlA4IGACAABwCwCdASooABsAPi0Sh0KhoQ1WAwAMAWJYwCdMoR2tui6ZeS3afvGf7kekcWKj/R+pVm2+ofYA/LbgTf0lE9cNZ1u8qTlzgzaAkCFsBpnQaZCfWrNVrg3N9T81oK/ooMYdswgAAP7+9PB9d4xvaW9b2Djs8ICJe04GCIoljhL5rkkH232k5Oqil2bg79sOAKv+jakHKK7/XJv3E67T05S5PLemeiFOcToB+mnk8wBoSG6lBUJVdYP3ez9+PS7h9z74E0+pYQEnkAP3VlUS6Q/dUHjApRjJHOBlMqT/XLS/kfJ0n4rexf9/XjY+ygoIbqrSTVw/CjRRhyg3RW/+ZrBGwfXqOjDYShTQ/t7Ovv3gefFebcLCYN2oquzpoxU8bRpPikbJ1198DP3ZKWfDfDx5dOd+/1pwcuP1Q6N7v6c1o+pzIxCQrqE6xLe9rWtyl6dzgoQYO2zPOgdJh3Es8pI5a7pqgAE1U3e7hW/P/h/6enbkSYq2zv3JYpE79VYcb/7TtHbvCtPQd424wymn++PcxRCq/icSmfp6fNULAKRnAsErxZd4CpH0v+ZPzmEIrevr1+7pkvjFx/69F/On//bXxdD1jePA/fryw9fcaPoww63nNc5y5V6+X01M5gFfsPvXziAqLWOlCgY6TqRVLopvLBoSs2zX/qQvJPtb+CRx5ya2hpBqaNzlPiv00HmSJU3xEahK298m+H89Z9nVba+WvKeCKP3Ewbu2S56rHDRSWSUESr/R3qrrs7inkkVJMkb45Ms69vhh01MNxv+N0ZI6G76yAvQIOiPy732aSpAAAA==);
+
+    background-size: cover, cover;
+    background-position: center center, center center;
+    background-repeat: no-repeat, no-repeat;
+    z-index: -1;
+    filter: blur(8px);
+    transition: filter 0.6s ease-out, background-image 0.3s ease-out;
+}
+
+#main-content.loaded::before {
+    /* highres 이미지로 교체 */
+    background-image:
+        url('../image/main_floral_calm.webp'),
+        /* Base64 유지 (fallback) */
+        url(data:image/webp;base64,UklGRmwCAABXRUJQVlA4IGACAABwCwCdASooABsAPi0Sh0KhoQ1WAwAMAWJYwCdMoR2tui6ZeS3afvGf7kekcWKj/R+pVm2+ofYA/LbgTf0lE9cNZ1u8qTlzgzaAkCFsBpnQaZCfWrNVrg3N9T81oK/ooMYdswgAAP7+9PB9d4xvaW9b2Djs8ICJe04GCIoljhL5rkkH232k5Oqil2bg79sOAKv+jakHKK7/XJv3E67T05S5PLemeiFOcToB+mnk8wBoSG6lBUJVdYP3ez9+PS7h9z74E0+pYQEnkAP3VlUS6Q/dUHjApRjJHOBlMqT/XLS/kfJ0n4rexf9/XjY+ygoIbqrSTVw/CjRRhyg3RW/+ZrBGwfXqOjDYShTQ/t7Ovv3gefFebcLCYN2oquzpoxU8bRpPikbJ1198DP3ZKWfDfDx5dOd+/1pwcuP1Q6N7v6c1o+pzIxCQrqE6xLe9rWtyl6dzgoQYO2zPOgdJh3Es8pI5a7pqgAE1U3e7hW/P/h/6enbkSYq2zv3JYpE79VYcb/7TtHbvCtPQd424wymn++PcxRCq/icSmfp6fNULAKRnAsErxZd4CpH0v+ZPzmEIrevr1+7pkvjFx/69F/On//bXxdD1jePA/fryw9fcaPoww63nNc5y5V6+X01M5gFfsPvXziAqLWOlCgY6TqRVLopvLBoSs2zX/qQvJPtb+CRx5ya2hpBqaNzlPiv00HmSJU3xEahK298m+H89Z9nVba+WvKeCKP3Ewbu2S56rHDRSWSUESr/R3qrrs7inkkVJMkb45Ms69vhh01MNxv+N0ZI6G76yAvQIOiPy732aSpAAAA==);
+    filter: blur(0);
+}
