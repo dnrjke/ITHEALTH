@@ -66,6 +66,7 @@ function initNavigation() {
     const navArrowLeft = document.querySelector('.nav-arrow-left');
     const navArrowRight = document.querySelector('.nav-arrow-right');
     const pageDots = document.querySelectorAll('.page-dot');
+    const sectionNavEl = document.querySelector('.section-nav');
     
     // 현재 활성 탭 인덱스
     let currentTabIndex = 0;
@@ -89,6 +90,52 @@ function initNavigation() {
         });
     }
     preventNavDragIssues();
+
+    // ==================== 내비게이션 레이아웃 모드(적응형) ====================
+    // - compact(<=1200px)에서는 "스크롤 가능 여부"에 따라
+    //   A) scrollable: 도트 표시 + 가로 스크롤
+    //   B) static: 도트 숨김 + 항목 중앙 정렬(모바일 스타일)
+    let _navLayoutMode = null; // 'scrollable' | 'static' | null
+    function updateNavLayoutMode() {
+        if (!sectionNavEl || !navCarouselContainer) return;
+
+        // 데스크탑(PC UI)은 기존 레이아웃 유지
+        if (window.innerWidth > NAV_COMPACT_MAX_WIDTH) {
+            sectionNavEl.classList.remove('is-scrollable', 'is-static');
+            navCarouselContainer.classList.remove('is-scrollable', 'is-static');
+            _navLayoutMode = null;
+            return;
+        }
+
+        // 실제로 내용이 넘쳐서 스크롤이 가능한지(필요한지) 측정
+        const overflow = navCarouselContainer.scrollWidth - navCarouselContainer.clientWidth;
+        // 클릭/활성화 스타일 변화나 서브픽셀 차이로 모드가 출렁이지 않도록 "여유값"을 둠
+        // (실제로 의미 있는 오버플로우가 있을 때만 scrollable)
+        const SCROLLABLE_THRESHOLD_PX = 12;
+        const isScrollable = overflow > SCROLLABLE_THRESHOLD_PX;
+
+        // 이미 같은 모드면 DOM 클래스 토글을 건드리지 않아 레이아웃 요동을 방지
+        const nextMode = isScrollable ? 'scrollable' : 'static';
+        if (_navLayoutMode === nextMode) return;
+        _navLayoutMode = nextMode;
+
+        sectionNavEl.classList.toggle('is-scrollable', isScrollable);
+        navCarouselContainer.classList.toggle('is-scrollable', isScrollable);
+        sectionNavEl.classList.toggle('is-static', !isScrollable);
+        navCarouselContainer.classList.toggle('is-static', !isScrollable);
+
+        // static 모드에서는 의미 없는 잔여 스크롤을 정리(가운데 정렬 시 어색함 방지)
+        if (!isScrollable) {
+            navCarouselContainer.scrollLeft = 0;
+        }
+    }
+
+    // 전역 노출: 언어 변경(i18n) 직후 폭이 바뀌는 케이스 대응
+    window.ITHealth = window.ITHealth || {};
+    window.ITHealth.updateNavLayoutMode = () => {
+        // DOM 텍스트가 바뀐 직후 레이아웃이 계산되기 전일 수 있어 RAF로 한 번 늦춰 측정
+        requestAnimationFrame(() => requestAnimationFrame(updateNavLayoutMode));
+    };
 
     /**
      * 네비게이션 인디케이터 업데이트
@@ -177,23 +224,58 @@ function initNavigation() {
         const activeIndex = Array.from(navItems).findIndex(item => item.dataset.tab === tabName);
         
         if (activeIndex >= 0) {
-            // 캐러셀(모바일/태블릿)에서만 스크롤
-            if (window.innerWidth <= NAV_COMPACT_MAX_WIDTH) {
-                setTimeout(() => {
-                    scrollToTab(activeIndex);
-                }, 100);
+            // UX 절충안:
+            // - 사용자가 "탭 이동(클릭/다음 스텝/뒤로가기 등)"으로 화면을 전환했을 때만
+            //   해당 탭이 화면 밖에 있으면 "최소한으로만" 보이게 살짝 스크롤한다.
+            // - 사용자의 가로 스와이프/스크롤 자체에 대해서는 절대 자동 정렬(센터링/스냅)하지 않는다.
+            currentTabIndex = activeIndex;
+            updateTabIndicators(activeIndex);
+
+            // static 모드에서는 "가로 스크롤이 발생하지 않는 상태"가 UX 정의이므로,
+            // 최소 스크롤(보이게 하기)도 실행하지 않는다.
+            if (window.innerWidth <= NAV_COMPACT_MAX_WIDTH && _navLayoutMode === 'scrollable') {
+                const targetItem = navItems[activeIndex];
+                ensureNavItemVisible(targetItem, { padding: 12, behavior: 'smooth' });
             }
-            // 데스크탑에서는 스크롤 불필요 (모든 탭이 보임)
         }
+    }
+
+    // 캐러셀 안에서 특정 탭이 "살짝이라도" 보이도록 최소 스크롤만 수행 (센터링 금지)
+    function ensureNavItemVisible(targetItem, { padding = 12, behavior = 'auto' } = {}) {
+        if (!targetItem || !navCarouselContainer) return;
+        if (window.innerWidth > NAV_COMPACT_MAX_WIDTH) return;
+        // 안전장치: static 모드에서는 절대 스크롤하지 않음
+        if (navCarouselContainer.classList.contains('is-static')) return;
+
+        const containerRect = navCarouselContainer.getBoundingClientRect();
+        const itemRect = targetItem.getBoundingClientRect();
+
+        const leftEdge = containerRect.left + padding;
+        const rightEdge = containerRect.right - padding;
+
+        // 이미 충분히 보이면 아무 것도 하지 않음
+        if (itemRect.left >= leftEdge && itemRect.right <= rightEdge) return;
+
+        // 필요한 만큼만 이동
+        let nextScrollLeft = navCarouselContainer.scrollLeft;
+        if (itemRect.left < leftEdge) {
+            nextScrollLeft -= (leftEdge - itemRect.left);
+        } else if (itemRect.right > rightEdge) {
+            nextScrollLeft += (itemRect.right - rightEdge);
+        }
+
+        // 범위 클램프
+        const maxScrollLeft = navCarouselContainer.scrollWidth - navCarouselContainer.clientWidth;
+        if (maxScrollLeft <= 0) return;
+        nextScrollLeft = Math.max(0, Math.min(nextScrollLeft, maxScrollLeft));
+
+        navCarouselContainer.scrollTo({ left: nextScrollLeft, behavior });
     }
     
     // 탭 인디케이터 클릭 이벤트 (모바일)
     pageDots.forEach((dot, index) => {
         dot.addEventListener('click', () => {
-            // 해당 탭으로 스크롤 및 도트 업데이트
-            scrollToTab(index);
-            
-            // 해당 탭의 콘텐츠 표시
+            // UX: 자동 정렬(가로 스크롤)은 하지 않고, 콘텐츠만 전환 + point는 showContent에서 갱신
             const targetNavItem = navItems[index];
             if (targetNavItem) {
                 const tabName = targetNavItem.dataset.tab;
@@ -232,6 +314,7 @@ function initNavigation() {
             'eye-health-content', 'back-health-content', 'face-tension-content'
         ];
         const isGuideTab = guideTabIds.includes(tabId);
+        const wasGuideView = document.body.classList.contains('guide-view');
 
         // 메인 화면 처리: 내비 숨김(body.main-view 적용)
         if (tabId === mainContentId) {
@@ -252,6 +335,11 @@ function initNavigation() {
             // 건강 가이드 탭일 때만 섹션 네비게이션 표시
             if (isGuideTab) {
                 document.body.classList.add('guide-view');
+                // UX: 탭 이동(클릭/다음 스텝)마다 레이아웃 모드를 재판정하면 "요동"이 생길 수 있음.
+                // 가이드 화면에 "처음 진입"했을 때만 재평가하고, 이후 탭 이동에서는 유지한다.
+                if (!wasGuideView) {
+                    requestAnimationFrame(() => updateNavLayoutMode());
+                }
                 const activeNavItem = document.querySelector(`.nav-item[data-tab="${tabId.replace('-content', '')}"]`);
                 if (activeNavItem) {
                     activeNavItem.classList.add('active');
@@ -668,15 +756,12 @@ function initNavigation() {
         resizeTimeout = setTimeout(() => {
             const activeNavItem = document.querySelector('.nav-item.active');
             if (activeNavItem) {
+                updateNavLayoutMode();
                 updateNavIndicator(activeNavItem);
                 
-                // 캐러셀(모바일/태블릿) 뷰에서 활성 탭으로 스크롤
-                if (window.innerWidth <= NAV_COMPACT_MAX_WIDTH && navCarouselContainer) {
-                    const tabIndex = Array.from(navItems).indexOf(activeNavItem);
-                    if (tabIndex >= 0) {
-                        scrollToTab(tabIndex);
-                    }
-                }
+                // UX: 리사이즈 시에도 자동 정렬(가로 스크롤)은 하지 않음
+                const tabIndex = Array.from(navItems).indexOf(activeNavItem);
+                if (tabIndex >= 0) updateTabIndicators(tabIndex);
             }
         }, 200);
     });
@@ -685,6 +770,7 @@ function initNavigation() {
     setTimeout(() => {
         const firstActiveItem = document.querySelector('.nav-item.active');
         if (firstActiveItem) {
+            updateNavLayoutMode();
             updateNavIndicator(firstActiveItem);
         }
     }, 100);
@@ -936,6 +1022,11 @@ function initI18n() {
         // 섹션 가이드가 있으면 업데이트 (언어 변경 시)
         if (typeof window.ITHealth?.updateSectionGuides === 'function') {
             window.ITHealth.updateSectionGuides();
+        }
+
+        // 내비게이션(도트/중앙정렬/스크롤 모드)도 언어에 따라 폭이 바뀌므로 재평가
+        if (typeof window.ITHealth?.updateNavLayoutMode === 'function') {
+            window.ITHealth.updateNavLayoutMode();
         }
     }
 

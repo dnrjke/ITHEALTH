@@ -30,6 +30,9 @@
     .section-nav {
         flex-direction: column;
         padding: 0.8em 0 1.5em;
+        /* static 모드에서 좌/우 끝 항목이 잘리지 않도록 기본 안전 여백 */
+        padding-left: 8px;
+        padding-right: 8px;
         gap: 0;
         width: 100%;
         box-sizing: border-box;
@@ -47,13 +50,19 @@
     
     /* 탭 인디케이터 표시 (6개) */
     .nav-page-indicator {
-        display: flex;
+        /* 기본은 숨김: 실제로 스크롤 가능한 경우(JS 측정)만 표시 */
+        display: none;
         gap: 6px;
         justify-content: center;
         width: 100%;
         box-sizing: border-box;
         padding-left: 0;
         padding-right: 0;
+    }
+
+    /* 스크롤 가능한 경우에만 도트 표시 (가로 스크롤 가능성 시각화) */
+    .section-nav.is-scrollable .nav-page-indicator {
+        display: flex;
     }
     
     .page-dot {
@@ -70,24 +79,42 @@
     .nav-carousel-container {
         max-width: 100%;
         width: 100%;
-        overflow-x: scroll;
+        /* 기본은 static 모드(중앙정렬) 전제: 스크롤 자체를 끔 */
+        overflow-x: hidden;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         scroll-behavior: auto;
+        /* UX: 사용자가 스와이프한 위치를 브라우저/스크립트가 "자동 정렬"하지 않도록 스냅 비활성화 */
+        scroll-snap-type: none;
+        scroll-padding: 0;
+        overscroll-behavior-x: contain;
         padding: 0;
         box-sizing: border-box;
     }
 
+    /* static 모드: 가로 스크롤이 없어야 하므로 overflow를 visible로 열어 "끝부분 잘림" 방지 */
+    .nav-carousel-container.is-static {
+        overflow-x: visible;
+        overflow-y: visible;
+    }
+
+    /* 실제로 스크롤이 필요할 때만 스크롤 허용 */
+    .nav-carousel-container.is-scrollable {
+        overflow-x: scroll;
+        overflow-y: hidden;
+    }
+
     .nav-carousel-container.snapping {
-        scroll-behavior: smooth;
+        /* 자동 정렬/스냅을 원치 않으므로 smooth 전환도 비활성화 */
+        scroll-behavior: auto;
     }
     
     .nav-carousel-container::-webkit-scrollbar {
         display: none;
     }
     
-    /* 3개씩 정확히 표시되는 페이지 구성 */
+    /* 캐러셀: "3등분 고정" 대신 공간이 넓으면 더 많이 보이게 */
     .nav-carousel {
         display: flex;
         flex-wrap: nowrap;
@@ -95,14 +122,34 @@
         transform: none !important;
         gap: 0;
         padding: 0;
+        justify-content: flex-start; /* scrollable 기본 */
+    }
+
+    /* 모든 항목이 한 줄에 다 들어가면(=static), 모바일 스타일 유지한 채 중앙 정렬 */
+    .section-nav.is-static .nav-carousel {
+        justify-content: center;
+        gap: 8px;
+        padding: 0;
+    }
+
+    /* static 모드에서는 좀 더 확실한 좌/우 여백(라운드/그림자/터치영역 보장) */
+    .section-nav.is-static {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
     .nav-item {
-        /* 화면을 정확히 3등분 (padding 포함) */
-        width: calc(100vw / 3);
-        min-width: calc(100vw / 3);
-        max-width: calc(100vw / 3);
-        flex: 0 0 calc(100vw / 3);
+        /*
+          폭을 유연하게: 화면이 넓을수록 한 화면에 더 많은 탭이 보이도록.
+          - 최소 폭을 둬서 너무 작아지지 않게
+          - 최대 폭을 둬서 태블릿/가로에서 "3개만 크게" 보이는 현상 방지
+        */
+        width: clamp(96px, 24vw, 152px);
+        min-width: clamp(96px, 24vw, 152px);
+        max-width: 180px;
+        flex: 0 0 auto;
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
         padding: 0.6em 0.3em;
         box-sizing: border-box;
         margin: 0;
