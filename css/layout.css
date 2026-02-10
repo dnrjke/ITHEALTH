@@ -76,6 +76,16 @@ header h1 {
     box-sizing: border-box;
 }
 
+/* 헤더 탭: 드래그/텍스트 선택으로 인한 불편 방지 */
+.header-nav-link,
+.header-nav-link * {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-drag: none;
+}
+
 .header-nav-link:hover {
     background: rgba(255, 255, 255, 0.2);
     color: #ffffff;
@@ -230,6 +240,16 @@ body.guide-view .section-nav {
 /* 배경 그레인 잔상 문제 방지 */
 .section-nav::before {
     content: none;
+}
+
+/* 건강 가이드 상단 탭: 드래그/텍스트 선택 방지 (스와이프/스크롤은 유지) */
+body.guide-view .section-nav,
+body.guide-view .section-nav * {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-drag: none;
 }
 
 /* 캐러셀 컨테이너 */

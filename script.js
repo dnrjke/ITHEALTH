@@ -70,6 +70,26 @@ function initNavigation() {
     // 현재 활성 탭 인덱스
     let currentTabIndex = 0;
 
+    // 상단 탭에서 텍스트 선택/드래그가 발생하지 않도록 (스크롤/스와이프는 유지)
+    function preventNavDragIssues() {
+        const els = [];
+        const sectionNav = document.querySelector('.section-nav');
+        if (sectionNav) els.push(sectionNav);
+        if (navCarouselContainer) els.push(navCarouselContainer);
+        if (navCarousel) els.push(navCarousel);
+        headerNavLinks.forEach(a => els.push(a));
+        navItems.forEach(it => els.push(it));
+        document.querySelectorAll('.page-dot').forEach(dot => els.push(dot));
+
+        els.forEach(el => {
+            if (!el) return;
+            el.setAttribute('draggable', 'false');
+            // dragstart/drag 관련 기본 동작 차단 (텍스트 드래그, 드래그 이미지 등)
+            el.addEventListener('dragstart', (e) => e.preventDefault());
+        });
+    }
+    preventNavDragIssues();
+
     /**
      * 네비게이션 인디케이터 업데이트
      */
